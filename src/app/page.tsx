@@ -140,9 +140,7 @@ export default function HomePage() {
                 </div>
                 <h3 style={{ fontFamily: "var(--font-display)", fontSize: 18, marginBottom: 4 }}>{p.name}</h3>
                 <p className="text-sm text-secondary" style={{ marginBottom: 12 }}>{p.type}</p>
-                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <span className="text-accent font-bold" style={{ fontSize: 16 }}>{p.avg}</span>
-                </div>
+
               </div>
             ))}
           </div>
