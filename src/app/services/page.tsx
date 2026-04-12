@@ -14,30 +14,30 @@ import {
 const paidServices = [
   {
     id: "assessment",
-    title: "Onboarding Assessment Prep",
+    title: "Onboarding Assessment Writing",
     price: "₦40,000",
     rawPrice: 40000,
     icon: <GraduationCap size={24} />,
-    description: "Get expert guidance and practice rubrics to pass your platform qualification tests on the first try.",
+    description: "Our experts will take the qualification assessment test on your behalf to ensure you pass with a high score.",
     features: [
-      "Platform-specific evaluation rubrics",
-      "Model answer examples",
-      "Assessment strategy session",
-      "Retake avoidance protocol"
+      "Done-for-you assessment writing",
+      "Guaranteed passing scores",
+      "Fast turnaround (24-48 hours)",
+      "High-paying project matching"
     ]
   },
   {
     id: "registration",
-    title: "Full Account Registration",
+    title: "Managed Account Registration",
     price: "₦60,000",
     rawPrice: 60000,
     icon: <UserPlus size={24} />,
-    description: "End-to-end walkthrough of the registration process using owner credentials. Includes identity protection setup.",
+    description: "We handle the entire platform registration and profile setup process for you using owner credentials.",
     features: [
-      "VPN & Cloud setup guidance",
-      "Profile optimization for high-paying projects",
-      "ID & credentials verification help",
-      "Initial account security setup"
+      "Done-for-you platform signup",
+      "Identity protection & VPN setup",
+      "Profile SEO for task volume",
+      "Complete account verify assistance"
     ]
   },
   {

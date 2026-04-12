@@ -163,13 +163,13 @@ export default function HomePage() {
                 <span className="badge badge-purple" style={{ marginBottom: 20 }}>Work Proxy Onboarding Services</span>
                 <h2 style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 800, marginBottom: 20 }}>Expert Guidance for <br />Competitive Platforms</h2>
                 <p className="text-secondary" style={{ marginBottom: 24, lineHeight: 1.8 }}>
-                  Most high-paying platforms have complex registration and assessment phases. We don't just match you — we provide the blueprints for success.
+                  Don't risk failing your assessment or messing up your registration. Our experts will handle the entire process for you, ensuring guaranteed results.
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 32 }}>
                    {[
-                      { icon: <Check size={16} />, title: "Onboarding Assessment Prep", desc: "₦40,000 — Pass your qualification tests on the first try." },
-                      { icon: <Check size={16} />, title: "Full Registration Walkthrough", desc: "₦60,000 — Expert guidance from sign-up to account setup." },
-                      { icon: <Check size={16} />, title: "Professional Tasker Training", desc: "₦60,000 — Master high-quality tasking to maximize income." },
+                      { icon: <Check size={16} />, title: "Onboarding Assessment Writing", desc: "₦40,000 — We write the qualification test for you to guarantee success." },
+                      { icon: <Check size={16} />, title: "Managed Account Registration", desc: "₦60,000 — We handle the end-to-end registration and setup for you." },
+                      { icon: <Check size={16} />, title: "Professional Tasker Training", desc: "₦60,000 — Intensive training to master tasking and avoid bans." },
                    ].map((item, i) => (
                      <div key={i} style={{ display: "flex", gap: 12 }}>
                         <div style={{ width: 24, height: 24, borderRadius: "50%", background: "rgba(0,153,255,0.1)", color: "var(--accent-primary)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
