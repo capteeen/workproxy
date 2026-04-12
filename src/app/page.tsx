@@ -64,7 +64,7 @@ export default function HomePage() {
                 <Rocket size={20} /> I Want to Work
               </Link>
               <Link href="/services" className="btn btn-outline btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <Activity size={20} /> View Setup Guides
+                <Activity size={20} /> View Onboarding Services
               </Link>
               <Link href="/auth/register?role=owner" className="btn btn-ghost btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <Briefcase size={20} /> List My Account
@@ -160,7 +160,7 @@ export default function HomePage() {
           <div className="svc-highlight-box">
             <div className="svc-highlight-grid">
               <div className="svc-highlight-text">
-                <span className="badge badge-teal" style={{ marginBottom: 20 }}>Account Success Services</span>
+                <span className="badge badge-purple" style={{ marginBottom: 20 }}>Work Proxy Onboarding Services</span>
                 <h2 style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 800, marginBottom: 20 }}>Expert Guidance for <br />Competitive Platforms</h2>
                 <p className="text-secondary" style={{ marginBottom: 24, lineHeight: 1.8 }}>
                   Most high-paying platforms have complex registration and assessment phases. We don't just match you — we provide the blueprints for success.
@@ -183,7 +183,7 @@ export default function HomePage() {
                    ))}
                 </div>
                 <Link href="/services" className="btn btn-primary">
-                  Book a Service
+                  Explore Onboarding Services
                 </Link>
               </div>
               <div className="svc-highlight-visual">

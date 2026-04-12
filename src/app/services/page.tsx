@@ -89,7 +89,7 @@ Please provide payment details to proceed.`;
       <section className="svc-hero">
         <div className="container">
           <div className="svc-hero-inner">
-            <span className="badge badge-purple" style={{ marginBottom: 20 }}>Work Proxy Success Services</span>
+            <span className="badge badge-purple" style={{ marginBottom: 20 }}>Work Proxy Onboarding Services</span>
             <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 800, marginBottom: 20 }}>
               Unlock Your <span className="gradient-text">Earning Potential</span>
             </h1>
