@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { 
   Rocket, Briefcase, Shield, FileText, Banknote, 
   LineChart, Scale, Activity, X, Check, Laptop,
-  ArrowRight
+  ArrowRight, Monitor
 } from "lucide-react";
 
 const platforms = [
@@ -63,7 +63,10 @@ export default function HomePage() {
               <Link href="/auth/register?role=worker" className="btn btn-primary btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <Rocket size={20} /> I Want to Work
               </Link>
-              <Link href="/auth/register?role=owner" className="btn btn-outline btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <Link href="/services" className="btn btn-outline btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Activity size={20} /> View Setup Guides
+              </Link>
+              <Link href="/auth/register?role=owner" className="btn btn-ghost btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <Briefcase size={20} /> List My Account
               </Link>
             </div>
@@ -121,7 +124,7 @@ export default function HomePage() {
         <div className="container">
           <div className="section-header">
             <span className="badge badge-blue">Supported Platforms — MVP</span>
-            <h2 className="section-title">6 High-Earning Platforms, Day One</h2>
+            <h2 className="section-title">High-Earning Platforms, Day One</h2>
             <p className="section-desc">All platforms below are geo-restricted in Nigeria. We bridge access through structured account management.</p>
           </div>
           <div className="grid-3">
@@ -140,11 +143,121 @@ export default function HomePage() {
                 </div>
                 <h3 style={{ fontFamily: "var(--font-display)", fontSize: 18, marginBottom: 4 }}>{p.name}</h3>
                 <p className="text-sm text-secondary" style={{ marginBottom: 12 }}>{p.type}</p>
-
+                {p.active && (
+                  <Link href="/services" className="text-xs font-bold text-accent hover:underline" style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    View Setup Guide <ArrowRight size={12} />
+                  </Link>
+                )}
               </div>
             ))}
           </div>
         </div>
+      </section>
+
+      {/* Account Success Services */}
+      <section className="section">
+        <div className="container">
+          <div className="svc-highlight-box">
+            <div className="svc-highlight-grid">
+              <div className="svc-highlight-text">
+                <span className="badge badge-teal" style={{ marginBottom: 20 }}>Account Success Services</span>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 800, marginBottom: 20 }}>Expert Guidance for <br />Competitive Platforms</h2>
+                <p className="text-secondary" style={{ marginBottom: 24, lineHeight: 1.8 }}>
+                  Most high-paying platforms have complex registration and assessment phases. We don't just match you — we provide the blueprints for success.
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 32 }}>
+                   {[
+                      { icon: <Check size={16} />, title: "Onboarding Assessment Prep", desc: "₦40,000 — Pass your qualification tests on the first try." },
+                      { icon: <Check size={16} />, title: "Full Registration Walkthrough", desc: "₦60,000 — Expert guidance from sign-up to account setup." },
+                      { icon: <Check size={16} />, title: "Professional Tasker Training", desc: "₦60,000 — Master high-quality tasking to maximize income." },
+                   ].map((item, i) => (
+                     <div key={i} style={{ display: "flex", gap: 12 }}>
+                        <div style={{ width: 24, height: 24, borderRadius: "50%", background: "rgba(0,153,255,0.1)", color: "var(--accent-primary)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                          {item.icon}
+                        </div>
+                        <div>
+                          <p style={{ fontSize: 14, fontWeight: 700 }}>{item.title}</p>
+                          <p className="text-xs text-muted">{item.desc}</p>
+                        </div>
+                     </div>
+                   ))}
+                </div>
+                <Link href="/services" className="btn btn-primary">
+                  Book a Service
+                </Link>
+              </div>
+              <div className="svc-highlight-visual">
+                <div className="svc-visual-card">
+                  <div className="svc-visual-header">
+                    <Monitor size={18} />
+                    <span style={{ fontSize: 13, fontWeight: 600 }}>Outlier Onboarding</span>
+                  </div>
+                  <div className="svc-visual-body">
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
+                      <span style={{ fontSize: 11, fontWeight: 600 }}>Progress</span>
+                      <span style={{ fontSize: 11, fontWeight: 800, color: "var(--accent-primary)" }}>60%</span>
+                    </div>
+                    <div className="progress-bar" style={{ height: 6, marginBottom: 20 }}>
+                      <div className="progress-fill" style={{ width: "60%" }} />
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                      <div className="svc-visual-step done"><Check size={14} /> Account Registration</div>
+                      <div className="svc-visual-step done"><Check size={14} /> Profile Completion</div>
+                      <div className="svc-visual-step active"><div className="dot" /> Take Onboarding Quiz</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <style>{`
+          .svc-highlight-box {
+            background: #ffffff;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-2xl);
+            padding: 60px;
+            box-shadow: 0 12px 48px rgba(0,0,0,0.03);
+            overflow: hidden;
+            position: relative;
+          }
+          @media (max-width: 768px) { .svc-highlight-box { padding: 40px 20px; } }
+          
+          .svc-highlight-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+          }
+          @media (max-width: 900px) { .svc-highlight-grid { grid-template-columns: 1fr; } }
+          
+          .svc-highlight-visual {
+            display: flex;
+            justify-content: center;
+            position: relative;
+          }
+          .svc-visual-card {
+            width: 100%;
+            max-width: 340px;
+            background: #ffffff;
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            animation: float 6s ease-in-out infinite;
+          }
+          .svc-visual-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; color: var(--accent-primary); }
+          .svc-visual-step { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-muted); }
+          .svc-visual-step.done { color: #10b981; }
+          .svc-visual-step.active { color: var(--text-primary); font-weight: 600; }
+          .svc-visual-step .dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--accent-primary); }
+          
+          @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+          }
+        `}</style>
       </section>
 
       {/* How It Works */}

@@ -23,6 +23,7 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Platform</h4>
             <Link href="/listings">Browse Listings</Link>
+            <Link href="/services">Onboarding Guides</Link>
             <Link href="/auth/register?role=worker">Become a Worker</Link>
             <Link href="/auth/register?role=owner">List an Account</Link>
             <Link href="/dashboard">Dashboard</Link>

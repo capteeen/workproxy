@@ -17,7 +17,8 @@ export default function Navbar() {
           </Link>
 
           <div className="navbar-links">
-            <Link href="/listings" className="nav-link">Browse Accounts</Link>
+             <Link href="/listings" className="nav-link">Browse Accounts</Link>
+            <Link href="/services" className="nav-link">Onboarding Guides</Link>
             <Link href="/#how" className="nav-link">How It Works</Link>
             <Link href="/#earnings" className="nav-link">Earnings</Link>
 
@@ -38,7 +39,8 @@ export default function Navbar() {
 
         {mobileOpen && (
           <div className="mobile-menu">
-            <Link href="/listings" className="mobile-link" onClick={() => setMobileOpen(false)}>Browse Accounts</Link>
+             <Link href="/listings" className="mobile-link" onClick={() => setMobileOpen(false)}>Browse Accounts</Link>
+            <Link href="/services" className="mobile-link" onClick={() => setMobileOpen(false)}>Onboarding Guides</Link>
             <Link href="/#how" className="mobile-link" onClick={() => setMobileOpen(false)}>How It Works</Link>
             <Link href="/#earnings" className="mobile-link" onClick={() => setMobileOpen(false)}>Earnings</Link>
             <Link href="/auth/register" className="btn btn-primary btn-sm w-full" style={{ justifyContent: "center" }}>Join Waitlist</Link>

@@ -256,8 +256,9 @@ function tabIcon(tab: string) {
 }
 function tabTitle(tab: string) {
   const titles: Record<string, string> = {
-    overview: "Dashboard Overview", accounts: "My Accounts", applications: "Applications",
-    reports: "Work Reports", wallet: "Wallet & Payouts", profile: "My Profile",
+    overview: "Dashboard Overview", accounts: "My Accounts",
+    applications: "Applications", reports: "Work Reports", wallet: "Wallet & Payouts",
+    profile: "My Profile",
   };
   return titles[tab] || tab;
 }
@@ -594,6 +595,8 @@ function ProfileTab({ role }: { role: string }) {
     </div>
   );
 }
+
+
 
 export default function DashboardPage() {
   return (
