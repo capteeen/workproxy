@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Link as LinkIcon, Rocket, Briefcase, Shield } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { Link as LinkIcon } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -19,18 +20,26 @@ export default function LoginPage() {
       return;
     }
     setLoading(true);
-    // Simulate auth — route to dashboard
-    await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    router.push("/dashboard");
-  };
+    
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: form.email,
+        password: form.password,
+      });
 
-  const demoLogin = (role: "owner" | "worker" | "admin") => {
-    setLoading(true);
-    setTimeout(() => {
-      if (role === "admin") router.push("/admin");
-      else router.push("/dashboard?role=" + role);
-    }, 800);
+      if (res?.error) {
+        setError(res.error);
+        setLoading(false);
+        return;
+      }
+
+      // We will let the dashboard or layout fetch the session to know the role
+      router.push("/dashboard");
+    } catch (err) {
+      setError("An unexpected error occurred.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,24 +53,6 @@ export default function LoginPage() {
         </div>
         <h1 className="auth-title">Welcome Back</h1>
         <p className="auth-desc">Sign in to your Work Proxy account</p>
-
-        {/* Demo quick logins */}
-        <div className="demo-logins">
-          <p className="text-xs text-muted" style={{ marginBottom: 10 }}>Quick Demo Access:</p>
-          <div className="demo-btns">
-            <button id="demo-worker" className="demo-btn" onClick={() => demoLogin("worker")}>
-              <Rocket size={14} /> Worker Demo
-            </button>
-            <button id="demo-owner" className="demo-btn" onClick={() => demoLogin("owner")}>
-              <Briefcase size={14} /> Owner Demo
-            </button>
-            <button id="demo-admin" className="demo-btn" onClick={() => demoLogin("admin")}>
-              <Shield size={14} /> Admin Demo
-            </button>
-          </div>
-        </div>
-
-        <div className="auth-divider"><span>or sign in with email</span></div>
 
         <form onSubmit={handleSubmit} className="auth-form">
           {error && <div className="auth-error">{error}</div>}
@@ -97,9 +88,14 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="auth-footer-text">
-          Don&apos;t have an account?{" "}
-          <Link href="/auth/register" className="text-accent font-semibold">Create one</Link>
+        <p className="auth-footer-text" style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <span>
+            Don&apos;t have an account?{" "}
+            <Link href="/auth/register?role=owner" className="text-accent font-semibold">List an Account</Link>
+          </span>
+          <span style={{ fontSize: 13, color: "var(--text-muted)" }}>
+            Looking for work? <Link href="/workers/apply" className="text-accent font-semibold" style={{ textDecoration: "underline" }}>Apply as a Worker</Link>
+          </span>
         </p>
       </div>
 

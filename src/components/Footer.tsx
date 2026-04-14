@@ -24,7 +24,7 @@ export default function Footer() {
             <h4>Platform</h4>
             <Link href="/listings">Browse Listings</Link>
             <Link href="/services">Onboarding Services</Link>
-            <Link href="/auth/register?role=worker">Become a Worker</Link>
+            <Link href="/workers/apply">Become a Worker</Link>
             <Link href="/auth/register?role=owner">List an Account</Link>
             <Link href="/dashboard">Dashboard</Link>
           </div>

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { 
   FolderOpen, Users, Handshake, DollarSign, Scale, CheckCircle, 
   Activity, Home, LogOut, Key, MonitorPlay, ShieldAlert,
-  Clock, TrendingUp, ShieldCheck
+  Clock, TrendingUp, ShieldCheck, ClipboardList
 } from "lucide-react";
 
 const adminStats = [
@@ -46,19 +46,27 @@ const pendingPayouts = [
   { id: "P3", user: "James Thornton", role: "Owner", method: "Wise", amount: 560, requested: "Apr 1, 2026" },
 ];
 
-const tabs = ["Overview", "Listings", "Users", "Matches", "Disputes", "Payouts"];
+const pendingWorkerApps = [
+  { id: "WA1", name: "Ahmed Musa", email: "ahmusa89@gmail.com", country: "🇳🇬 Nigeria", expertise: "AI Training, Data Annotation", experience: "1-3 years", internet: "4G Router", power: "Has Backup", idType: "NIN", submitted: "Apr 11, 2026", status: "Pending" },
+  { id: "WA2", name: "Grace Olayinka", email: "graceola@yahoo.co.uk", country: "🇳🇬 Nigeria", expertise: "Transcription, Content Writing", experience: "3-5 years", internet: "Fiber", power: "Has Backup", idType: "Passport", submitted: "Apr 10, 2026", status: "Pending" },
+];
+
+const tabs = ["Overview", "Worker Apps", "Listings", "Users", "Matches", "Disputes", "Payouts"];
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState("Overview");
   const [listingStatuses, setListingStatuses] = useState<Record<string, string>>({});
   const [userStatuses, setUserStatuses] = useState<Record<string, string>>({});
   const [payoutStatuses, setPayoutStatuses] = useState<Record<string, string>>({});
+  const [workerAppStatuses, setWorkerAppStatuses] = useState<Record<string, string>>({});
 
   const approveListing = (id: string) => setListingStatuses((s) => ({ ...s, [id]: "Approved" }));
   const rejectListing = (id: string) => setListingStatuses((s) => ({ ...s, [id]: "Rejected" }));
   const approveUser = (id: string) => setUserStatuses((s) => ({ ...s, [id]: "Approved" }));
   const rejectUser = (id: string) => setUserStatuses((s) => ({ ...s, [id]: "Rejected" }));
   const processPayout = (id: string) => setPayoutStatuses((s) => ({ ...s, [id]: "Processed" }));
+  const approveWorkerApp = (id: string) => setWorkerAppStatuses((s) => ({ ...s, [id]: "Approved" }));
+  const rejectWorkerApp = (id: string) => setWorkerAppStatuses((s) => ({ ...s, [id]: "Rejected" }));
 
   return (
     <div className="dash-layout">
@@ -150,6 +158,7 @@ export default function AdminPage() {
                   </h3>
                   <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                     {[
+                      { label: "Worker apps awaiting review", count: pendingWorkerApps.length, color: "#10b981", action: "Worker Apps" },
                       { label: "Listings awaiting approval", count: pendingListings.length, color: "#f59e0b", action: "Listings" },
                       { label: "Users awaiting ID review", count: pendingUsers.length, color: "#0099ff", action: "Users" },
                       { label: "Open disputes", count: openDisputes.length, color: "var(--accent-rose)", action: "Disputes" },
@@ -274,6 +283,39 @@ export default function AdminPage() {
                         <button id={`view-id-${u.id}`} className="btn btn-ghost btn-sm">👁 View ID</button>
                         <button id={`approve-user-${u.id}`} className="btn btn-outline btn-sm" onClick={() => approveUser(u.id)}>✓ Approve</button>
                         <button className="btn btn-danger btn-sm" onClick={() => rejectUser(u.id)}>✕ Reject</button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Worker Apps */}
+          {activeTab === "Worker Apps" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              <h2 style={{ fontFamily: "var(--font-display)", fontSize: 18 }}>Worker Applications Review</h2>
+              {pendingWorkerApps.map((w) => {
+                const st = workerAppStatuses[w.id];
+                return (
+                  <div key={w.id} className="card" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, flexWrap: "wrap" }}>
+                    <div>
+                      <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 8 }}>
+                        <h3 style={{ fontFamily: "var(--font-display)", fontSize: 16 }}>{w.name}</h3>
+                        <span className={`badge ${st ? (st === "Approved" ? "badge-green" : "badge-rose") : "badge-amber"}`}>{st || w.status}</span>
+                      </div>
+                      <p className="text-sm text-secondary">{w.email} · {w.country}</p>
+                      <p className="text-sm text-secondary" style={{ marginTop: 8 }}>
+                        <span className="font-semibold text-primary">Expertise:</span> {w.expertise} <br/>
+                        <span className="font-semibold text-primary">Experience:</span> {w.experience} | <span className="font-semibold text-primary">Setup:</span> {w.internet}, {w.power}
+                      </p>
+                      <p className="text-xs text-muted" style={{ marginTop: 8 }}>ID: {w.idType} · Submitted: {w.submitted}</p>
+                    </div>
+                    {!st && (
+                      <div style={{ display: "flex", gap: 8 }}>
+                        <button className="btn btn-ghost btn-sm">👁 View Profile</button>
+                        <button className="btn btn-outline btn-sm" onClick={() => approveWorkerApp(w.id)}>✓ Approve</button>
+                        <button className="btn btn-danger btn-sm" onClick={() => rejectWorkerApp(w.id)}>✕ Reject</button>
                       </div>
                     )}
                   </div>
@@ -437,6 +479,7 @@ export default function AdminPage() {
 function adminTabIcon(tab: string) {
   switch (tab) {
     case "Overview": return <Activity size={16} />;
+    case "Worker Apps": return <ClipboardList size={16} />;
     case "Listings": return <FolderOpen size={16} />;
     case "Users": return <Users size={16} />;
     case "Matches": return <Handshake size={16} />;

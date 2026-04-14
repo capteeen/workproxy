@@ -59,7 +59,7 @@ export default function ListingsPage() {
                   {filtered.length} accounts available — apply to start earning from geo-restricted platforms
                 </p>
               </div>
-              <Link href="/auth/register?role=worker" className="btn btn-primary">
+              <Link href="/workers/apply" className="btn btn-primary">
                 <Rocket size={16} /> Create Worker Profile
               </Link>
             </div>
@@ -190,7 +190,7 @@ export default function ListingsPage() {
                 </ul>
               </div>
               <div style={{ display: "flex", gap: 12 }}>
-                <Link href="/auth/register?role=worker" id={`apply-${selected.id}`} className="btn btn-primary" style={{ flex: 1, justifyContent: "center" }}>
+                <Link href="/workers/apply" id={`apply-${selected.id}`} className="btn btn-primary" style={{ flex: 1, justifyContent: "center" }}>
                   Apply for This Account →
                 </Link>
                 <button className="btn btn-ghost" onClick={() => setSelected(null)}>Cancel</button>

@@ -19,13 +19,11 @@ export default function Navbar() {
           <div className="navbar-links">
              <Link href="/listings" className="nav-link">Browse Accounts</Link>
             <Link href="/services" className="nav-link">Onboarding Services</Link>
-            <Link href="/#how" className="nav-link">How It Works</Link>
-            <Link href="/#earnings" className="nav-link">Earnings</Link>
-
           </div>
 
           <div className="navbar-actions">
-            <Link href="/auth/register" className="btn btn-primary btn-sm">Join Waitlist</Link>
+            <Link href="/auth/login" className="btn btn-ghost btn-sm">Sign In</Link>
+            <Link href="/auth/register?role=owner" className="btn btn-primary btn-sm">List Account</Link>
           </div>
 
           <button
@@ -41,9 +39,9 @@ export default function Navbar() {
           <div className="mobile-menu">
              <Link href="/listings" className="mobile-link" onClick={() => setMobileOpen(false)}>Browse Accounts</Link>
             <Link href="/services" className="mobile-link" onClick={() => setMobileOpen(false)}>Onboarding Services</Link>
-            <Link href="/#how" className="mobile-link" onClick={() => setMobileOpen(false)}>How It Works</Link>
-            <Link href="/#earnings" className="mobile-link" onClick={() => setMobileOpen(false)}>Earnings</Link>
-            <Link href="/auth/register" className="btn btn-primary btn-sm w-full" style={{ justifyContent: "center" }}>Join Waitlist</Link>
+
+            <Link href="/auth/login" className="mobile-link" onClick={() => setMobileOpen(false)}>Sign In</Link>
+            <Link href="/auth/register?role=owner" className="btn btn-primary btn-sm w-full" style={{ justifyContent: "center", marginTop: 8 }}>List Account</Link>
           </div>
         )}
       </div>

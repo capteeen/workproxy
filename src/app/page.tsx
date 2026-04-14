@@ -60,7 +60,7 @@ export default function HomePage() {
               Work Proxy connects UK/US account holders with skilled Nigerian workers to unlock income from platforms like Outlier AI and OneForma — through verified contracts and escrow payments.
             </p>
             <div className="hero-actions">
-              <Link href="/auth/register?role=worker" className="btn btn-primary btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <Link href="/workers/apply" className="btn btn-primary btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <Rocket size={20} /> I Want to Work
               </Link>
               <Link href="/services" className="btn btn-outline btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -438,7 +438,7 @@ export default function HomePage() {
               Whether you have an idle account or you&apos;re a skilled worker looking to access global platforms — Work Proxy is your launchpad.
             </p>
             <div className="flex gap-4 justify-center" style={{ flexWrap: "wrap" }}>
-              <Link href="/auth/register?role=worker" className="btn btn-primary btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <Link href="/workers/apply" className="btn btn-primary btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <Rocket size={18} /> Get Started as Worker
               </Link>
               <Link href="/auth/register?role=owner" className="btn btn-outline btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>

@@ -43,8 +43,7 @@ export default function NewListingPage() {
   const handleSubmit = async () => {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    router.push("/dashboard?role=owner");
+    router.push("/");
   };
 
   const availableTasks = form.platform ? taskTypes[form.platform] || [] : [];
@@ -57,7 +56,7 @@ export default function NewListingPage() {
     <div className="auth-page" style={{ alignItems: "flex-start", paddingTop: 40 }}>
       <div className="auth-bg" />
       <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 640, margin: "0 auto" }}>
-        <Link href="/dashboard?role=owner" className="auth-back"><ArrowLeft size={14} style={{ display: "inline", marginRight: 4 }} /> Back to Dashboard</Link>
+        <Link href="/" className="auth-back"><ArrowLeft size={14} style={{ display: "inline", marginRight: 4 }} /> Back to Home</Link>
  
          <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 20, display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
 -          <span>⛓️</span>
