@@ -34,7 +34,7 @@ export default async function DashboardServerPage() {
     twitterUrl: dbUser.twitterUrl || "",
     phone: workerApp?.phone || "Not Set",
     country: workerApp?.country || "Global",
-    skills: workerApp?.expertise ? workerApp.expertise.split(',').map(s => s.trim()).filter(Boolean) : [],
+    skills: workerApp?.expertise ? workerApp.expertise.split(',').map((s: string) => s.trim()).filter(Boolean) : [],
     tier: "Standard",
     tierClass: "tier-standard",
     rating: 0.0,
@@ -42,7 +42,7 @@ export default async function DashboardServerPage() {
     transactions: [],
     
     // Convert DB Account Listings
-    accounts: dbUser.listings.map(l => ({
+    accounts: dbUser.listings.map((l: any) => ({
       platform: l.platform,
       status: l.status,
       owner: "You", 
@@ -52,7 +52,7 @@ export default async function DashboardServerPage() {
     })),
     
     // Convert DB Worker Applications
-    applications: dbUser.applications.map(app => ({
+    applications: dbUser.applications.map((app: any) => ({
       platform: "Work Proxy Platform Access",
       status: app.status,
       applied: app.appliedAt.toLocaleDateString(),
