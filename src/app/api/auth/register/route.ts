@@ -80,7 +80,10 @@ export async function POST(req: Request) {
     });
 
     try {
-      const verifyUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/verify?token=${token}`;
+      const host = req.headers.get('host') || 'workproxy.fun';
+      const protocol = host.includes('localhost') ? 'http' : 'https';
+      const verifyUrl = `${protocol}://${host}/verify?token=${token}`;
+      
       console.log("Attempting to send verification email to:", email);
       console.log("Verification Link (Backup):", verifyUrl);
 
