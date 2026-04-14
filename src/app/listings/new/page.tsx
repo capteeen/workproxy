@@ -52,7 +52,7 @@ export default function ListAccountPage() {
                 Contact our verification team on WhatsApp. We&apos;ll review your account details, earnings history, and get you listed within 24 hours.
               </p>
               <a 
-                href="https://wa.me/2348123456789" // Updated to a professional button
+                href="https://wa.me/2347076245153" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="btn btn-primary btn-lg"
