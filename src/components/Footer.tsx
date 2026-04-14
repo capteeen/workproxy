@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="footer-logo">
-              <LinkIcon size={22} color="var(--text-primary)" />
+              <img src="/logo.jpg" alt="Logo" style={{ width: 28, height: 28, borderRadius: 6, objectFit: 'cover' }} />
               <span className="logo-txt" style={{ color: "var(--text-primary)" }}>Work Proxy</span>
             </div>
             <p className="footer-tagline">

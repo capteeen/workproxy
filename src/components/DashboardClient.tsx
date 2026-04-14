@@ -45,7 +45,7 @@ function DashboardContent({ workerData }: { workerData: DashboardData }) {
       <aside className="sidebar">
         <div className="sidebar-logo">
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
-            <Key size={18} color="var(--accent-primary)" />
+            <img src="/logo.jpg" alt="Logo" style={{ width: 24, height: 24, borderRadius: 4, objectFit: 'cover' }} />
             <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 16, color: "var(--accent-primary)" }}>
               Work Proxy
             </span>

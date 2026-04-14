@@ -16,7 +16,7 @@ export default function Navbar() {
       <div className="container">
         <div className="navbar-inner">
           <Link href="/" className="navbar-logo">
-            <span className="logo-icon"><LinkIcon size={22} color="var(--accent-primary)" /></span>
+            <img src="/logo.jpg" alt="Work Proxy Logo" style={{ width: 32, height: 32, borderRadius: 6, objectFit: 'cover' }} />
             <span className="logo-text" style={{ color: "var(--accent-primary)" }}>Work Proxy</span>
           </Link>
 
