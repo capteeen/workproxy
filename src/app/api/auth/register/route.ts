@@ -117,8 +117,8 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ success: true, message: 'Account created successfully. Please verify your email.' }, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Registration Error:', error);
-    return NextResponse.json({ error: 'Internal server error while registering' }, { status: 500 });
+    return NextResponse.json({ error: error.message || 'Internal server error while registering' }, { status: 500 });
   }
 }
