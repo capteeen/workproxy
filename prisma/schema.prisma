@@ -42,6 +42,9 @@ model WorkerApplication {
   power         String
   idType        String
   idDocumentUrl String?
+  dailyHours    String?
+  pcType        String? // "Windows", "Mac", "None"
+  performedTasks String?
   status        String    @default("PENDING") // PENDING, APPROVED, REJECTED
   appliedAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
