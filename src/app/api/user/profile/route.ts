@@ -11,6 +11,7 @@ export async function POST(req: Request) {
     }
 
     const userId = (session.user as any).id;
+    const body = await req.json();
     const { phone, name, bio, resumeUrl, twitterUrl, skills } = body;
 
     const userUpdateData: any = {};
