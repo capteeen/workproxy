@@ -25,6 +25,18 @@ export default async function DashboardServerPage() {
 
   const workerApp = dbUser.applications[0];
 
+  // Fetch Match Requests for accounts owned by this user
+  const matchRequests = await prisma.match.findMany({
+    where: {
+      listing: { ownerId: userId },
+      status: "PENDING"
+    },
+    include: {
+      worker: true,
+      listing: true
+    }
+  });
+
   // Dynamically map real Prisma records into the Dashboard UI format
   const userData: DashboardData = {
     name: dbUser.name || "Unknown User",
@@ -56,6 +68,14 @@ export default async function DashboardServerPage() {
       platform: "Work Proxy Platform Access",
       status: app.status,
       applied: app.appliedAt.toLocaleDateString(),
+    })),
+
+    // Match requests for owners to see who applied
+    requests: matchRequests.map(r => ({
+      id: r.id,
+      workerName: r.worker.name || "Anonymous",
+      platform: r.listing.platform,
+      appliedAt: r.createdAt.toLocaleDateString()
     })),
     
     reports: [],

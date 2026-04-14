@@ -26,6 +26,7 @@ export type DashboardData = {
   earnings: { total: number; thisMonth: number; pending: number };
   accounts: any[];
   applications: any[];
+  requests?: any[];
   reports: any[];
   transactions: any[];
 };
@@ -36,7 +37,7 @@ function DashboardContent({ workerData }: { workerData: DashboardData }) {
 
   const [activeTab, setActiveTab] = useState("overview");
 
-  const tabs = ["overview", "accounts", "applications", "reports", "wallet", "profile"];
+  const tabs = ["overview", "accounts", "applications", "requests", "reports", "wallet", "profile"];
 
   return (
     <div className="dash-layout">
@@ -127,6 +128,7 @@ function DashboardContent({ workerData }: { workerData: DashboardData }) {
           {activeTab === "overview" && <OverviewTab workerData={workerData} />}
           {activeTab === "accounts" && <AccountsTab workerData={workerData} />}
           {activeTab === "applications" && <ApplicationsTab workerData={workerData} />}
+          {activeTab === "requests" && <RequestsTab workerData={workerData} />}
           {activeTab === "reports" && <ReportsTab workerData={workerData} />}
           {activeTab === "wallet" && <WalletTab workerData={workerData} />}
           {activeTab === "profile" && <ProfileTab workerData={workerData} />}
@@ -233,16 +235,61 @@ function tabIcon(tab: string) {
     case "overview": return <LayoutDashboard size={16} />;
     case "accounts": return <FolderOpen size={16} />;
     case "applications": return <ClipboardList size={16} />;
+    case "requests": return <Bell size={16} />;
     case "reports": return <FileText size={16} />;
     case "wallet": return <Wallet size={16} />;
     case "profile": return <User size={16} />;
     default: return <LayoutDashboard size={16} />;
   }
 }
+function RequestsTab({ workerData }: { workerData: DashboardData }) {
+  const [loading, setLoading] = useState<string | null>(null);
+  
+  const handleMatchAction = async (matchId: string, status: 'ONGOING' | 'TERMINATED') => {
+    setLoading(matchId);
+    try {
+      const res = await fetch('/api/match/action', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ matchId, status })
+      });
+      if (res.ok) {
+        window.location.reload();
+      } else {
+        alert("Action failed");
+      }
+    } catch (e) {
+      alert("Error taking action");
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const reqs = workerData.requests || [];
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <h2 style={{ fontFamily: "var(--font-display)", fontSize: 18 }}>Worker Match Requests</h2>
+      {reqs.length === 0 && <p className="text-muted">No pending match requests.</p>}
+      {reqs.map((r: any) => (
+        <div key={r.id} className="card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div>
+            <h3 style={{ fontFamily: "var(--font-display)", fontSize: 16 }}>{r.workerName}</h3>
+            <p className="text-sm text-secondary">Applied for {r.platform} · {r.appliedAt}</p>
+          </div>
+          <div style={{ display: "flex", gap: 10 }}>
+             <button className="btn btn-primary btn-sm" disabled={!!loading} onClick={() => handleMatchAction(r.id, 'ONGOING')}>Approve</button>
+             <button className="btn btn-danger btn-sm" disabled={!!loading} onClick={() => handleMatchAction(r.id, 'TERMINATED')}>Decline</button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function tabTitle(tab: string) {
   const titles: Record<string, string> = {
     overview: "Dashboard Overview", accounts: "My Accounts",
-    applications: "Applications", reports: "Work Reports", wallet: "Wallet & Payouts",
+    applications: "Applications", requests: "Match Requests", reports: "Work Reports", wallet: "Wallet & Payouts",
     profile: "My Profile",
   };
   return titles[tab] || tab;

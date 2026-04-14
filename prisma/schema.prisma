@@ -24,6 +24,7 @@ model User {
 
   listings      AccountListing[]
   applications  WorkerApplication[]
+  matches       Match[]
 }
 
 model WorkerApplication {
@@ -63,6 +64,19 @@ model AccountListing {
   status          String   @default("PENDING") // PENDING, APPROVED, REJECTED
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+  matches         Match[]
+}
+
+model Match {
+  id            String         @id @default(uuid())
+  listingId     String
+  listing       AccountListing @relation(fields: [listingId], references: [id])
+  workerId      String
+  worker        User           @relation(fields: [workerId], references: [id])
+  status        String         @default("PENDING") // PENDING, ONGOING, TERMINATED
+  startedAt     DateTime?
+  earningsTotal Float          @default(0)
+  createdAt     DateTime       @default(now())
 }
 
 model EmailVerification {

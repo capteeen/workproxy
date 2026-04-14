@@ -35,10 +35,39 @@ function adminTabIcon(tab: string) {
 }
 
 export default function AdminClient({ adminData }: { adminData: AdminData }) {
+  const tabs = ["Overview", "Worker Apps", "Listings", "Manual Listing", "Users"];
+
   const [activeTab, setActiveTab] = useState("Overview");
   const [loading, setLoading] = useState<string | null>(null);
 
-  const tabs = ["Overview", "Worker Apps", "Listings", "Users"];
+  const [form, setForm] = useState({
+    userEmail: "",
+    platform: "",
+    avgEarning: "",
+    ownerSplit: "35",
+  });
+
+  const handleManualCreate = async () => {
+    setLoading('manual');
+    try {
+      const res = await fetch('/api/admin/create-listing', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      });
+      if (res.ok) {
+        alert("Listing created successfully!");
+        window.location.reload();
+      } else {
+        const d = await res.json();
+        alert(d.error || "Failed to create");
+      }
+    } catch (e) {
+      alert("Error");
+    } finally {
+      setLoading(null);
+    }
+  };
 
   const handleAction = async (type: 'worker' | 'listing', id: string, status: 'APPROVED' | 'REJECTED') => {
     setLoading(id);
@@ -192,6 +221,34 @@ export default function AdminClient({ adminData }: { adminData: AdminData }) {
                   </div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Manual Listing */}
+          {activeTab === "Manual Listing" && (
+            <div className="card" style={{ maxWidth: 600 }}>
+              <h3 style={{ marginBottom: 20 }}>Create Manual Listing</h3>
+              <div className="form-group" style={{ marginBottom: 16 }}>
+                <label className="form-label" style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6 }}>Owner Email *</label>
+                <input className="form-input" style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border)' }} placeholder="User email already in DB" value={form.userEmail} onChange={e => setForm({...form, userEmail: e.target.value})} />
+              </div>
+              <div className="form-group" style={{ marginBottom: 16 }}>
+                <label className="form-label" style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6 }}>Platform *</label>
+                <input className="form-input" style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border)' }} placeholder="e.g. Outlier AI" value={form.platform} onChange={e => setForm({...form, platform: e.target.value})} />
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+                <div className="form-group">
+                  <label className="form-label" style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6 }}>Avg Earning ($) *</label>
+                  <input className="form-input" style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border)' }} type="number" value={form.avgEarning} onChange={e => setForm({...form, avgEarning: e.target.value})} />
+                </div>
+                <div className="form-group">
+                  <label className="form-label" style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6 }}>Owner Split (%)</label>
+                  <input className="form-input" style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border)' }} type="number" value={form.ownerSplit} onChange={e => setForm({...form, ownerSplit: e.target.value})} />
+                </div>
+              </div>
+              <button className="btn btn-primary" style={{ width: '100%', padding: '12px', justifyContent: 'center' }} disabled={loading === 'manual'} onClick={handleManualCreate}>
+                {loading === 'manual' ? 'Creating...' : 'Create and Approve Listing ✨'}
+              </button>
             </div>
           )}
 
