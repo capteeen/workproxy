@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   keywords: "account management, remote work, geo-restricted platforms, Nigeria, Outlier AI, Scale AI",
 };
 
+import { Providers } from "@/components/Providers";
+
 export default function RootLayout({
   children,
 }: {
@@ -15,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

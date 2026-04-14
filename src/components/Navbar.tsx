@@ -3,9 +3,13 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Link as LinkIcon } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const initial = session?.user?.name?.charAt(0).toUpperCase() || session?.user?.email?.charAt(0).toUpperCase() || 'U';
 
   return (
     <nav className="navbar">
@@ -22,8 +26,19 @@ export default function Navbar() {
           </div>
 
           <div className="navbar-actions">
-            <Link href="/auth/login" className="btn btn-ghost btn-sm">Sign In</Link>
-            <Link href="/auth/register?role=owner" className="btn btn-primary btn-sm">List Account</Link>
+            {status === 'authenticated' ? (
+              <Link href={session.user?.role === 'admin' ? '/admin' : '/dashboard'} className="avatar-link">
+                <div className="avatar avatar-sm" style={session.user?.role === 'admin' ? { background: "linear-gradient(135deg, #f59e0b, #f43f5e)" } : {}}>{initial}</div>
+                <span className="nav-link" style={{ fontWeight: 600 }}>
+                  {session.user?.role === 'admin' ? 'Admin Panel' : 'My Dashboard'}
+                </span>
+              </Link>
+            ) : (
+              <>
+                <Link href="/auth/login" className="btn btn-ghost btn-sm">Sign In</Link>
+                <Link href="/auth/register?role=owner" className="btn btn-primary btn-sm">List Account</Link>
+              </>
+            )}
           </div>
 
           <button
@@ -40,8 +55,16 @@ export default function Navbar() {
              <Link href="/listings" className="mobile-link" onClick={() => setMobileOpen(false)}>Browse Accounts</Link>
             <Link href="/services" className="mobile-link" onClick={() => setMobileOpen(false)}>Onboarding Services</Link>
 
-            <Link href="/auth/login" className="mobile-link" onClick={() => setMobileOpen(false)}>Sign In</Link>
-            <Link href="/auth/register?role=owner" className="btn btn-primary btn-sm w-full" style={{ justifyContent: "center", marginTop: 8 }}>List Account</Link>
+            {status === 'authenticated' ? (
+              <Link href={session.user?.role === 'admin' ? '/admin' : '/dashboard'} className="mobile-link" onClick={() => setMobileOpen(false)}>
+                {session.user?.role === 'admin' ? 'Go to Admin Panel' : 'Go to Dashboard'} ({session.user?.name})
+              </Link>
+            ) : (
+              <>
+                <Link href="/auth/login" className="mobile-link" onClick={() => setMobileOpen(false)}>Sign In</Link>
+                <Link href="/auth/register?role=owner" className="btn btn-primary btn-sm w-full" style={{ justifyContent: "center", marginTop: 8 }}>List Account</Link>
+              </>
+            )}
           </div>
         )}
       </div>
@@ -101,6 +124,18 @@ export default function Navbar() {
           color: var(--text-primary);
           background: #ffffff;
           box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .avatar-link {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          text-decoration: none;
+          padding: 4px 8px;
+          border-radius: var(--radius-full);
+          transition: all var(--transition);
+        }
+        .avatar-link:hover {
+          background: rgba(0,0,0,0.03);
         }
         .navbar-actions {
           display: flex;
