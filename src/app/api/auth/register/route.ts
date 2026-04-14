@@ -85,7 +85,7 @@ export async function POST(req: Request) {
       console.log("Verification Link (Backup):", verifyUrl);
 
       const data = await resend.emails.send({
-        from: 'Work Proxy <onboarding@resend.dev>',
+        from: 'Work Proxy <onboarding@workproxy.fun>',
         to: email,
         subject: 'Verify your Work Proxy account',
         html: `
