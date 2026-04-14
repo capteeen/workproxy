@@ -50,7 +50,7 @@ export async function POST(req: Request) {
         },
       });
     } else if (role === 'worker') {
-      const { expertise, yearsExperience, internetType, backupPower, idType } = body;
+      const { expertise, yearsExperience, internetType, backupPower, idType, dailyHours, pcType, performedTasks } = body;
       await prisma.workerApplication.create({
         data: {
           userId: user.id,
@@ -59,11 +59,14 @@ export async function POST(req: Request) {
           email,
           phone,
           country,
-          expertise: expertise?.join(', ') || '',
+          expertise: Array.isArray(expertise) ? expertise.join(', ') : (expertise || ''),
           experience: yearsExperience || '',
           internet: internetType || '',
           power: backupPower ? 'Has Backup' : 'No Backup',
           idType: idType || 'Unknown',
+          dailyHours: dailyHours || '',
+          pcType: pcType || '',
+          performedTasks: performedTasks || '',
           status: 'PENDING',
         },
       });

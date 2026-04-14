@@ -27,10 +27,10 @@ export default function Navbar() {
 
           <div className="navbar-actions">
             {status === 'authenticated' ? (
-              <Link href={session.user?.role === 'admin' ? '/admin' : '/dashboard'} className="avatar-link">
-                <div className="avatar avatar-sm" style={session.user?.role === 'admin' ? { background: "linear-gradient(135deg, #f59e0b, #f43f5e)" } : {}}>{initial}</div>
+              <Link href={(session.user as any)?.role === 'admin' ? '/admin' : '/dashboard'} className="avatar-link">
+                <div className="avatar avatar-sm" style={(session.user as any)?.role === 'admin' ? { background: "linear-gradient(135deg, #f59e0b, #f43f5e)" } : {}}>{initial}</div>
                 <span className="nav-link" style={{ fontWeight: 600 }}>
-                  {session.user?.role === 'admin' ? 'Admin Panel' : 'My Dashboard'}
+                  {(session.user as any)?.role === 'admin' ? 'Admin Panel' : 'My Dashboard'}
                 </span>
               </Link>
             ) : (
@@ -56,8 +56,8 @@ export default function Navbar() {
             <Link href="/services" className="mobile-link" onClick={() => setMobileOpen(false)}>Onboarding Services</Link>
 
             {status === 'authenticated' ? (
-              <Link href={session.user?.role === 'admin' ? '/admin' : '/dashboard'} className="mobile-link" onClick={() => setMobileOpen(false)}>
-                {session.user?.role === 'admin' ? 'Go to Admin Panel' : 'Go to Dashboard'} ({session.user?.name})
+              <Link href={(session.user as any)?.role === 'admin' ? '/admin' : '/dashboard'} className="mobile-link" onClick={() => setMobileOpen(false)}>
+                {(session.user as any)?.role === 'admin' ? 'Go to Admin Panel' : 'Go to Dashboard'} ({session.user?.name})
               </Link>
             ) : (
               <>

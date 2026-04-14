@@ -38,8 +38,10 @@ export default function WorkerApplyPage() {
     country: "",
     expertise: [] as string[],
     yearsExperience: "",
+    dailyHours: "",
+    pcType: "Windows",
+    performedTasks: "",
     upworkProfile: "",
-    primaryDevice: "laptop",
     internetType: "fiber",
     backupPower: false,
     idType: "nin",
@@ -157,13 +159,13 @@ export default function WorkerApplyPage() {
         {step === 1 && (
           <div className="card" style={{ animation: "fadeInUp 0.3s ease" }}>
             <h1 style={{ fontFamily: "var(--font-display)", fontSize: 24, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}><Briefcase size={24} /> Work Experience</h1>
-            <p className="text-secondary text-sm" style={{ marginBottom: 28 }}>
-              Account owners are looking for highly skilled managers to effectively operate their remote accounts.
+            <p className="text-secondary text-sm" style={{ marginBottom: 20 }}>
+              Help us understand your skills and availability.
             </p>
 
             <div className="auth-form">
                <div className="form-group">
-                  <label className="form-label">Primary Areas of Expertise *</label>
+                  <label className="form-label">Platform(s) you are familiar with *</label>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 4 }}>
                     {expertiseAreas.map((skill) => (
                       <button
@@ -179,9 +181,40 @@ export default function WorkerApplyPage() {
                   </div>
                 </div>
 
+                <div className="form-group">
+                  <label className="form-label">What specific tasks do you perform on these platforms? *</label>
+                  <textarea 
+                    className="form-input" 
+                    placeholder="e.g. RLHF for Outlier AI, Data Labeling for Remotasks..." 
+                    style={{ minHeight: 80, padding: 12 }} 
+                    value={form.performedTasks} 
+                    onChange={(e) => up("performedTasks", e.target.value)} 
+                  />
+                </div>
+
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                 <div className="form-group">
-                  <label className="form-label">Years of Remote Experience</label>
+                  <label className="form-label">Daily Hours Commitment *</label>
+                  <select className="form-select" value={form.dailyHours} onChange={(e) => up("dailyHours", e.target.value)}>
+                    <option value="">Select...</option>
+                    <option value="2-4 hours">2-4 hours</option>
+                    <option value="4-8 hours">4-8 hours</option>
+                    <option value="8+ hours">8+ hours (Full Time)</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Personal Computer Type *</label>
+                  <select className="form-select" value={form.pcType} onChange={(e) => up("pcType", e.target.value)}>
+                    <option value="Windows">Windows PC</option>
+                    <option value="Mac">MacBook / Apple PC</option>
+                    <option value="None">I don't have a PC</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                <div className="form-group">
+                  <label className="form-label">Years of Remote Experience *</label>
                   <select className="form-select" value={form.yearsExperience} onChange={(e) => up("yearsExperience", e.target.value)}>
                     <option value="">Select...</option>
                     <option value="< 1 year">Less than 1 year</option>
@@ -191,43 +224,18 @@ export default function WorkerApplyPage() {
                   </select>
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Past Upwork/Fiverr Profile (Optional)</label>
-                  <input className="form-input" placeholder="https://..." value={form.upworkProfile} onChange={(e) => up("upworkProfile", e.target.value)} />
-                </div>
-              </div>
-
-               <div className="form-group">
-                <label className="form-label">Hardware & Infrastructure</label>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--bg-secondary)", padding: "14px 16px", borderRadius: "var(--radius-md)", border: "1px solid var(--border)", marginBottom: 12 }}>
-                  <Wifi size={18} className="text-muted" />
-                  <div style={{ flex: 1 }}>
-                    <p className="font-medium text-sm">Internet Connection</p>
-                    <select className="form-select" style={{ padding: "4px 8px", fontSize: 13, marginTop: 4, height: 'auto' }} value={form.internetType} onChange={(e) => up("internetType", e.target.value)}>
-                      <option value="fiber">Fiber / Broadband (Very Stable)</option>
-                      <option value="4g">4G / 5G Router</option>
-                      <option value="mobile">Mobile Hotspot (Not Recommended)</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--bg-secondary)", padding: "14px 16px", borderRadius: "var(--radius-md)", border: "1px solid var(--border)" }}>
-                  <input
-                    type="checkbox"
-                    checked={form.backupPower}
-                    onChange={(e) => up("backupPower", e.target.checked)}
-                    style={{ accentColor: "var(--accent-primary)", width: 16, height: 16 }}
-                  />
-                  <div>
-                    <p className="font-medium text-sm">I have backup power</p>
-                    <p className="text-xs text-muted">Generator, Inverter, or Power Station</p>
-                  </div>
+                  <label className="form-label">Internet Connection *</label>
+                  <select className="form-select" value={form.internetType} onChange={(e) => up("internetType", e.target.value)}>
+                    <option value="fiber">Fiber / Stable Broadband</option>
+                    <option value="4g">4G / 5G Router</option>
+                  </select>
                 </div>
               </div>
             </div>
 
             <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
               <button className="btn btn-ghost" onClick={() => setStep(0)}>← Back</button>
-              <button className="btn btn-primary" style={{ flex: 1, justifyContent: "center" }} onClick={() => setStep(2)} disabled={form.expertise.length === 0 || !form.yearsExperience}>
+              <button className="btn btn-primary" style={{ flex: 1, justifyContent: "center" }} onClick={() => setStep(2)} disabled={form.expertise.length === 0 || !form.yearsExperience || !form.dailyHours || !form.performedTasks}>
                  Next Step <ArrowLeft size={16} style={{ transform: "rotate(180deg)" }} />
               </button>
             </div>
