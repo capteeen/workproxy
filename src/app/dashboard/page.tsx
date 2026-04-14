@@ -37,6 +37,13 @@ export default async function DashboardServerPage() {
     }
   });
 
+  // Fetch notifications
+  const notifications = await prisma.notification.findMany({
+    where: { userId },
+    orderBy: { createdAt: 'desc' },
+    take: 10
+  });
+
   // Dynamically map real Prisma records into the Dashboard UI format
   const userData: DashboardData = {
     name: dbUser.name || "Unknown User",
@@ -52,6 +59,14 @@ export default async function DashboardServerPage() {
     rating: 0.0,
     earnings: { total: 0, thisMonth: 0, pending: 0 },
     transactions: [],
+    notifications: notifications.map(n => ({
+      id: n.id,
+      title: n.title,
+      message: n.message,
+      type: n.type,
+      read: n.read,
+      createdAt: n.createdAt.toLocaleDateString()
+    })),
     
     // Convert DB Account Listings
     accounts: dbUser.listings.map((l: any) => ({

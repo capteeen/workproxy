@@ -25,6 +25,7 @@ model User {
   listings      AccountListing[]
   applications  WorkerApplication[]
   matches       Match[]
+  notifications Notification[]
 }
 
 model WorkerApplication {
@@ -89,4 +90,15 @@ model EmailVerification {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  type      String   @default("INFO") // INFO, SUCCESS, WARNING, ERROR
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
 }

@@ -18,6 +18,18 @@ export async function POST(req: Request) {
         data: { status }
       });
 
+      // Create Notification for the worker
+      await prisma.notification.create({
+        data: {
+          userId: app.userId!,
+          title: status === 'APPROVED' ? 'Application Approved! 🚀' : 'Application Update',
+          message: status === 'APPROVED' 
+            ? 'Your worker application was approved. You can now browse and manage accounts.' 
+            : 'There is an update on your application status. Contact admin for details.',
+          type: status === 'APPROVED' ? 'SUCCESS' : 'INFO'
+        }
+      });
+
       if (status === 'APPROVED') {
         try {
           const { Resend } = await import('resend');
@@ -45,9 +57,21 @@ export async function POST(req: Request) {
         }
       }
     } else if (type === 'listing') {
-      await prisma.accountListing.update({
+      const listing = await prisma.accountListing.update({
         where: { id },
         data: { status }
+      });
+
+      // Notify the Owner
+      await prisma.notification.create({
+        data: {
+          userId: listing.ownerId,
+          title: status === 'APPROVED' ? 'Listing Live! ✨' : 'Listing Updated',
+          message: status === 'APPROVED' 
+            ? `Your listing for ${listing.platform} is now live in the marketplace.` 
+            : `Your listing for ${listing.platform} status has been updated to ${status.toLowerCase()}.`,
+          type: status === 'APPROVED' ? 'SUCCESS' : 'INFO'
+        }
       });
     }
 

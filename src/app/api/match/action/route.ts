@@ -30,6 +30,18 @@ export async function POST(req: Request) {
       }
     });
 
+    // Notify the worker
+    await prisma.notification.create({
+      data: {
+        userId: match.workerId,
+        title: status === 'ONGOING' ? 'Match Request Approved! 🤝' : 'Match Request Update',
+        message: status === 'ONGOING' 
+          ? `Your request to manage ${match.listing.platform} was approved! You can now start work.` 
+          : `There is an update on your management request for ${match.listing.platform}.`,
+        type: status === 'ONGOING' ? 'SUCCESS' : 'INFO'
+      }
+    });
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Match action error:", error);

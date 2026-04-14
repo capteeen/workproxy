@@ -29,6 +29,7 @@ export type DashboardData = {
   requests?: any[];
   reports: any[];
   transactions: any[];
+  notifications: any[];
 };
 
 function DashboardContent({ workerData }: { workerData: DashboardData }) {
@@ -36,8 +37,10 @@ function DashboardContent({ workerData }: { workerData: DashboardData }) {
   const isNew = searchParams.get("new") === "1";
 
   const [activeTab, setActiveTab] = useState("overview");
+  const [showNotifs, setShowNotifs] = useState(false);
 
   const tabs = ["overview", "accounts", "applications", "requests", "reports", "wallet", "profile"];
+  const unreadCount = workerData.notifications?.filter(n => !n.read).length || 0;
 
   return (
     <div className="dash-layout">
@@ -119,7 +122,29 @@ function DashboardContent({ workerData }: { workerData: DashboardData }) {
             <p className="text-sm text-muted">April 11, 2026</p>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div className="notif-btn"><Bell size={16} /><span className="notif-count">3</span></div>
+            <div className="notif-btn" onClick={() => setShowNotifs(!showNotifs)}>
+              <Bell size={16} />
+              {unreadCount > 0 && <span className="notif-count">{unreadCount}</span>}
+              
+              {showNotifs && (
+                <div className="notif-dropdown">
+                  <div className="notif-header">Notifications</div>
+                  <div className="notif-list">
+                    {workerData.notifications?.length > 0 ? (
+                      workerData.notifications.map(n => (
+                        <div key={n.id} className={`notif-item ${!n.read ? 'unread' : ''}`}>
+                          <p className="notif-item-title">{n.title}</p>
+                          <p className="notif-item-msg">{n.message}</p>
+                          <span className="notif-item-time">{n.createdAt}</span>
+                        </div>
+                      ))
+                    ) : (
+                      <p style={{ padding: 20, textAlign: 'center', color: '#94a3b8', fontSize: 13 }}>No notifications</p>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
             <div className="avatar avatar-sm">{workerData.name?.charAt(0)?.toUpperCase() || "U"}</div>
           </div>
         </header>
@@ -225,6 +250,28 @@ function DashboardContent({ workerData }: { workerData: DashboardData }) {
           cursor: pointer;
           font-size: 16px;
         }
+        .notif-dropdown {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          width: 300px;
+          background: #fff;
+          border: 1px solid var(--border);
+          border-radius: 12px;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+          margin-top: 10px;
+          z-index: 100;
+          overflow: hidden;
+          text-align: left;
+        }
+        .notif-header { padding: 12px 16px; font-weight: 700; font-size: 14px; border-bottom: 1px solid var(--border); background: #f8fafc; color: var(--text-primary); }
+        .notif-list { max-height: 360px; overflow-y: auto; }
+        .notif-item { padding: 12px 16px; border-bottom: 1px solid var(--border); transition: background 0.2s; }
+        .notif-item:hover { background: #f8fafc; }
+        .notif-item.unread { background: rgba(0,212,170,0.03); border-left: 3px solid var(--accent-primary); }
+        .notif-item-title { font-weight: 600; font-size: 13.5px; color: var(--text-primary); margin-bottom: 2px; }
+        .notif-item-msg { font-size: 12.5px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 4px; }
+        .notif-item-time { font-size: 11px; color: var(--text-muted); }
       `}</style>
     </div>
   );
