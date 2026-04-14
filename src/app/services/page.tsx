@@ -77,7 +77,7 @@ export default function ServicesPage() {
 
 Please provide payment details to proceed.`;
 
-    const whatsappUrl = `https://wa.me/2348152688569?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/2347076245153?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
