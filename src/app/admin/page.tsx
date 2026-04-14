@@ -31,7 +31,7 @@ export default async function AdminPage() {
     },
     pendingWorkerApps: workerApps,
     pendingListings: listings,
-    users: users.map(u => ({
+    users: users.map((u: any) => ({
       id: u.id,
       name: u.name,
       email: u.email,
