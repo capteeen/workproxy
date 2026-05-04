@@ -34,6 +34,18 @@ export async function POST(req: Request) {
     });
 
     // Handle role specific records
+    if (role === 'worker') {
+      const { nin } = body;
+      if (nin) {
+        const existingApp = await prisma.workerApplication.findFirst({
+          where: { nin, NOT: { status: 'REJECTED' } }
+        });
+        if (existingApp) {
+          return NextResponse.json({ error: 'This NIN is already associated with an active application or account.' }, { status: 400 });
+        }
+      }
+    }
+
     if (role === 'owner') {
       const { platform, accountAge, accountEarnings, requireTrial, trialDays, ownerSplit, availability } = body;
       await prisma.accountListing.create({
@@ -50,7 +62,7 @@ export async function POST(req: Request) {
         },
       });
     } else if (role === 'worker') {
-      const { expertise, yearsExperience, internetType, backupPower, idType, dailyHours, pcType, performedTasks } = body;
+      const { expertise, yearsExperience, internetType, backupPower, idType, dailyHours, pcType, performedTasks, nin } = body;
       await prisma.workerApplication.create({
         data: {
           userId: user.id,
@@ -64,6 +76,7 @@ export async function POST(req: Request) {
           internet: internetType || '',
           power: backupPower ? 'Has Backup' : 'No Backup',
           idType: idType || 'Unknown',
+          nin: nin || '',
           dailyHours: dailyHours || '',
           pcType: pcType || '',
           performedTasks: performedTasks || '',

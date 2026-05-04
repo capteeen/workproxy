@@ -43,6 +43,7 @@ model WorkerApplication {
   power         String
   idType        String
   idDocumentUrl String?
+  nin           String?
   dailyHours    String?
   pcType        String? // "Windows", "Mac", "None"
   performedTasks String?

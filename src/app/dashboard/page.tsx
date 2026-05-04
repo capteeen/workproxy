@@ -13,6 +13,12 @@ export default async function DashboardServerPage() {
 
   // Fetch the real user from Supabase using Prisma
   const userId = (session.user as any).id;
+
+  if (!userId) {
+    console.error("No userId found in session. Forcing re-login.");
+    redirect("/auth/login?error=SessionExpired");
+  }
+
   const dbUser = await prisma.user.findUnique({
     where: { id: userId },
     include: {

@@ -45,17 +45,43 @@ export default function WorkerApplyPage() {
     internetType: "fiber",
     backupPower: false,
     idType: "nin",
+    nin: "",
   });
   
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [ninError, setNinError] = useState("");
 
   const up = (field: string, value: string | boolean | string[]) => setForm((f) => ({ ...f, [field]: value }));
   const toggleExpertise = (skill: string) => {
     up("expertise", form.expertise.includes(skill)
       ? form.expertise.filter((t) => t !== skill)
       : [...form.expertise, skill]);
+  };
+
+  const handleVerifyAndSubmit = async () => {
+    setIsVerifying(true);
+    setNinError("");
+    try {
+      const resp = await fetch("/api/verify-nin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nin: form.nin })
+      });
+      const data = await resp.json();
+      if (!data.success) {
+        setNinError(data.error || "Verification failed");
+        setIsVerifying(false);
+        return;
+      }
+      // If success, proceed to actual registration
+      await handleSubmit();
+    } catch (e) {
+      setNinError("Service error. Try again.");
+      setIsVerifying(false);
+    }
   };
 
   const handleSubmit = async () => {
@@ -246,49 +272,46 @@ export default function WorkerApplyPage() {
           <div className="card" style={{ animation: "fadeInUp 0.3s ease" }}>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: 22, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}><Fingerprint size={24} /> Identity Verification</h2>
             <p className="text-secondary text-sm" style={{ marginBottom: 24 }}>
-              To maintain absolute trust, all account managers must be verified with a government-issued ID.
+              To maintain absolute trust, all account managers must be verified. Please enter your National Identification Number (NIN) and upload a copy of your NIN card/slip.
             </p>
 
             <div className="auth-form">
               <div className="form-group">
-                <label className="form-label">ID Type</label>
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
-                  {["NIN", "International Passport", "Driver License"].map((t) => (
-                    <button key={t} type="button"
-                      className={`badge ${form.idType === t.toLowerCase() ? "badge-green" : "badge-blue"}`}
-                      style={{ cursor: "pointer", padding: "8px 14px", fontSize: 13 }}
-                      onClick={() => up("idType", t.toLowerCase())}
-                    >
-                      {t}
-                    </button>
-                  ))}
-                </div>
+                <label className="form-label">NIN Number *</label>
+                <input 
+                  className="form-input" 
+                  placeholder="Enter your 11-digit NIN" 
+                  value={form.nin} 
+                  maxLength={11}
+                  onChange={(e) => up("nin", e.target.value.replace(/\D/g, ''))} 
+                />
+                {ninError && <p className="text-xs text-error" style={{ color: '#ef4444', marginTop: 4 }}>{ninError}</p>}
+                <p className="text-xs text-muted" style={{ marginTop: 8 }}>
+                  We use official verification APIs to validate your identity.
+                </p>
               </div>
 
-               <div className="upload-box" style={{ marginBottom: 12 }}>
+               <div className="upload-box" style={{ marginBottom: 16 }}>
                 <div style={{ color: "var(--text-muted)", marginBottom: 12 }}>
                   <Upload size={32} />
                 </div>
-                <p className="font-medium">Upload ID Document</p>
-                <p className="text-sm text-muted" style={{ marginTop: 4 }}>Clear photo of your {form.idType.toUpperCase()}</p>
-                <button className="btn btn-ghost btn-sm" style={{ marginTop: 12 }}>Choose File</button>
+                <p className="font-medium">Upload NIN Card / Slip</p>
+                <p className="text-sm text-muted" style={{ marginTop: 4 }}>JPEG or PNG format. Max 5MB.</p>
+                <button className="btn btn-ghost btn-sm" style={{ marginTop: 12 }} type="button" onClick={() => alert("File upload will be processed upon submission.")}>Choose File</button>
               </div>
 
-               <div className="upload-box" style={{ padding: "24px" }}>
-                <div style={{ color: "var(--text-muted)", marginBottom: 8 }}>
-                  <Camera size={24} />
-                </div>
-                <p className="font-medium text-sm">Upload Selfie</p>
-                <p className="text-xs text-muted" style={{ marginTop: 4 }}>Take a clear picture of your face to match the ID.</p>
-                <button className="btn btn-ghost btn-sm" style={{ marginTop: 8 }}>Choose File</button>
+               <div style={{ background: "rgba(0,212,170,0.05)", padding: 16, borderRadius: 12, border: "1px solid rgba(0,212,170,0.2)", marginTop: 8 }}>
+                <p className="text-xs text-secondary" style={{ lineHeight: 1.5 }}>
+                  <strong>Note:</strong> Verification happens instantly. Ensure the name on your NIN matches the name used in this application.
+                </p>
               </div>
 
             </div>
 
             <div style={{ display: "flex", gap: 12, marginTop: 24 }}>
-              <button className="btn btn-ghost" onClick={() => setStep(1)}>← Back</button>
-              <button id="submit-worker-app" className="btn btn-primary" style={{ flex: 1, justifyContent: "center" }} onClick={handleSubmit} disabled={loading}>
-                {loading ? <span className="btn-spinner" /> : <span style={{ display: "flex", alignItems: "center", gap: 8 }}>Submit Application <Rocket size={16} /></span>}
+              <button className="btn btn-ghost" onClick={() => setStep(1)} disabled={loading || isVerifying}>← Back</button>
+              <button id="submit-worker-app" className="btn btn-primary" style={{ flex: 1, justifyContent: "center" }} onClick={handleVerifyAndSubmit} disabled={loading || isVerifying || form.nin.length < 11}>
+                {loading || isVerifying ? <span className="btn-spinner" /> : <span style={{ display: "flex", alignItems: "center", gap: 8 }}>Verify & Submit <Rocket size={16} /></span>}
               </button>
             </div>
           </div>
