@@ -135,9 +135,6 @@ export default function HomePage() {
                     <Laptop size={22} />
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4 }}>
-                    <span className={`badge ${p.restricted ? "badge-rose" : "badge-amber"}`}>
-                      {p.restricted ? "🔒 Restricted" : "⚠️ Partial"}
-                    </span>
                     {!p.active && <span className="badge badge-purple" style={{ fontSize: 10 }}>Coming Soon</span>}
                   </div>
                 </div>

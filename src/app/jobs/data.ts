@@ -1,0 +1,40 @@
+export const JOBS = [
+  {
+    id: "film-daily-life",
+    title: "Get Paid to Film Your Daily Life",
+    company: "Work Proxy Partners",
+    location: "Remote (Global)",
+    type: "Contract",
+    compensation: "$10 - $30 / hr",
+    description: "Record everyday content that helps AI systems understand the world better. Free equipment. No experience required. 2 minutes to see if you're approved.",
+    applyLink: "https://contracted.ai/",
+    featured: true,
+    isCustomLayout: true, // we will use the special layout for this one
+  },
+  {
+    id: "ai-response-reviewer",
+    title: "AI Response Reviewer",
+    company: "Work Proxy Partners",
+    location: "Remote (Global)",
+    type: "Contract",
+    compensation: "$15 - $25 / hr",
+    description: "We are looking for detail-oriented individuals to review and rate AI model responses. You will be helping to train the next generation of large language models. No coding experience required, but strong analytical and language skills are a must.",
+    applyLink: "#",
+    featured: false,
+    isCustomLayout: false,
+    fullDescription: "As an AI Response Reviewer, you will play a critical role in evaluating the safety, helpfulness, and accuracy of AI outputs. Your daily tasks include reading prompts and generated responses, identifying hallucinations or biases, and providing detailed written feedback to improve the model.\\n\\nRequirements:\\n- Fluent in written and spoken English\\n- Strong critical thinking and analytical skills\\n- High attention to detail\\n- Reliable internet connection\\n\\nBenefits:\\n- Work from anywhere\\n- Flexible hours (choose your own schedule)\\n- Weekly payments via Payoneer or Crypto",
+  },
+  {
+    id: "senior-full-stack",
+    title: "Senior Full Stack Engineer",
+    company: "AccessBridge",
+    location: "Remote (Nigeria)",
+    type: "Full-time",
+    compensation: "$4,000 - $6,000 / mo",
+    description: "Join our core engineering team to build scalable systems connecting global talent. You'll be working with Next.js, Node.js, and PostgreSQL.",
+    applyLink: "#",
+    featured: false,
+    isCustomLayout: false,
+    fullDescription: "AccessBridge is seeking a Senior Full Stack Engineer to lead development on our core platform. You will architect robust, scalable solutions using modern web technologies.\\n\\nRequirements:\\n- 5+ years experience with React/Next.js\\n- 3+ years experience with Node.js and REST/GraphQL APIs\\n- Deep understanding of database design (PostgreSQL/Prisma)\\n- Experience with secure payment integrations\\n\\nBenefits:\\n- Competitive salary\\n- Health insurance\\n- Remote work stipend\\n- Stock options",
+  }
+];
