@@ -13,12 +13,13 @@ export default async function AdminPage() {
   }
 
   // Fetch real platform data
-  const [workerApps, listings, users, userCount, activeListings] = await Promise.all([
+  const [workerApps, listings, users, userCount, activeListings, blogPosts] = await Promise.all([
     prisma.workerApplication.findMany({ where: { status: "PENDING" }, orderBy: { appliedAt: 'desc' } }),
     prisma.accountListing.findMany({ where: { status: "PENDING" }, orderBy: { createdAt: 'desc' } }),
     prisma.user.findMany({ take: 10, orderBy: { createdAt: 'desc' } }),
     prisma.user.count(),
     prisma.accountListing.count({ where: { status: "APPROVED" } }),
+    prisma.blogPost.findMany({ orderBy: { createdAt: 'desc' } })
   ]);
 
   const adminData: AdminData = {
@@ -37,6 +38,7 @@ export default async function AdminPage() {
       email: u.email,
       role: u.role,
     })),
+    blogPosts: blogPosts,
   };
 
   return <AdminClient adminData={adminData} />;

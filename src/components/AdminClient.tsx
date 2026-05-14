@@ -19,6 +19,7 @@ export type AdminData = {
   pendingWorkerApps: any[];
   pendingListings: any[];
   users: any[];
+  blogPosts: any[];
 };
 
 function adminTabIcon(tab: string) {
@@ -35,7 +36,7 @@ function adminTabIcon(tab: string) {
 }
 
 export default function AdminClient({ adminData }: { adminData: AdminData }) {
-  const tabs = ["Overview", "Worker Apps", "Listings", "Manual Listing", "Users"];
+  const tabs = ["Overview", "Worker Apps", "Listings", "Manual Listing", "Users", "Blog Posts"];
 
   const [activeTab, setActiveTab] = useState("Overview");
   const [loading, setLoading] = useState<string | null>(null);
@@ -45,6 +46,14 @@ export default function AdminClient({ adminData }: { adminData: AdminData }) {
     platform: "",
     avgEarning: "",
     ownerSplit: "35",
+  });
+
+  const [blogForm, setBlogForm] = useState({
+    title: "",
+    slug: "",
+    content: "",
+    imageUrl: "",
+    published: true,
   });
 
   const handleManualCreate = async () => {
@@ -64,6 +73,28 @@ export default function AdminClient({ adminData }: { adminData: AdminData }) {
       }
     } catch (e) {
       alert("Error");
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const handleCreateBlogPost = async () => {
+    setLoading('blog');
+    try {
+      const res = await fetch('/api/admin/blog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(blogForm)
+      });
+      if (res.ok) {
+        alert("Blog post created successfully!");
+        window.location.reload();
+      } else {
+        const d = await res.json();
+        alert(d.error || "Failed to create post");
+      }
+    } catch (e) {
+      alert("Error creating post");
     } finally {
       setLoading(null);
     }
@@ -268,6 +299,69 @@ export default function AdminClient({ adminData }: { adminData: AdminData }) {
                   ))}
                 </tbody>
               </table>
+            </div>
+          )}
+
+          {/* Blog Posts */}
+          {activeTab === "Blog Posts" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+              <div className="card" style={{ maxWidth: 800 }}>
+                <h3 style={{ marginBottom: 20 }}>Create New Blog Post</h3>
+                <div className="form-group" style={{ marginBottom: 16 }}>
+                  <label className="form-label" style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6 }}>Title *</label>
+                  <input className="form-input" style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border)' }} placeholder="Post Title" value={blogForm.title} onChange={e => {
+                    const title = e.target.value;
+                    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                    setBlogForm({...blogForm, title, slug});
+                  }} />
+                </div>
+                <div className="form-group" style={{ marginBottom: 16 }}>
+                  <label className="form-label" style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6 }}>Slug *</label>
+                  <input className="form-input" style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border)' }} placeholder="post-slug" value={blogForm.slug} onChange={e => setBlogForm({...blogForm, slug: e.target.value})} />
+                </div>
+                <div className="form-group" style={{ marginBottom: 16 }}>
+                  <label className="form-label" style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6 }}>Image URL</label>
+                  <input className="form-input" style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border)' }} placeholder="https://..." value={blogForm.imageUrl} onChange={e => setBlogForm({...blogForm, imageUrl: e.target.value})} />
+                </div>
+                <div className="form-group" style={{ marginBottom: 16 }}>
+                  <label className="form-label" style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6 }}>Content (Markdown supported) *</label>
+                  <textarea className="form-input" style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border)', minHeight: '200px', resize: 'vertical' }} placeholder="Write your content here..." value={blogForm.content} onChange={e => setBlogForm({...blogForm, content: e.target.value})} />
+                </div>
+                <div className="form-group" style={{ marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <input type="checkbox" id="published" checked={blogForm.published} onChange={e => setBlogForm({...blogForm, published: e.target.checked})} />
+                  <label htmlFor="published" className="form-label" style={{ fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>Publish Immediately</label>
+                </div>
+                <button className="btn btn-primary" style={{ width: '100%', padding: '12px', justifyContent: 'center' }} disabled={loading === 'blog'} onClick={handleCreateBlogPost}>
+                  {loading === 'blog' ? 'Publishing...' : 'Publish Blog Post 📝'}
+                </button>
+              </div>
+
+              <div className="card">
+                <h3 style={{ marginBottom: 20 }}>Existing Posts</h3>
+                <div className="table-wrapper">
+                  <table className="table" style={{ width: '100%', textAlign: 'left' }}>
+                    <thead><tr><th style={{ padding: '12px' }}>Title</th><th style={{ padding: '12px' }}>Slug</th><th style={{ padding: '12px' }}>Status</th><th style={{ padding: '12px' }}>Date</th></tr></thead>
+                    <tbody>
+                      {adminData.blogPosts?.length === 0 ? (
+                        <tr><td colSpan={4} style={{ padding: '12px', textAlign: 'center' }} className="text-muted">No blog posts yet.</td></tr>
+                      ) : (
+                        adminData.blogPosts?.map((p: any) => (
+                          <tr key={p.id}>
+                            <td className="font-semibold" style={{ padding: '12px' }}>{p.title}</td>
+                            <td style={{ padding: '12px' }}>{p.slug}</td>
+                            <td style={{ padding: '12px' }}>
+                              <span className={`badge ${p.published ? 'badge-green' : 'badge-amber'}`}>
+                                {p.published ? 'Published' : 'Draft'}
+                              </span>
+                            </td>
+                            <td style={{ padding: '12px' }}>{new Date(p.createdAt).toLocaleDateString()}</td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           )}
         </div>

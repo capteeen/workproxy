@@ -24,6 +24,7 @@ export default function Navbar() {
             <Link href="/listings" className="nav-link">Browse Accounts</Link>
             <Link href="/services" className="nav-link">Onboarding Services</Link>
             <Link href="/jobs" className="nav-link">Jobs</Link>
+            <Link href="/blog" className="nav-link">Blog</Link>
           </div>
 
           <div className="navbar-actions">
@@ -56,6 +57,7 @@ export default function Navbar() {
             <Link href="/listings" className="mobile-link" onClick={() => setMobileOpen(false)}>Browse Accounts</Link>
             <Link href="/services" className="mobile-link" onClick={() => setMobileOpen(false)}>Onboarding Services</Link>
             <Link href="/jobs" className="mobile-link" onClick={() => setMobileOpen(false)}>Jobs</Link>
+            <Link href="/blog" className="mobile-link" onClick={() => setMobileOpen(false)}>Blog</Link>
 
             {status === 'authenticated' ? (
               <Link href={(session.user as any)?.role === 'admin' ? '/admin' : '/dashboard'} className="mobile-link" onClick={() => setMobileOpen(false)}>
