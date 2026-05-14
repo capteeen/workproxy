@@ -171,8 +171,7 @@ Please provide payment details to proceed.`;
                       >
                         <option>Outlier AI</option>
                         <option>OneForma</option>
-                        <option>Scale AI</option>
-                        <option>Telus International</option>
+                        <option>Handshake</option>
                       </select>
                     </div>
 
