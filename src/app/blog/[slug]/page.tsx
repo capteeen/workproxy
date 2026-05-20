@@ -26,13 +26,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <Navbar />
 
       <section className="section" style={{ background: "#ffffff", minHeight: "80vh", padding: "60px 0" }}>
-        <div className="container" style={{ maxWidth: 720 }}>
+        <div className="container" style={{ maxWidth: 900, marginLeft: "auto", marginRight: "auto" }}>
           <Link href="/blog" className="text-secondary hover-accent" style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 32, textDecoration: "none", fontWeight: 600 }}>
             <ArrowLeft size={16} /> Back to Blog
           </Link>
 
           <header style={{ marginBottom: 40 }}>
-            <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 800, marginBottom: 24, lineHeight: 1.2, color: "var(--text-primary)" }}>
+            <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 800, marginBottom: 24, lineHeight: 1.25, color: "var(--text-primary)" }}>
               {post.title}
             </h1>
             <div style={{ display: "flex", alignItems: "center", gap: 24, color: "var(--text-muted)", fontSize: 15, paddingBottom: 24, borderBottom: "1px solid var(--border)" }}>

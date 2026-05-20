@@ -24,6 +24,7 @@ export default function Navbar() {
             <Link href="/listings" className="nav-link">Browse Accounts</Link>
             <Link href="/services" className="nav-link">Onboarding Services</Link>
             <Link href="/jobs" className="nav-link">Jobs</Link>
+            <Link href="/academy" className="nav-link">Academy</Link>
             <Link href="/blog" className="nav-link">Blog</Link>
           </div>
 
@@ -57,6 +58,7 @@ export default function Navbar() {
             <Link href="/listings" className="mobile-link" onClick={() => setMobileOpen(false)}>Browse Accounts</Link>
             <Link href="/services" className="mobile-link" onClick={() => setMobileOpen(false)}>Onboarding Services</Link>
             <Link href="/jobs" className="mobile-link" onClick={() => setMobileOpen(false)}>Jobs</Link>
+            <Link href="/academy" className="mobile-link" onClick={() => setMobileOpen(false)}>Academy</Link>
             <Link href="/blog" className="mobile-link" onClick={() => setMobileOpen(false)}>Blog</Link>
 
             {status === 'authenticated' ? (
