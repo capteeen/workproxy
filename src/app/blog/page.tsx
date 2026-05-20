@@ -6,6 +6,10 @@ import { ArrowRight, BookOpen } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
 
+function stripEmojis(text: string): string {
+  return text.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{200D}\u{20E3}\u{E0020}-\u{E007F}\u{FE0F}]/gu, '').replace(/\s{2,}/g, ' ').trim();
+}
+
 export default async function BlogPage() {
   const posts = await prisma.blogPost.findMany({
     where: { published: true },
@@ -57,16 +61,16 @@ export default async function BlogPage() {
                       </div>
                       
                       <h2 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 700, marginBottom: 16, color: 'var(--text-primary)', lineHeight: 1.3 }}>
-                        {post.title}
+                        {stripEmojis(post.title)}
                       </h2>
                       
                       <p className="text-secondary" style={{ lineHeight: 1.6, marginBottom: 24, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', flex: 1 }}>
-                        {post.content.replace(/[#_*\[\\]`>]/g, '').substring(0, 150)}...
+                        {stripEmojis(post.content.replace(/[#_*\[\\]`>]/g, '').substring(0, 150))}...
                       </p>
                       
                       <div style={{ marginTop: 'auto', paddingTop: 20, borderTop: '1px solid var(--border)' }}>
                         <div style={{ color: "var(--accent-primary)", fontWeight: 600, display: "flex", alignItems: "center", gap: 6, fontSize: 14 }}>
-                          Read Article <ArrowRight size={16} style={{ transition: 'transform 0.2s', className: 'arrow-icon' }} />
+                          Read Article <ArrowRight size={16} className="arrow-icon" style={{ transition: 'transform 0.2s' }} />
                         </div>
                       </div>
                     </div>
