@@ -9,8 +9,49 @@ import remarkGfm from 'remark-gfm';
 
 export const dynamic = 'force-dynamic';
 
-function stripEmojis(text: string): string {
-  return text.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{200D}\u{20E3}\u{E0020}-\u{E007F}\u{FE0F}]/gu, '').replace(/\s{2,}/g, ' ').trim();
+function cleanContent(text: string): string {
+  let cleaned = text;
+
+  // Strip emojis
+  cleaned = cleaned.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{200D}\u{20E3}\u{E0020}-\u{E007F}\u{FE0F}]/gu, '');
+
+  // Remove ** at end of lines (used as section dividers)
+  cleaned = cleaned.replace(/\s*\*\*\s*$/gm, '');
+
+  // Remove horizontal rules (*** or --- or ___) 
+  cleaned = cleaned.replace(/^\s*[\*\-_]{3,}\s*$/gm, '');
+
+  // Remove ** at start of lines (broken bold attempts)
+  cleaned = cleaned.replace(/^\*\*\s*/gm, '');
+
+  // Remove stray * * patterns (spaced double asterisks)
+  cleaned = cleaned.replace(/\*\s+\*/g, '');
+
+  // Convert * at start of line to proper bullet (- )
+  cleaned = cleaned.replace(/^\*\s*/gm, '- ');
+
+  // Remove trailing lone * at end of lines
+  cleaned = cleaned.replace(/\s*\*\s*$/gm, '');
+
+  // Remove empty list items (- with no text after)
+  cleaned = cleaned.replace(/^\s*[-*+]\s*$/gm, '');
+
+  // Ensure ## headings are on their own line
+  cleaned = cleaned.replace(/([^\n])(#{1,6}\s)/g, '$1\n\n$2');
+
+  // Ensure numbered list items (2. 3. etc.) start on new lines
+  cleaned = cleaned.replace(/([^\n\d])(\d+\.\s)/g, '$1\n\n$2');
+
+  // Ensure bullet items start on new lines
+  cleaned = cleaned.replace(/([^\n])(- )/g, '$1\n$2');
+
+  // Clean up excessive newlines
+  cleaned = cleaned.replace(/\n{3,}/g, '\n\n');
+
+  // Clean up extra spaces
+  cleaned = cleaned.replace(/ {2,}/g, ' ');
+
+  return cleaned.trim();
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -37,7 +78,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
           <header style={{ marginBottom: 40 }}>
             <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 800, marginBottom: 24, lineHeight: 1.25, color: "var(--text-primary)" }}>
-              {stripEmojis(post.title)}
+              {cleanContent(post.title)}
             </h1>
             <div style={{ display: "flex", alignItems: "center", gap: 24, color: "var(--text-muted)", fontSize: 15, paddingBottom: 24, borderBottom: "1px solid var(--border)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -57,7 +98,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
           <article className="markdown-content">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {stripEmojis(post.content)}
+              {cleanContent(post.content)}
             </ReactMarkdown>
           </article>
         </div>

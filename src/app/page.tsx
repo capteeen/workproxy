@@ -47,14 +47,16 @@ export default function HomePage() {
       {/* Hero */}
       <section className="hero-section">
         <div className="hero-bg" />
+        <div className="hero-glow hero-glow--1" />
+        <div className="hero-glow hero-glow--2" />
         <div className="container">
           <div className="hero-inner">
             <div className="hero-badge">
-              <span className="badge badge-teal">🚀 MVP Launch — April 2026</span>
+              <span className="badge badge-teal" style={{ background: "rgba(99,102,241,0.1)", color: "#6366f1", border: "1px solid rgba(99,102,241,0.25)" }}>🚀 MVP Launch — April 2026</span>
             </div>
             <h1 className="hero-title">
               Bridge the Gap Between<br />
-              <span className="gradient-text">Global Platforms & Local Talent</span>
+              <span className="hero-gradient-text">Global Platforms & Local Talent</span>
             </h1>
             <p className="hero-desc">
               Work Proxy connects UK/US account holders with skilled Nigerian workers to unlock income from platforms like Outlier AI and OneForma — through verified contracts and escrow payments.
@@ -85,6 +87,26 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Trust Strip */}
+      <div className="trust-strip">
+        <div className="container">
+          <div className="trust-strip-inner">
+            {[
+              { icon: <Shield size={15} />, label: "AES-256 Encrypted" },
+              { icon: <FileText size={15} />, label: "Legal Contracts" },
+              { icon: <Banknote size={15} />, label: "Escrow Payments" },
+              { icon: <Scale size={15} />, label: "Dispute Protection" },
+              { icon: <Activity size={15} />, label: "Weekly Payouts" },
+            ].map((t) => (
+              <div key={t.label} className="trust-item">
+                {t.icon}
+                <span>{t.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* Problem/Solution */}
       <section className="section">
@@ -289,78 +311,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Worker Earnings Growth */}
-      <section className="section">
-        <div className="container">
-          <div className="section-header">
-            <span className="badge badge-amber">Worker Growth</span>
-            <h2 className="section-title">The Longer You Stay, The More You Earn</h2>
-            <p className="section-desc">Dedicated workers unlock higher earning tiers. Your income grows automatically as you build trust and deliver quality work.</p>
-          </div>
-          <div className="growth-path">
-            {[
-              { tier: "Probation", time: "First 2 weeks", multiplier: "1×", desc: "Start earning from day one while we verify your work quality", color: "#94a3b8", cls: "tier-probation" },
-              { tier: "Standard", time: "After 1 month", multiplier: "1.6×", desc: "Your earnings grow as you prove consistency and reliability", color: "#0099ff", cls: "tier-standard" },
-              { tier: "Verified", time: "After 3 months", multiplier: "2.3×", desc: "Trusted workers unlock significantly higher income", color: "var(--accent-primary)", cls: "tier-verified" },
-              { tier: "Elite", time: "After 6 months", multiplier: "3×", desc: "Top performers earn the maximum — 3x your starting rate", color: "#f59e0b", cls: "tier-elite" },
-            ].map((t, i) => (
-              <div key={t.tier} className="growth-card">
-                <div className="growth-step">
-                  <div className="growth-dot" style={{ background: t.color }} />
-                  {i < 3 && <div className="growth-line" />}
-                </div>
-                <div className="growth-info">
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                    <span className={`badge ${t.cls}`}>{t.tier}</span>
-                    <span className="text-xs text-muted">{t.time}</span>
-                  </div>
-                  <div style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 800, color: t.color, marginBottom: 6 }}>{t.multiplier}</div>
-                  <p className="text-sm text-secondary" style={{ lineHeight: 1.6 }}>{t.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <style>{`
-          .growth-path {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            max-width: 600px;
-            margin: 0 auto;
-          }
-          .growth-card {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-          }
-          .growth-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-shrink: 0;
-            padding-top: 4px;
-          }
-          .growth-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            flex-shrink: 0;
-            box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
-          }
-          .growth-line {
-            width: 2px;
-            height: 100%;
-            min-height: 60px;
-            background: var(--border);
-          }
-          .growth-info {
-            padding-bottom: 28px;
-          }
-        `}</style>
-      </section>
-
       {/* Features */}
       <section className="section" style={{ background: "linear-gradient(180deg, #080f20 0%, transparent 100%)" }}>
         <div className="container">
@@ -384,24 +334,79 @@ export default function HomePage() {
       <section className="section">
         <div className="container">
           <div className="section-header">
-            <span className="badge badge-teal">Performance Tiers</span>
-            <h2 className="section-title">The More You Perform, The More You Earn</h2>
+            <span className="badge badge-amber">Performance Tiers</span>
+            <h2 className="section-title">The Longer You Stay, The More You Earn</h2>
+            <p className="section-desc">Dedicated workers unlock higher earning tiers automatically. Your cut grows from 10% all the way to 30% as you build trust.</p>
           </div>
-          <div className="grid-4">
+          <div className="tiers-grid">
             {[
-              { tier: "Probation", pct: "10%", reqs: "New — first 2 weeks", color: "#94a3b8", cls: "tier-probation" },
-              { tier: "Standard", pct: "16.5%", reqs: "1+ month, 3.5★+", color: "#0099ff", cls: "tier-standard" },
-              { tier: "Verified", pct: "23%", reqs: "3+ months, 4.0★+", color: "var(--accent-primary)", cls: "tier-verified" },
-              { tier: "Elite", pct: "30%", reqs: "6+ months, 5★, top 10%", color: "#f59e0b", cls: "tier-elite" },
-            ].map((t) => (
-              <div key={t.tier} className="card" style={{ textAlign: "center" }}>
-                <span className={`badge ${t.cls}`} style={{ marginBottom: 16, display: "inline-flex" }}>{t.tier}</span>
-                <div style={{ fontSize: 40, fontFamily: "var(--font-display)", fontWeight: 800, color: t.color, marginBottom: 8 }}>{t.pct}</div>
+              { tier: "Probation", pct: "10%", time: "First 2 weeks", reqs: "New — verification period", color: "#94a3b8", cls: "tier-probation", mult: "1×" },
+              { tier: "Standard", pct: "16.5%", time: "After 1 month", reqs: "3.5★+ rating", color: "#0099ff", cls: "tier-standard", mult: "1.6×" },
+              { tier: "Verified", pct: "23%", time: "After 3 months", reqs: "4.0★+ rating", color: "#6366f1", cls: "tier-verified", mult: "2.3×" },
+              { tier: "Elite", pct: "30%", time: "After 6 months", reqs: "5★ · Top 10%", color: "#f59e0b", cls: "tier-elite", mult: "3×" },
+            ].map((t, i) => (
+              <div key={t.tier} className="tier-card">
+                <div className="tier-card-top" style={{ borderColor: t.color }}>
+                  <span className={`badge ${t.cls}`}>{t.tier}</span>
+                  <span className="text-xs text-muted">{t.time}</span>
+                </div>
+                <div style={{ fontSize: 48, fontFamily: "var(--font-display)", fontWeight: 800, color: t.color, lineHeight: 1, margin: "16px 0 8px" }}>{t.pct}</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: t.color, marginBottom: 12, opacity: 0.7 }}>{t.mult} your starting rate</div>
                 <p className="text-sm text-secondary">{t.reqs}</p>
+                {i < 3 && <div className="tier-arrow">→</div>}
               </div>
             ))}
           </div>
         </div>
+        <style>{`
+          .tiers-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+          }
+          @media (max-width: 900px) { .tiers-grid { grid-template-columns: repeat(2, 1fr); } }
+          @media (max-width: 560px) { .tiers-grid { grid-template-columns: 1fr; } }
+          .tier-card {
+            padding: 32px 24px;
+            border-right: 1px solid var(--border);
+            position: relative;
+            transition: background var(--transition);
+          }
+          .tier-card:last-child { border-right: none; }
+          .tier-card:hover { background: #fafafa; }
+          .tier-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 12px;
+            border-bottom: 2px solid;
+            margin-bottom: 4px;
+          }
+          .tier-arrow {
+            position: absolute;
+            right: -14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+          }
+          @media (max-width: 900px) { .tier-arrow { display: none; } }
+        `}</style>
       </section>
 
       {/* FAQ */}
@@ -427,7 +432,8 @@ export default function HomePage() {
         <div className="container">
           <div className="cta-box">
             <div className="cta-glow" />
-            <span className="badge" style={{ marginBottom: 20, background: "rgba(0,212,170,0.15)", color: "#00d4aa", border: "1px solid rgba(0,212,170,0.3)" }}>Join the Waitlist</span>
+            <div className="cta-glow cta-glow--2" />
+            <span className="badge" style={{ marginBottom: 20, background: "rgba(99,102,241,0.2)", color: "#a5b4fc", border: "1px solid rgba(99,102,241,0.35)" }}>Join the Waitlist</span>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: 40, fontWeight: 800, marginBottom: 16, color: "#ffffff" }}>
               Ready to Start Earning?
             </h2>
@@ -435,7 +441,7 @@ export default function HomePage() {
               Whether you have an idle account or you&apos;re a skilled worker looking to access global platforms — Work Proxy is your launchpad.
             </p>
             <div className="flex gap-4 justify-center" style={{ flexWrap: "wrap" }}>
-              <Link href="/workers/apply" className="btn btn-primary btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <Link href="/workers/apply" className="btn btn-lg" style={{ display: "flex", alignItems: "center", gap: 8, background: "linear-gradient(135deg, #6366f1, #8b5cf6)", color: "#fff", boxShadow: "0 8px 24px rgba(99,102,241,0.4)" }}>
                 <Rocket size={18} /> Get Started as Worker
               </Link>
               <Link href="/auth/register?role=owner" className="btn btn-outline btn-lg" style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -459,11 +465,60 @@ export default function HomePage() {
           position: absolute;
           inset: 0;
           background:
-            radial-gradient(ellipse 90% 70% at 50% -10%, rgba(0,0,0,0.03) 0%, transparent 55%),
-            radial-gradient(ellipse 60% 50% at 85% 30%, rgba(0,0,0,0.02) 0%, transparent 50%),
-            radial-gradient(ellipse 50% 40% at 15% 70%, rgba(0,0,0,0.02) 0%, transparent 55%);
+            radial-gradient(ellipse 90% 70% at 50% -10%, rgba(99,102,241,0.06) 0%, transparent 55%),
+            radial-gradient(ellipse 60% 50% at 85% 30%, rgba(139,92,246,0.04) 0%, transparent 50%),
+            radial-gradient(ellipse 50% 40% at 15% 70%, rgba(59,130,246,0.04) 0%, transparent 55%);
           pointer-events: none;
         }
+        .hero-glow {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(80px);
+          pointer-events: none;
+        }
+        .hero-glow--1 {
+          width: 500px;
+          height: 300px;
+          background: rgba(99,102,241,0.12);
+          top: -60px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+        .hero-glow--2 {
+          width: 300px;
+          height: 200px;
+          background: rgba(245,158,11,0.08);
+          bottom: 20px;
+          right: 10%;
+        }
+        .hero-gradient-text {
+          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 40%, #3b82f6 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .trust-strip {
+          background: #f8fafc;
+          border-top: 1px solid var(--border);
+          border-bottom: 1px solid var(--border);
+          padding: 16px 0;
+        }
+        .trust-strip-inner {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 40px;
+          flex-wrap: wrap;
+        }
+        .trust-item {
+          display: flex;
+          align-items: center;
+          gap: 7px;
+          font-size: 13px;
+          font-weight: 600;
+          color: var(--text-secondary);
+        }
+        .trust-item svg { color: #6366f1; }
         .hero-inner {
           text-align: center;
           max-width: 840px;
@@ -659,20 +714,18 @@ export default function HomePage() {
           flex-shrink: 0;
         }
         .cta-box {
-          background: #0f172a;
+          background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
           color: #ffffff;
           border-radius: var(--radius-2xl);
           padding: 88px 40px;
           text-align: center;
           position: relative;
           overflow: hidden;
-          box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+          box-shadow: 0 16px 64px rgba(99,102,241,0.2), 0 4px 24px rgba(0,0,0,0.15);
         }
         .cta-box .text-secondary { color: #94a3b8; }
-        .cta-box .btn-outline { color: #fff; border-color: rgba(255,255,255,0.2); }
+        .cta-box .btn-outline { color: #fff; border-color: rgba(255,255,255,0.25); }
         .cta-box .btn-outline:hover { background: rgba(255,255,255,0.1); }
-        .cta-box .btn-primary { background: #ffffff; color: #0f172a; }
-        .cta-box .btn-primary:hover { background: #f8fafc; color: #0f172a; }
 
         .cta-glow {
           position: absolute;
@@ -681,8 +734,16 @@ export default function HomePage() {
           transform: translateX(-50%);
           width: 700px;
           height: 360px;
-          background: radial-gradient(ellipse, rgba(255,255,255,0.1) 0%, transparent 70%);
+          background: radial-gradient(ellipse, rgba(99,102,241,0.25) 0%, transparent 70%);
           pointer-events: none;
+        }
+        .cta-glow--2 {
+          top: auto;
+          bottom: -30%;
+          left: 30%;
+          width: 400px;
+          height: 240px;
+          background: radial-gradient(ellipse, rgba(139,92,246,0.15) 0%, transparent 70%);
         }
         .platform-dot { flex-shrink: 0; }
       `}</style>
