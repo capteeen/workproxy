@@ -24,12 +24,12 @@ const earningsRows = [
 ];
 
 const features = [
-  { icon: <Shield size={32} />, title: "Credential Vault", desc: "AES-256 encrypted storage. Credentials released only after both parties sign the agreement and escrow is funded." },
-  { icon: <FileText size={32} />, title: "Smart Contracts", desc: "Auto-generated Account Management Agreements covering splits, duration, NDA, and account ban liability." },
-  { icon: <Banknote size={32} />, title: "Escrow Payments", desc: "Every dollar flows through Work Proxy escrow. Workers paid weekly, owners monthly. Full transparency." },
-  { icon: <LineChart size={32} />, title: "Performance Tiers", desc: "Workers advance from Probation → Standard → Verified → Elite. As you level up, Work Proxy reduces its fee and your cut grows — up to 30%." },
-  { icon: <Scale size={32} />, title: "Dispute Resolution", desc: "Admin panel mediates all disputes within 48hrs. Evidence-based resolution with audit trails." },
-  { icon: <Activity size={32} />, title: "Live Dashboards", desc: "Real-time earnings tracking, weekly reports, tier progress, and payout history for all parties." },
+  { icon: <Banknote size={26} />, title: "Escrow Payments", desc: "Every dollar flows through Work Proxy escrow. Workers paid weekly, owners monthly — full transparency, zero counterparty risk.", accent: "#34D399", glow: "16,185,129", featured: true },
+  { icon: <Shield size={22} />, title: "Credential Vault", desc: "AES-256 encrypted storage. Credentials released only after both parties sign and escrow is funded.", accent: "#60A5FA", glow: "37,99,235" },
+  { icon: <FileText size={22} />, title: "Smart Contracts", desc: "Auto-generated Account Management Agreements covering splits, duration, NDA, and ban liability.", accent: "#A78BFA", glow: "124,58,237" },
+  { icon: <LineChart size={22} />, title: "Performance Tiers", desc: "Advance from Probation → Standard → Verified → Elite. Level up and your cut grows to 30%.", accent: "#FBBF24", glow: "217,119,6", wide: true },
+  { icon: <Scale size={22} />, title: "Dispute Resolution", desc: "Admin mediates every dispute within 48hrs. Evidence-based outcomes with full audit trails — both parties protected.", accent: "#F472B6", glow: "219,39,119", wide: true },
+  { icon: <Activity size={22} />, title: "Live Dashboards", desc: "Real-time earnings, weekly reports, tier progress, and payout history for every party — always in sync.", accent: "#22D3EE", glow: "8,145,178", wide: true },
 ];
 
 const testimonials = [
@@ -318,22 +318,244 @@ export default function HomePage() {
       </section>
 
       {/* Features */}
-      <section className="section" style={{ background: "linear-gradient(180deg, var(--bg-dark) 0%, #0F1A3A 100%)" }}>
-        <div className="container">
-          <div className="section-header reveal">
-            <span className="badge" style={{ background: "rgba(124,58,237,0.2)", color: "#A78BFA", border: "1px solid rgba(124,58,237,0.3)" }}>Platform Features</span>
-            <h2 className="section-title" style={{ color: "#F1F5F9" }}>Built for Trust. Built for Scale.</h2>
+      <section className="features-section">
+        <div className="features-grid-bg" />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="features-head reveal">
+            <div>
+              <span className="badge" style={{ background: "rgba(124,58,237,0.18)", color: "#C4B5FD", border: "1px solid rgba(124,58,237,0.3)" }}>Platform Features</span>
+              <h2 className="features-title">Built for trust.<br /><span className="features-title-accent">Built for scale.</span></h2>
+            </div>
+            <p className="features-sub">Six systems working together so workers, owners, and Work Proxy can transact with zero blind trust.</p>
           </div>
-          <div className="grid-3">
-            {features.map((f) => (
-              <div key={f.title} className="card-dark" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                <div style={{ color: "#60A5FA", width: 40, height: 40, borderRadius: 10, background: "rgba(37,99,235,0.15)", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid rgba(37,99,235,0.25)" }}>{f.icon}</div>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 700, color: "#F1F5F9" }}>{f.title}</h3>
-                <p style={{ color: "#94A3B8", fontSize: 13.5, lineHeight: 1.75 }}>{f.desc}</p>
-              </div>
+
+          <div className="bento">
+            {features.map((f, i) => (
+              <article
+                key={f.title}
+                className={`bento-card reveal${f.featured ? " bento-card--featured" : ""}${f.wide ? " bento-card--wide" : ""}`}
+                style={{
+                  ['--accent' as string]: f.accent,
+                  ['--glow' as string]: f.glow,
+                  ['--delay' as string]: `${i * 70}ms`,
+                }}
+              >
+                <div className="bento-card-glow" />
+                <div className="bento-top">
+                  <div className="bento-icon">{f.icon}</div>
+                  <span className="bento-index">{String(i + 1).padStart(2, "0")}</span>
+                </div>
+                <h3 className="bento-title">{f.title}</h3>
+                <p className="bento-desc">{f.desc}</p>
+
+                {f.featured && (
+                  <div className="bento-visual">
+                    <div className="bento-visual-row">
+                      <span>Owner funds escrow</span><Check size={13} />
+                    </div>
+                    <div className="bento-visual-bar"><span style={{ width: "100%" }} /></div>
+                    <div className="bento-visual-row">
+                      <span>Worker paid weekly</span><span className="bento-amt">+$420</span>
+                    </div>
+                    <div className="bento-visual-bar"><span style={{ width: "72%" }} /></div>
+                  </div>
+                )}
+                {f.wide && (
+                  <div className="bento-tiers">
+                    {["Probation", "Standard", "Verified", "Elite"].map((t, ti) => (
+                      <span key={t} className="bento-tier" style={{ opacity: 0.55 + ti * 0.15 }}>{t}</span>
+                    ))}
+                  </div>
+                )}
+              </article>
             ))}
           </div>
         </div>
+
+        <style>{`
+          .features-section {
+            position: relative;
+            padding: 96px 0 104px;
+            background: radial-gradient(ellipse 100% 60% at 50% 0%, #131C3A 0%, #070B14 60%);
+            overflow: hidden;
+          }
+          .features-grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+              linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 0%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 0%, transparent 75%);
+            pointer-events: none;
+          }
+          .features-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 48px;
+          }
+          @media (max-width: 820px) { .features-head { flex-direction: column; align-items: flex-start; gap: 16px; } }
+          .features-title {
+            font-family: var(--font-display);
+            font-size: clamp(30px, 4vw, 52px);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.04;
+            margin-top: 16px;
+            color: #F8FAFC;
+          }
+          .features-title-accent {
+            background: linear-gradient(120deg, #60A5FA, #A78BFA, #34D399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          }
+          .features-sub {
+            font-size: 15px;
+            line-height: 1.75;
+            color: #94A3B8;
+            max-width: 340px;
+            padding-bottom: 8px;
+          }
+
+          .bento {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(150px, auto);
+            gap: 16px;
+          }
+          @media (max-width: 900px) { .bento { grid-template-columns: repeat(2, 1fr); } }
+          @media (max-width: 560px) { .bento { grid-template-columns: 1fr; } }
+
+          .bento-card {
+            position: relative;
+            background: linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 100%);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--radius-xl);
+            padding: 26px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.4s ease, background 0.4s ease;
+            backdrop-filter: blur(6px);
+          }
+          .bento-card:hover {
+            transform: translateY(-5px);
+            border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+            background: linear-gradient(160deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+          }
+          /* featured tile: spans 2 cols + 2 rows */
+          .bento-card--featured { grid-column: span 2; grid-row: span 2; }
+          /* wide tile: spans 2 cols */
+          .bento-card--wide { grid-column: span 2; }
+          @media (max-width: 900px) {
+            .bento-card--featured { grid-column: span 2; grid-row: span 2; }
+            .bento-card--wide { grid-column: span 2; }
+          }
+          @media (max-width: 560px) {
+            .bento-card--featured, .bento-card--wide { grid-column: span 1; grid-row: auto; }
+          }
+
+          .bento-card-glow {
+            position: absolute;
+            top: -50%; right: -30%;
+            width: 220px; height: 220px;
+            background: radial-gradient(circle, rgba(var(--glow),0.22) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.45s ease;
+            pointer-events: none;
+          }
+          .bento-card:hover .bento-card-glow { opacity: 1; }
+
+          .bento-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+          }
+          .bento-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent);
+            background: color-mix(in srgb, var(--accent) 14%, transparent);
+            border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+            transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+          }
+          .bento-card:hover .bento-icon { transform: scale(1.08) rotate(-3deg); }
+          .bento-index {
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.22);
+            letter-spacing: 0.05em;
+          }
+          .bento-title {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 700;
+            color: #F1F5F9;
+            margin-bottom: 8px;
+          }
+          .bento-card--featured .bento-title { font-size: 24px; }
+          .bento-desc {
+            font-size: 13.5px;
+            line-height: 1.72;
+            color: #94A3B8;
+          }
+          .bento-card--featured .bento-desc { font-size: 14.5px; max-width: 380px; }
+
+          /* featured embedded visual */
+          .bento-visual {
+            margin-top: auto;
+            padding-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+          }
+          .bento-visual-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12.5px;
+            color: #CBD5E1;
+            font-weight: 500;
+          }
+          .bento-visual-row svg { color: var(--accent); }
+          .bento-amt { color: var(--accent); font-weight: 700; }
+          .bento-visual-bar {
+            height: 6px;
+            border-radius: 99px;
+            background: rgba(255,255,255,0.07);
+            overflow: hidden;
+          }
+          .bento-visual-bar span {
+            display: block;
+            height: 100%;
+            border-radius: 99px;
+            background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 40%, #2563EB));
+          }
+
+          /* wide tile tier chips */
+          .bento-tiers {
+            margin-top: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+          }
+          .bento-tier {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 99px;
+            background: color-mix(in srgb, var(--accent) 12%, transparent);
+            border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+          }
+        `}</style>
       </section>
 
       {/* Worker Tiers */}
