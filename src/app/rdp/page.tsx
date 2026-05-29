@@ -177,7 +177,7 @@ Please share the available locations and payment details.`;
           </p>
           <div className="rdp-hero-cta reveal" style={{ ['--delay' as string]: '180ms' }}>
             <a href="#pricing" className="btn btn-primary">View plans <ArrowRight size={16} /></a>
-            <a href="#locations" className="btn btn-ghost-dark">Browse locations</a>
+            <a href="#locations" className="btn btn-ghost">Browse locations</a>
           </div>
 
           {/* terminal card */}
@@ -284,12 +284,12 @@ session ready in 47s — welcome aboard.`}
       </section>
 
       {/* ───────────────── LOCATIONS ───────────────── */}
-      <section className="rdp-section rdp-dark" id="locations">
+      <section className="rdp-section rdp-locations" id="locations">
         <div className="container">
           <div className="rdp-head">
-            <span className="rdp-eyebrow rdp-eyebrow-cyan">Network</span>
-            <h2 className="rdp-h2 light">Deploy in <span className="rdp-grad-cyan">18 cities</span> across 3 continents</h2>
-            <p className="rdp-head-sub light">
+            <span className="rdp-eyebrow">Network</span>
+            <h2 className="rdp-h2">Deploy in <span className="rdp-grad">18 cities</span> across 3 continents</h2>
+            <p className="rdp-head-sub">
               Tier-1 carrier-grade datacenters with public test IPs you can ping
               before you buy. Tap any IP to copy it.
             </p>
@@ -399,71 +399,68 @@ session ready in 47s — welcome aboard.`}
         /* HERO */
         .rdp-hero {
           position: relative;
-          background: var(--bg-dark);
-          color: #fff;
+          background: var(--bg-secondary);
+          color: var(--text-primary);
           overflow: hidden;
           padding: 96px 0 80px;
+          border-bottom: 1px solid var(--border);
         }
         .rdp-hero-grid {
           position: absolute; inset: 0;
           background-image:
-            linear-gradient(rgba(96,165,250,0.07) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(96,165,250,0.07) 1px, transparent 1px);
+            linear-gradient(rgba(37,99,235,0.06) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(37,99,235,0.06) 1px, transparent 1px);
           background-size: 46px 46px;
-          mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
-          -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+          mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%);
+          -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%);
         }
         .rdp-hero-glow {
-          position: absolute; top: -160px; left: 50%; transform: translateX(-50%);
-          width: 680px; height: 480px;
-          background: radial-gradient(circle, rgba(34,211,238,0.22), transparent 65%);
+          position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+          width: 720px; height: 520px;
+          background: radial-gradient(circle, rgba(37,99,235,0.12), transparent 65%);
           filter: blur(20px); pointer-events: none;
         }
         .rdp-hero-inner { position: relative; text-align: center; }
         .rdp-pill {
           display: inline-flex; align-items: center; gap: 8px;
           font-size: 13px; font-weight: 600; letter-spacing: 0.01em;
-          color: #93C5FD;
-          background: rgba(96,165,250,0.1);
-          border: 1px solid rgba(96,165,250,0.25);
+          color: var(--accent-primary);
+          background: var(--bg-glass-blue);
+          border: 1px solid var(--border-accent);
           padding: 7px 16px; border-radius: var(--radius-full);
           margin-bottom: 26px;
         }
         .rdp-dot {
-          width: 7px; height: 7px; border-radius: 50%; background: #22D3EE;
-          box-shadow: 0 0 0 0 rgba(34,211,238,0.6); animation: rdpPulse 1.8s infinite;
+          width: 7px; height: 7px; border-radius: 50%; background: var(--accent-emerald);
+          box-shadow: 0 0 0 0 rgba(5,150,105,0.5); animation: rdpPulse 1.8s infinite;
         }
         @keyframes rdpPulse {
-          0% { box-shadow: 0 0 0 0 rgba(34,211,238,0.6); }
-          70% { box-shadow: 0 0 0 8px rgba(34,211,238,0); }
-          100% { box-shadow: 0 0 0 0 rgba(34,211,238,0); }
+          0% { box-shadow: 0 0 0 0 rgba(5,150,105,0.5); }
+          70% { box-shadow: 0 0 0 8px rgba(5,150,105,0); }
+          100% { box-shadow: 0 0 0 0 rgba(5,150,105,0); }
         }
         .rdp-h1 {
           font-family: var(--font-display);
           font-size: clamp(36px, 6vw, 68px);
           font-weight: 800; line-height: 1.02; letter-spacing: -0.03em;
-          margin-bottom: 22px;
+          margin-bottom: 22px; color: var(--text-primary);
         }
         .rdp-h1-accent {
-          background: linear-gradient(100deg, #60A5FA, #22D3EE 60%, #A78BFA);
+          background: linear-gradient(100deg, #2563EB, #0891B2 55%, #7C3AED);
           -webkit-background-clip: text; background-clip: text; color: transparent;
         }
         .rdp-sub {
           max-width: 620px; margin: 0 auto 32px;
-          font-size: 18px; line-height: 1.7; color: #94A3B8;
+          font-size: 18px; line-height: 1.7; color: var(--text-secondary);
         }
-        .rdp-sub strong { color: #fff; }
+        .rdp-sub strong { color: var(--text-primary); }
         .rdp-hero-cta { display: flex; gap: 12px; justify-content: center; margin-bottom: 56px; flex-wrap: wrap; }
-        .btn-ghost-dark {
-          color: #fff; border: 1.5px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.03);
-        }
-        .btn-ghost-dark:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.07); }
 
         .rdp-term {
           max-width: 560px; margin: 0 auto; text-align: left;
-          background: #0B1220; border: 1px solid rgba(96,165,250,0.18);
+          background: #0B1220; border: 1px solid rgba(37,99,235,0.2);
           border-radius: var(--radius-lg);
-          box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.02);
+          box-shadow: var(--shadow-xl);
           overflow: hidden;
         }
         .rdp-term-bar {
@@ -482,42 +479,39 @@ session ready in 47s — welcome aboard.`}
         }
 
         /* SPEC STRIP */
-        .rdp-strip { background: var(--bg-dark); padding: 0 0 80px; }
+        .rdp-strip { background: var(--bg-primary); padding: 64px 0; }
         .rdp-strip-grid {
           display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
         }
         .rdp-strip-item {
           display: flex; gap: 14px; align-items: flex-start;
-          background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
-          border-radius: var(--radius-md); padding: 20px;
+          background: var(--bg-card); border: 1px solid var(--border);
+          border-radius: var(--radius-md); padding: 20px; box-shadow: var(--shadow-xs);
         }
         .rdp-strip-icon {
           flex-shrink: 0; width: 42px; height: 42px; border-radius: var(--radius-sm);
-          display: grid; place-items: center; color: #22D3EE;
-          background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.2);
+          display: grid; place-items: center; color: var(--accent-primary);
+          background: var(--bg-glass-blue); border: 1px solid var(--border);
         }
-        .rdp-strip-title { color: #fff; font-weight: 700; font-size: 15px; margin-bottom: 4px; }
-        .rdp-strip-desc { color: #94A3B8; font-size: 13px; line-height: 1.5; }
+        .rdp-strip-title { color: var(--text-primary); font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+        .rdp-strip-desc { color: var(--text-muted); font-size: 13px; line-height: 1.5; }
 
         /* SECTIONS */
         .rdp-section { padding: 88px 0; }
-        .rdp-dark { background: var(--bg-dark); }
+        .rdp-locations { background: var(--bg-primary); }
         .rdp-head { text-align: center; max-width: 680px; margin: 0 auto 56px; }
         .rdp-eyebrow {
           font-family: ${MONO}; font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
           text-transform: uppercase; color: var(--accent-primary);
           display: inline-block; margin-bottom: 14px;
         }
-        .rdp-eyebrow-cyan { color: #22D3EE; }
         .rdp-h2 {
           font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px);
           font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; margin-bottom: 16px;
+          color: var(--text-primary);
         }
-        .rdp-h2.light { color: #fff; }
         .rdp-grad { background: linear-gradient(100deg, #2563EB, #7C3AED); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .rdp-grad-cyan { background: linear-gradient(100deg, #60A5FA, #22D3EE); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .rdp-head-sub { color: var(--text-secondary); font-size: 16.5px; line-height: 1.7; max-width: 560px; margin: 0 auto; }
-        .rdp-head-sub.light { color: #94A3B8; }
 
         /* PLANS */
         .rdp-plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
@@ -530,25 +524,25 @@ session ready in 47s — welcome aboard.`}
         }
         .rdp-plan:hover { transform: translateY(-5px); box-shadow: 0 24px 50px rgba(var(--glow), .16); }
         .rdp-plan.is-active { border-color: var(--accent); box-shadow: 0 24px 50px rgba(var(--glow), .2); }
-        .rdp-plan.is-featured { background: var(--bg-dark); border-color: rgba(34,211,238,.3); }
-        .rdp-plan.is-featured .rdp-plan-name,
-        .rdp-plan.is-featured .rdp-plan-price { color: #fff; }
-        .rdp-plan.is-featured .rdp-plan-tagline { color: #94A3B8; }
-        .rdp-plan.is-featured .rdp-core-row,
-        .rdp-plan.is-featured .rdp-shared-row { color: #CBD5E1; }
-        .rdp-plan.is-featured .rdp-plan-core,
-        .rdp-plan.is-featured .rdp-plan-shared { border-color: rgba(255,255,255,.1); }
+        .rdp-plan.is-featured {
+          border-color: var(--border-accent);
+          background:
+            linear-gradient(var(--bg-card), var(--bg-card)) padding-box,
+            linear-gradient(135deg, rgba(37,99,235,0.4), rgba(8,145,178,0.3)) border-box;
+          border: 1.5px solid transparent;
+          box-shadow: var(--shadow-lg);
+        }
         .rdp-plan-tag {
           position: absolute; top: -11px; left: 26px;
           font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
-          color: #06141f; background: linear-gradient(100deg, #60A5FA, #22D3EE);
+          color: #fff; background: linear-gradient(100deg, #2563EB, #0891B2);
           padding: 5px 12px; border-radius: var(--radius-full);
+          box-shadow: var(--shadow-button);
         }
-        .rdp-plan-name { font-family: var(--font-display); font-size: 19px; font-weight: 700; margin-bottom: 10px; }
-        .rdp-plan-price { font-family: var(--font-display); font-size: 46px; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+        .rdp-plan-name { font-family: var(--font-display); font-size: 19px; font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
+        .rdp-plan-price { font-family: var(--font-display); font-size: 46px; font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--text-primary); }
         .rdp-plan-cur { font-size: 24px; vertical-align: super; margin-right: 2px; color: var(--accent); }
         .rdp-plan-per { font-size: 16px; font-weight: 500; color: var(--text-muted); margin-left: 4px; }
-        .rdp-plan.is-featured .rdp-plan-per { color: #64748B; }
         .rdp-plan-tagline { font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; margin: 12px 0 20px; min-height: 40px; }
         .rdp-plan-core {
           display: flex; flex-direction: column; gap: 10px;
@@ -559,15 +553,12 @@ session ready in 47s — welcome aboard.`}
         .rdp-plan-shared { display: flex; flex-direction: column; gap: 9px; padding: 18px 0 22px; flex: 1; }
         .rdp-shared-row { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-secondary); }
         .rdp-check { color: var(--accent-emerald); flex-shrink: 0; }
-        .rdp-plan.is-featured .rdp-check { color: #34D399; }
         .rdp-plan-select {
           text-align: center; font-size: 14px; font-weight: 700; padding: 12px;
           border-radius: var(--radius-md); border: 1.5px solid var(--border-accent);
           color: var(--accent-primary); transition: all .2s;
         }
-        .rdp-plan.is-featured .rdp-plan-select { color: #22D3EE; border-color: rgba(34,211,238,.4); }
         .rdp-plan-select.sel { background: var(--accent); border-color: var(--accent); color: #fff; }
-        .rdp-plan.is-featured .rdp-plan-select.sel { color: #06141f; }
 
         .rdp-order-bar {
           margin-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px;
@@ -576,47 +567,48 @@ session ready in 47s — welcome aboard.`}
           padding: 20px 24px; box-shadow: var(--shadow-md);
         }
         .rdp-order-label { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--text-muted); font-weight: 600; }
-        .rdp-order-plan { font-size: 15px; font-weight: 600; margin-top: 4px; }
+        .rdp-order-plan { font-size: 15px; font-weight: 600; margin-top: 4px; color: var(--text-primary); }
         .rdp-order-right { display: flex; align-items: center; gap: 20px; }
-        .rdp-order-price { font-family: var(--font-display); font-size: 30px; font-weight: 800; }
+        .rdp-order-price { font-family: var(--font-display); font-size: 30px; font-weight: 800; color: var(--text-primary); }
         .rdp-order-price span { font-size: 15px; font-weight: 500; color: var(--text-muted); }
 
         /* LOCATIONS */
         .rdp-region-tabs { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 36px; }
         .rdp-region-tab {
           display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
-          font-size: 14px; font-weight: 600; color: #94A3B8;
-          background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+          font-size: 14px; font-weight: 600; color: var(--text-secondary);
+          background: var(--bg-card); border: 1px solid var(--border);
           padding: 9px 18px; border-radius: var(--radius-full); transition: all .2s;
         }
-        .rdp-region-tab:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
-        .rdp-region-tab.on { color: #06141f; background: #22D3EE; border-color: #22D3EE; }
+        .rdp-region-tab:hover { color: var(--text-primary); border-color: var(--border-accent); }
+        .rdp-region-tab.on { color: #fff; background: var(--accent-primary); border-color: var(--accent-primary); }
         .rdp-region-count {
-          font-size: 11px; font-family: ${MONO}; background: rgba(0,0,0,0.18);
+          font-size: 11px; font-family: ${MONO}; background: rgba(37,99,235,0.1); color: var(--accent-primary);
           padding: 1px 7px; border-radius: var(--radius-full);
         }
-        .rdp-region-tab:not(.on) .rdp-region-count { background: rgba(255,255,255,0.08); }
+        .rdp-region-tab.on .rdp-region-count { background: rgba(255,255,255,0.22); color: #fff; }
         .rdp-loc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
         .rdp-loc {
-          background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+          background: var(--bg-card); border: 1px solid var(--border);
           border-radius: var(--radius-md); padding: 18px; transition: all .25s cubic-bezier(.22,1,.36,1);
+          box-shadow: var(--shadow-xs);
         }
-        .rdp-loc:hover { transform: translateY(-4px); border-color: rgba(34,211,238,0.35); background: rgba(34,211,238,0.04); }
+        .rdp-loc:hover { transform: translateY(-4px); border-color: var(--border-accent); box-shadow: var(--shadow-md); }
         .rdp-loc-top { display: flex; align-items: center; gap: 11px; margin-bottom: 14px; }
         .rdp-loc-flag { font-size: 26px; line-height: 1; }
-        .rdp-loc-city { color: #fff; font-weight: 700; font-size: 16px; }
-        .rdp-loc-country { color: #64748B; font-size: 12.5px; }
-        .rdp-loc-dc { color: #94A3B8; font-size: 12.5px; margin-bottom: 12px; font-weight: 500; }
+        .rdp-loc-city { color: var(--text-primary); font-weight: 700; font-size: 16px; }
+        .rdp-loc-country { color: var(--text-muted); font-size: 12.5px; }
+        .rdp-loc-dc { color: var(--text-secondary); font-size: 12.5px; margin-bottom: 12px; font-weight: 500; }
         .rdp-loc-ip {
           width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px; cursor: pointer;
-          font-family: ${MONO}; font-size: 13px; color: #7DD3FC;
-          background: rgba(0,0,0,0.3); border: 1px solid rgba(125,211,252,0.15);
+          font-family: ${MONO}; font-size: 13px; color: var(--accent-primary); font-weight: 600;
+          background: var(--bg-glass-blue); border: 1px solid var(--border);
           padding: 8px 12px; border-radius: var(--radius-sm); transition: all .2s;
         }
-        .rdp-loc-ip:hover { border-color: rgba(125,211,252,0.4); background: rgba(0,0,0,0.45); }
-        .rdp-loc-ip svg { color: #64748B; flex-shrink: 0; }
+        .rdp-loc-ip:hover { border-color: var(--border-accent); background: rgba(37,99,235,0.1); }
+        .rdp-loc-ip svg { color: var(--text-muted); flex-shrink: 0; }
         .rdp-loc-ip.inline { width: auto; display: inline-flex; padding: 5px 10px; }
-        .rdp-ip-ok { color: #34D399 !important; }
+        .rdp-ip-ok { color: var(--accent-emerald) !important; }
 
         /* DATACENTER */
         .rdp-dc-wrap { display: grid; grid-template-columns: 1fr 1.3fr; gap: 48px; align-items: start; }
@@ -625,29 +617,28 @@ session ready in 47s — welcome aboard.`}
         .rdp-dc-net-row {
           display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
           font-size: 13px; color: var(--text-secondary);
-          padding: 12px 14px; background: var(--bg-glass-blue); border: 1px solid var(--border); border-radius: var(--radius-md);
+          padding: 12px 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md);
         }
         .rdp-dc-net-row svg { color: var(--accent-primary); }
         .rdp-dc-net-k { font-weight: 700; color: var(--text-primary); min-width: 64px; }
         .rdp-dc-net-v { font-family: ${MONO}; color: var(--text-secondary); }
-        .rdp-loc-ip.inline span { color: var(--accent-primary); }
         .rdp-dc-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .rdp-dc-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); }
-        .rdp-dc-card-head { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 16px; margin-bottom: 16px; }
+        .rdp-dc-card-head { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 16px; margin-bottom: 16px; color: var(--text-primary); }
         .rdp-dc-card-icon { width: 34px; height: 34px; border-radius: var(--radius-sm); display: grid; place-items: center; color: var(--accent-primary); background: var(--bg-glass-blue); border: 1px solid var(--border); }
         .rdp-dc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
         .rdp-dc-list li { display: flex; align-items: flex-start; gap: 9px; font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; }
 
         /* CTA */
-        .rdp-cta { background: var(--bg-dark); padding: 96px 0; position: relative; overflow: hidden; }
+        .rdp-cta { background: var(--bg-secondary); padding: 96px 0; position: relative; overflow: hidden; border-top: 1px solid var(--border); }
         .rdp-cta::before {
           content: ""; position: absolute; inset: 0;
-          background: radial-gradient(ellipse 60% 80% at 50% 120%, rgba(34,211,238,0.18), transparent 70%);
+          background: radial-gradient(ellipse 60% 80% at 50% 120%, rgba(37,99,235,0.1), transparent 70%);
         }
         .rdp-cta-inner { position: relative; text-align: center; }
-        .rdp-cta-spark { color: #22D3EE; margin-bottom: 18px; }
-        .rdp-cta-h { font-family: var(--font-display); font-size: clamp(28px, 4vw, 42px); font-weight: 800; color: #fff; letter-spacing: -0.025em; margin-bottom: 14px; }
-        .rdp-cta-sub { color: #94A3B8; font-size: 17px; max-width: 520px; margin: 0 auto 32px; line-height: 1.6; }
+        .rdp-cta-spark { color: var(--accent-primary); margin-bottom: 18px; }
+        .rdp-cta-h { font-family: var(--font-display); font-size: clamp(28px, 4vw, 42px); font-weight: 800; color: var(--text-primary); letter-spacing: -0.025em; margin-bottom: 14px; }
+        .rdp-cta-sub { color: var(--text-secondary); font-size: 17px; max-width: 520px; margin: 0 auto 32px; line-height: 1.6; }
         .btn-lg { font-size: 16px; padding: 14px 28px; }
 
         /* RESPONSIVE */
