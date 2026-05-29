@@ -4,7 +4,8 @@ import Footer from "@/components/Footer";
 import {
   Rocket, Briefcase, Shield, FileText, Banknote,
   LineChart, Scale, Activity, X, Check, Laptop,
-  ArrowRight, Monitor, Star, Quote
+  ArrowRight, Monitor, Star, Quote,
+  Server, Cpu, HardDrive, Network, Globe2, Zap
 } from "lucide-react";
 
 const platforms = [
@@ -766,6 +767,249 @@ export default function HomePage() {
           }
           .testimonial-name { font-size: 14px; font-weight: 700; color: var(--text-primary); }
           .testimonial-role { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+        `}</style>
+      </section>
+
+      {/* RDP Servers */}
+      <section className="rdp-landing-section section">
+        <div className="container">
+          <div className="rdp-landing-wrap">
+
+            {/* Text side */}
+            <div className="rdp-landing-text">
+              <span className="badge badge-blue reveal" style={{ marginBottom: 20 }}>
+                <Server size={13} style={{ display: "inline", marginRight: 6 }} />
+                New — RDP Servers
+              </span>
+              <h2 className="rdp-landing-h reveal" style={{ ['--delay' as string]: '50ms' }}>
+                Remote desktops.<br />
+                <span className="rdp-landing-grad">Real datacenters.</span>
+              </h2>
+              <p className="rdp-landing-sub reveal" style={{ ['--delay' as string]: '100ms' }}>
+                Enterprise-grade Windows RDP on dedicated vCores with dual 25 Gbps
+                uplinks — racked in 18 cities across the globe. Starting at{" "}
+                <strong>$20/month</strong>.
+              </p>
+
+              {/* spec pills */}
+              <div className="rdp-landing-specs reveal" style={{ ['--delay' as string]: '150ms' }}>
+                {[
+                  { icon: <Cpu size={14} />, label: "Dedicated vCores" },
+                  { icon: <HardDrive size={14} />, label: "NVMe Storage" },
+                  { icon: <Network size={14} />, label: "Dual 25 Gbps" },
+                  { icon: <Globe2 size={14} />, label: "18 Cities" },
+                ].map((s) => (
+                  <span key={s.label} className="rdp-spec-pill">
+                    {s.icon} {s.label}
+                  </span>
+                ))}
+              </div>
+
+              {/* plan chips */}
+              <div className="rdp-landing-plans reveal" style={{ ['--delay' as string]: '200ms' }}>
+                {[
+                  { name: "Starter", price: "$20", cores: "1 vCore · 2 GB · 30 GB" },
+                  { name: "Pro", price: "$30", cores: "2 vCore · 4 GB · 50 GB", popular: true },
+                  { name: "Elite", price: "$40", cores: "4 vCore · 8 GB · 100 GB" },
+                ].map((p) => (
+                  <div key={p.name} className={`rdp-plan-chip ${p.popular ? "rdp-plan-chip--pop" : ""}`}>
+                    <div className="rdp-plan-chip-name">{p.name}</div>
+                    <div className="rdp-plan-chip-price">{p.price}<span>/mo</span></div>
+                    <div className="rdp-plan-chip-specs">{p.cores}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="rdp-landing-cta reveal" style={{ ['--delay' as string]: '250ms' }}>
+                <Link href="/rdp" className="btn btn-primary" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <Zap size={16} /> Browse All Plans
+                </Link>
+                <Link href="/rdp#locations" className="btn btn-ghost" style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 14 }}>
+                  <Globe2 size={14} /> View 18 locations <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+
+            {/* Visual side — dark server card */}
+            <div className="rdp-landing-visual reveal" style={{ ['--delay' as string]: '120ms' }}>
+              <div className="rdp-server-card">
+                <div className="rdp-server-header">
+                  <span className="rdp-server-led" />
+                  <span className="rdp-server-title">rdp · provisioning</span>
+                  <span className="rdp-server-badge">LIVE</span>
+                </div>
+
+                <div className="rdp-server-body">
+                  {/* terminal lines */}
+                  <div className="rdp-server-lines">
+                    {[
+                      { k: "location", v: "Equinix LD8, London" },
+                      { k: "plan", v: "Professional — $30/mo" },
+                      { k: "ip", v: "45.87.60.12 (dedicated)" },
+                      { k: "uplink", v: "2 × 25 Gbps bonded" },
+                      { k: "os", v: "Windows Server (licensed)" },
+                    ].map((l) => (
+                      <div key={l.k} className="rdp-server-line">
+                        <span className="rdp-server-key">{l.k}</span>
+                        <span className="rdp-server-val">{l.v}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* progress bar */}
+                  <div className="rdp-server-progress-wrap">
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", fontWeight: 600 }}>Provisioning</span>
+                      <span style={{ fontSize: 11, color: "#22D3EE", fontWeight: 700 }}>100%</span>
+                    </div>
+                    <div className="rdp-server-bar">
+                      <div className="rdp-server-bar-fill" />
+                    </div>
+                  </div>
+
+                  <div className="rdp-server-ready">
+                    <Check size={14} />
+                    <span>Session ready — connect now</span>
+                  </div>
+                </div>
+
+                {/* locations mini-strip */}
+                <div className="rdp-server-locs">
+                  {["🇬🇧","🇺🇸","🇩🇪","🇳🇱","🇸🇬","🇯🇵","🇦🇺","🇨🇦"].map((f) => (
+                    <span key={f} className="rdp-server-flag">{f}</span>
+                  ))}
+                  <span className="rdp-server-more">+10</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <style>{`
+          .rdp-landing-section {
+            background: linear-gradient(180deg, transparent 0%, rgba(37,99,235,0.04) 50%, transparent 100%);
+          }
+          .rdp-landing-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+          }
+          @media (max-width: 900px) {
+            .rdp-landing-wrap { grid-template-columns: 1fr; gap: 40px; }
+            .rdp-landing-visual { order: -1; }
+          }
+          .rdp-landing-h {
+            font-family: var(--font-display);
+            font-size: clamp(30px, 4vw, 50px);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
+            margin-bottom: 18px;
+            color: var(--text-primary);
+          }
+          .rdp-landing-grad {
+            background: linear-gradient(120deg, #2563EB, #0891B2 55%, #7C3AED);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+          }
+          .rdp-landing-sub {
+            font-size: 16.5px;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            margin-bottom: 28px;
+            max-width: 460px;
+          }
+          .rdp-landing-sub strong { color: var(--text-primary); font-weight: 700; }
+
+          .rdp-landing-specs {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px;
+          }
+          .rdp-spec-pill {
+            display: inline-flex; align-items: center; gap: 7px;
+            font-size: 12.5px; font-weight: 600; color: var(--accent-primary);
+            background: var(--bg-glass-blue); border: 1px solid var(--border);
+            padding: 6px 13px; border-radius: var(--radius-full);
+          }
+
+          .rdp-landing-plans {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 32px;
+          }
+          @media (max-width: 480px) { .rdp-landing-plans { grid-template-columns: 1fr; } }
+
+          .rdp-plan-chip {
+            background: var(--bg-card); border: 1.5px solid var(--border);
+            border-radius: var(--radius-lg); padding: 16px 14px;
+            transition: all .2s cubic-bezier(.22,1,.36,1);
+          }
+          .rdp-plan-chip:hover { border-color: var(--border-accent); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+          .rdp-plan-chip--pop {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 1px rgba(37,99,235,0.15), var(--shadow-sm);
+            background: linear-gradient(160deg, #ffffff, #EEF2FF);
+          }
+          .rdp-plan-chip-name { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); margin-bottom: 6px; }
+          .rdp-plan-chip--pop .rdp-plan-chip-name { color: var(--accent-primary); }
+          .rdp-plan-chip-price { font-family: var(--font-display); font-size: 24px; font-weight: 800; color: var(--text-primary); line-height: 1; }
+          .rdp-plan-chip-price span { font-size: 13px; font-weight: 500; color: var(--text-muted); }
+          .rdp-plan-chip-specs { font-size: 11px; color: var(--text-muted); margin-top: 6px; line-height: 1.4; font-family: ui-monospace, 'SF Mono', monospace; }
+
+          .rdp-landing-cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+          /* ── Dark server card ── */
+          .rdp-landing-visual { display: flex; justify-content: center; }
+          .rdp-server-card {
+            width: 100%; max-width: 420px;
+            background: #0B1220;
+            border: 1px solid rgba(37,99,235,0.22);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            animation: float 7s ease-in-out infinite;
+          }
+          @keyframes float {
+            0%,100% { transform: translateY(0); }
+            50%      { transform: translateY(-12px); }
+          }
+          .rdp-server-header {
+            display: flex; align-items: center; gap: 10px;
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.02);
+          }
+          .rdp-server-led {
+            width: 8px; height: 8px; border-radius: 50%; background: #22D3EE;
+            box-shadow: 0 0 8px rgba(34,211,238,0.7); flex-shrink: 0;
+            animation: ledBlink 2s ease-in-out infinite;
+          }
+          @keyframes ledBlink { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+          .rdp-server-title { font-size: 12px; color: #94A3B8; font-family: ui-monospace,'SF Mono',monospace; }
+          .rdp-server-badge {
+            margin-left: auto; font-size: 10px; font-weight: 700; letter-spacing: .1em;
+            color: #22D3EE; background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.25);
+            padding: 3px 8px; border-radius: var(--radius-full);
+          }
+          .rdp-server-body { padding: 20px 18px; }
+          .rdp-server-lines { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+          .rdp-server-line { display: flex; gap: 12px; font-size: 12.5px; font-family: ui-monospace,'SF Mono',monospace; }
+          .rdp-server-key { color: #475569; min-width: 72px; flex-shrink: 0; }
+          .rdp-server-val { color: #CBD5E1; }
+          .rdp-server-progress-wrap { margin-bottom: 14px; }
+          .rdp-server-bar { height: 5px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden; }
+          .rdp-server-bar-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #2563EB, #22D3EE); border-radius: 99px; }
+          .rdp-server-ready {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 12.5px; color: #34D399; font-weight: 600;
+            font-family: ui-monospace,'SF Mono',monospace;
+          }
+          .rdp-server-locs {
+            display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+            padding: 12px 18px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.02);
+          }
+          .rdp-server-flag { font-size: 18px; line-height: 1; }
+          .rdp-server-more { font-size: 11px; font-weight: 700; color: #64748B; margin-left: 2px; }
         `}</style>
       </section>
 
