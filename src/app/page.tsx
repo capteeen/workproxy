@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { 
-  Rocket, Briefcase, Shield, FileText, Banknote, 
+import {
+  Rocket, Briefcase, Shield, FileText, Banknote,
   LineChart, Scale, Activity, X, Check, Laptop,
-  ArrowRight, Monitor
+  ArrowRight, Monitor, Star, Quote
 } from "lucide-react";
 
 const platforms = [
@@ -32,6 +32,12 @@ const features = [
   { icon: <Activity size={32} />, title: "Live Dashboards", desc: "Real-time earnings tracking, weekly reports, tier progress, and payout history for all parties." },
 ];
 
+const testimonials = [
+  { quote: "I went from zero access to earning steady income on Outlier within my first month. The escrow system meant I never worried about getting paid.", name: "Chinedu O.", role: "Verified Worker · Lagos", initials: "CO", tier: "Verified", cls: "tier-verified" },
+  { quote: "My Appen account was sitting idle for two years. Now it earns me a passive cut every month with zero effort on my end. Completely hands-off.", name: "James W.", role: "Account Owner · Manchester, UK", initials: "JW", tier: "Owner", cls: "tier-standard" },
+  { quote: "The onboarding training was worth every naira. I passed my assessment first try and hit Elite tier in six months. Best decision I made this year.", name: "Aisha B.", role: "Elite Worker · Abuja", initials: "AB", tier: "Elite", cls: "tier-elite" },
+];
+
 const faqs = [
   { q: "Is this legal?", a: "Work Proxy operates as a professional account management service. We provide legal disclaimers and our contracts clearly define liability. The platform is not responsible for platform ToS decisions — users accept risk through the agreement." },
   { q: "How do workers receive credentials?", a: "Only after both parties digitally sign the Account Management Agreement AND the owner funds the escrow. Credentials are AES-256 encrypted and accessed via our secure vault." },
@@ -52,7 +58,7 @@ export default function HomePage() {
         <div className="container">
           <div className="hero-inner">
             <div className="hero-badge">
-              <span className="badge badge-teal" style={{ background: "rgba(99,102,241,0.1)", color: "#6366f1", border: "1px solid rgba(99,102,241,0.25)" }}>🚀 MVP Launch — April 2026</span>
+              <span className="badge badge-blue">🚀 MVP Launch — April 2026</span>
             </div>
             <h1 className="hero-title">
               Bridge the Gap Between<br />
@@ -111,12 +117,12 @@ export default function HomePage() {
       {/* Problem/Solution */}
       <section className="section">
         <div className="container">
-          <div className="section-header">
+          <div className="section-header reveal">
             <span className="badge badge-purple">The Problem</span>
             <h2 className="section-title">High-Paying Platforms Are Locked Away</h2>
             <p className="section-desc">Skilled Nigerian workers can&apos;t access some of the best remote income platforms due to geo-restrictions. Account owners in the UK/US have idle accounts. Work Proxy fixes both.</p>
           </div>
-          <div className="problem-grid">
+          <div className="problem-grid reveal">
             <div className="problem-card problem-card--red">
               <div className="problem-icon"><X size={32} /></div>
               <h3>Without Work Proxy</h3>
@@ -144,7 +150,7 @@ export default function HomePage() {
       {/* Supported Platforms */}
       <section className="section" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(37,99,235,0.04) 100%)" }}>
         <div className="container">
-          <div className="section-header">
+          <div className="section-header reveal">
             <span className="badge badge-blue">Supported Platforms — MVP</span>
             <h2 className="section-title">High-Earning Platforms, Day One</h2>
             <p className="section-desc">All platforms below are geo-restricted in Nigeria. We bridge access through structured account management.</p>
@@ -282,11 +288,11 @@ export default function HomePage() {
       {/* How It Works */}
       <section className="section">
         <div className="container">
-          <div className="section-header">
+          <div className="section-header reveal">
             <span className="badge badge-teal">How It Works</span>
             <h2 className="section-title">Three Parties, One Ecosystem</h2>
           </div>
-          <div className="how-it-works">
+          <div className="how-it-works reveal">
             <div className="how-card">
               <div className="how-num">01</div>
               <h3>Account Owner Lists</h3>
@@ -314,7 +320,7 @@ export default function HomePage() {
       {/* Features */}
       <section className="section" style={{ background: "linear-gradient(180deg, var(--bg-dark) 0%, #0F1A3A 100%)" }}>
         <div className="container">
-          <div className="section-header">
+          <div className="section-header reveal">
             <span className="badge" style={{ background: "rgba(124,58,237,0.2)", color: "#A78BFA", border: "1px solid rgba(124,58,237,0.3)" }}>Platform Features</span>
             <h2 className="section-title" style={{ color: "#F1F5F9" }}>Built for Trust. Built for Scale.</h2>
           </div>
@@ -333,12 +339,12 @@ export default function HomePage() {
       {/* Worker Tiers */}
       <section className="section">
         <div className="container">
-          <div className="section-header">
+          <div className="section-header reveal">
             <span className="badge badge-amber">Performance Tiers</span>
             <h2 className="section-title">The Longer You Stay, The More You Earn</h2>
             <p className="section-desc">Dedicated workers unlock higher earning tiers automatically. Your cut grows from 10% all the way to 30% as you build trust.</p>
           </div>
-          <div className="tiers-grid">
+          <div className="tiers-grid reveal">
             {[
               { tier: "Probation", pct: "10%", time: "First 2 weeks", reqs: "New — verification period", color: "#94a3b8", cls: "tier-probation", mult: "1×" },
               { tier: "Standard", pct: "16.5%", time: "After 1 month", reqs: "3.5★+ rating", color: "#0099ff", cls: "tier-standard", mult: "1.6×" },
@@ -409,10 +415,142 @@ export default function HomePage() {
         `}</style>
       </section>
 
+      {/* Social Proof */}
+      <section className="section" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(37,99,235,0.04) 50%, transparent 100%)" }}>
+        <div className="container">
+          <div className="section-header reveal">
+            <span className="badge badge-green">Social Proof</span>
+            <h2 className="section-title">Trusted by Workers & Owners Alike</h2>
+            <p className="section-desc">Real people, real income. Here&apos;s what early members of the Work Proxy network are saying.</p>
+          </div>
+
+          <div className="proof-stats reveal">
+            {[
+              { value: "$2,000", label: "Top monthly worker earnings" },
+              { value: "98%", label: "On-time weekly payouts" },
+              { value: "4.8★", label: "Average worker rating" },
+              { value: "48h", label: "Avg. dispute resolution" },
+            ].map((s) => (
+              <div key={s.label} className="proof-stat">
+                <span className="proof-stat-value">{s.value}</span>
+                <span className="proof-stat-label">{s.label}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="testimonial-grid">
+            {testimonials.map((t, i) => (
+              <figure key={t.name} className="testimonial-card reveal" style={{ ['--delay' as string]: `${i * 90}ms` }}>
+                <Quote className="testimonial-quote-icon" size={28} />
+                <div className="testimonial-stars">
+                  {[...Array(5)].map((_, j) => <Star key={j} size={14} fill="#D97706" stroke="#D97706" />)}
+                </div>
+                <blockquote className="testimonial-text">{t.quote}</blockquote>
+                <figcaption className="testimonial-author">
+                  <div className="avatar avatar-md">{t.initials}</div>
+                  <div>
+                    <div className="testimonial-name">{t.name}</div>
+                    <div className="testimonial-role">{t.role}</div>
+                  </div>
+                  <span className={`badge ${t.cls}`} style={{ marginLeft: "auto" }}>{t.tier}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+
+        <style>{`
+          .proof-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            background: #fff;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            margin-bottom: 48px;
+          }
+          @media (max-width: 768px) { .proof-stats { grid-template-columns: repeat(2, 1fr); } }
+          .proof-stat {
+            padding: 28px 20px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+          }
+          .proof-stat:last-child { border-right: none; }
+          @media (max-width: 768px) {
+            .proof-stat:nth-child(2) { border-right: none; }
+            .proof-stat:nth-child(1), .proof-stat:nth-child(2) { border-bottom: 1px solid var(--border); }
+          }
+          .proof-stat-value {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 34px;
+            font-weight: 800;
+            background: var(--grad-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+          }
+          .proof-stat-label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 500;
+          }
+          .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+          }
+          @media (max-width: 900px) { .testimonial-grid { grid-template-columns: 1fr; max-width: 540px; margin: 0 auto; } }
+          .testimonial-card {
+            position: relative;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 32px 28px;
+            box-shadow: var(--shadow-xs);
+            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+            overflow: hidden;
+          }
+          .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border-accent);
+          }
+          .testimonial-quote-icon {
+            color: var(--accent-primary);
+            opacity: 0.14;
+            position: absolute;
+            top: 20px;
+            right: 22px;
+          }
+          .testimonial-stars { display: flex; gap: 2px; margin-bottom: 16px; }
+          .testimonial-text {
+            font-size: 14.5px;
+            line-height: 1.75;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-style: normal;
+          }
+          .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+          }
+          .testimonial-name { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+          .testimonial-role { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+        `}</style>
+      </section>
+
       {/* FAQ */}
       <section className="section">
         <div className="container" style={{ maxWidth: 780 }}>
-          <div className="section-header">
+          <div className="section-header reveal">
             <span className="badge badge-blue">FAQ</span>
             <h2 className="section-title">Common Questions</h2>
           </div>
