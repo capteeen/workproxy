@@ -128,7 +128,7 @@ export default function AcademyPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const msg = `🎓 *WORK PROXY ACADEMY — OUTLIER AI ENROLMENT*%0A%0A*Name:* ${formData.fullName}%0A*Email:* ${formData.email}%0A*Phone:* ${formData.phone}%0A*Experience:* ${formData.experience || "None provided"}%0A%0ACourse: Outlier AI Mastery (6 weeks · ₦100,000)`;
-    window.open(`https://wa.me/2349027406685?text=${msg}`, "_blank");
+    window.open(`https://wa.me/2347076245153?text=${msg}`, "_blank");
     setSubmitted(true);
   };
 
@@ -419,7 +419,7 @@ export default function AcademyPage() {
               <a href="#enroll" className="btn btn-lg" style={{ background: "#fff", color: "#0B1120", fontWeight: 700, display: "flex", alignItems: "center", gap: 8, boxShadow: "0 4px 16px rgba(0,0,0,0.15)" }}>
                 <GraduationCap size={18} /> Enroll — ₦100,000
               </a>
-              <a href="https://wa.me/2349027406685" target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-lg" style={{ color: "#fff", borderColor: "rgba(255,255,255,0.22)", display: "flex", alignItems: "center", gap: 8 }}>
+              <a href="https://wa.me/2347076245153" target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-lg" style={{ color: "#fff", borderColor: "rgba(255,255,255,0.22)", display: "flex", alignItems: "center", gap: 8 }}>
                 <Phone size={18} /> Ask a Question
               </a>
             </div>
