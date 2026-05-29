@@ -14,7 +14,7 @@ const MONO = "ui-monospace, 'SF Mono', SFMono-Regular, Menlo, monospace";
 
 const modules = [
   {
-    week: "Week 1",
+    week: "Week 1 · Part 1",
     title: "Platform Foundations",
     icon: <Target size={20} />,
     accent: "#F59E0B",
@@ -27,7 +27,7 @@ const modules = [
     ],
   },
   {
-    week: "Week 2",
+    week: "Week 1 · Part 2",
     title: "Prompt Writing Mastery",
     icon: <MessageSquare size={20} />,
     accent: "#60A5FA",
@@ -40,7 +40,7 @@ const modules = [
     ],
   },
   {
-    week: "Week 3",
+    week: "Week 1 · Part 3",
     title: "Response Critique & Ranking",
     icon: <Brain size={20} />,
     accent: "#A78BFA",
@@ -53,7 +53,7 @@ const modules = [
     ],
   },
   {
-    week: "Week 4",
+    week: "Week 2 · Part 1",
     title: "Coding & SWE Tasks",
     icon: <Code2 size={20} />,
     accent: "#34D399",
@@ -66,7 +66,7 @@ const modules = [
     ],
   },
   {
-    week: "Week 5",
+    week: "Week 2 · Part 2",
     title: "Earnings & Tier Strategy",
     icon: <TrendingUp size={20} />,
     accent: "#F472B6",
@@ -79,7 +79,7 @@ const modules = [
     ],
   },
   {
-    week: "Week 6",
+    week: "Week 2 · Part 3",
     title: "Assessment & Certification",
     icon: <BadgeCheck size={20} />,
     accent: "#22D3EE",
@@ -110,7 +110,7 @@ const benefits = [
 
 const faqs = [
   { q: "Do I need coding experience?", a: "No. Week 4 covers coding tasks but only basic logic is needed. Most students earn well on writing and critique tasks which require zero coding." },
-  { q: "How long does the course take?", a: "6 weeks at roughly 2–4 hours per day. You can go faster — most students complete assessments by week 4." },
+  { q: "How long does the course take?", a: "2 weeks of intensive daily training. Sessions are focused and practical — most students are assessment-ready by the end of week 2." },
   { q: "What happens after I finish?", a: "You sit the certification exam. Graduates get a certificate and direct placement access through Work Proxy's verified account network." },
   { q: "Will I definitely pass the Outlier assessment?", a: "We can't guarantee it 100%, but our 94% first-try pass rate speaks for itself. If you fail, we give you extra sessions at no charge." },
   { q: "How is payment made?", a: "One-time ₦100,000 payment via bank transfer or USDT. After WhatsApp confirmation, you get immediate access to all materials." },
@@ -127,7 +127,7 @@ export default function AcademyPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `🎓 *WORK PROXY ACADEMY — OUTLIER AI ENROLMENT*%0A%0A*Name:* ${formData.fullName}%0A*Email:* ${formData.email}%0A*Phone:* ${formData.phone}%0A*Experience:* ${formData.experience || "None provided"}%0A%0ACourse: Outlier AI Mastery (6 weeks · ₦100,000)`;
+    const msg = `🎓 *WORK PROXY ACADEMY — OUTLIER AI ENROLMENT*%0A%0A*Name:* ${formData.fullName}%0A*Email:* ${formData.email}%0A*Phone:* ${formData.phone}%0A*Experience:* ${formData.experience || "None provided"}%0A%0ACourse: Outlier AI Mastery (2 weeks · ₦100,000)`;
     window.open(`https://wa.me/2347076245153?text=${msg}`, "_blank");
     setSubmitted(true);
   };
@@ -151,7 +151,7 @@ export default function AcademyPage() {
               <span className="ac-h1-grad">Get certified.<br />Start earning.</span>
             </h1>
             <p className="ac-sub reveal" style={{ ['--delay' as string]: '100ms' }}>
-              A 6-week intensive training programme that takes you from zero to certified Outlier
+              A 2-week intensive training programme that takes you from zero to certified Outlier
               AI tasker — with real task practice, live sessions, and guaranteed job placement support.
             </p>
             <div className="ac-hero-actions reveal" style={{ ['--delay' as string]: '150ms' }}>
@@ -174,11 +174,11 @@ export default function AcademyPage() {
               <span className="ac-card-live">ENROLLING</span>
             </div>
             <div className="ac-card-price">₦100,000</div>
-            <div className="ac-card-meta">One-time · All 6 weeks included</div>
+            <div className="ac-card-meta">One-time · Full 2-week programme</div>
 
             <div className="ac-card-items">
               {[
-                "6 weeks of structured training",
+                "2 weeks of structured training",
                 "Real task practice with feedback",
                 "2× live sessions per week",
                 "Mock assessment + 1-on-1 review",
@@ -195,7 +195,7 @@ export default function AcademyPage() {
             <div className="ac-card-stats">
               <div className="ac-card-stat"><span>94%</span><small>pass rate</small></div>
               <div className="ac-card-divider" />
-              <div className="ac-card-stat"><span>6 wks</span><small>duration</small></div>
+              <div className="ac-card-stat"><span>2 wks</span><small>duration</small></div>
               <div className="ac-card-divider" />
               <div className="ac-card-stat"><span>$2K</span><small>top earner</small></div>
             </div>
@@ -210,7 +210,7 @@ export default function AcademyPage() {
             {[
               { value: "94%", label: "First-try pass rate" },
               { value: "$2,000", label: "Top monthly earning" },
-              { value: "6 weeks", label: "Full programme" },
+              { value: "2 weeks", label: "Full programme" },
               { value: "48h", label: "Placement turnaround" },
             ].map((s) => (
               <div key={s.label} className="ac-strip-item reveal">
@@ -227,7 +227,7 @@ export default function AcademyPage() {
         <div className="container">
           <div className="ac-head">
             <span className="ac-eyebrow amber">Curriculum</span>
-            <h2 className="ac-h2">6 weeks. <span className="ac-grad-amber">One platform mastered.</span></h2>
+            <h2 className="ac-h2">2 weeks. <span className="ac-grad-amber">One platform mastered.</span></h2>
             <p className="ac-head-sub">Every module is built around real Outlier tasks — not theory. You leave each week able to do the work, not just understand it.</p>
           </div>
 
@@ -309,7 +309,7 @@ export default function AcademyPage() {
           <div className="ac-steps">
             {[
               { n: "01", title: "Enroll & Pay", desc: "Fill the form below. Pay ₦100,000 via bank transfer or USDT. Instant access to all course materials." },
-              { n: "02", title: "Train for 6 Weeks", desc: "Work through modules at your pace. Attend 2 live sessions weekly. Submit practise tasks for feedback." },
+              { n: "02", title: "Train for 2 Weeks", desc: "Work through all modules at an intensive pace. Attend live sessions daily and submit practise tasks for feedback." },
               { n: "03", title: "Sit the Assessment", desc: "A real mock Outlier assessment under timed conditions. 1-on-1 feedback call with your trainer after." },
               { n: "04", title: "Get Certified & Placed", desc: "Receive your certificate. Get matched to a verified Outlier account through Work Proxy — skip the queue." },
             ].map((s, i) => (
@@ -369,7 +369,7 @@ export default function AcademyPage() {
                 <div className="ac-form-course-icon"><Target size={22} /></div>
                 <div>
                   <div className="ac-form-course-name">Outlier AI Mastery</div>
-                  <div className="ac-form-course-meta">6 weeks · Live sessions · Certificate included</div>
+                  <div className="ac-form-course-meta">2 weeks · Live sessions · Certificate included</div>
                 </div>
                 <div className="ac-form-course-price">₦100,000</div>
               </div>
