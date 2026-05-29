@@ -223,12 +223,12 @@ export default function AcademyPage() {
       </div>
 
       {/* ─── CURRICULUM ─── */}
-      <section className="ac-section ac-dark" id="curriculum">
+      <section className="ac-section ac-curriculum" id="curriculum">
         <div className="container">
           <div className="ac-head">
             <span className="ac-eyebrow amber">Curriculum</span>
-            <h2 className="ac-h2 light">6 weeks. <span className="ac-grad-amber">One platform mastered.</span></h2>
-            <p className="ac-head-sub light">Every module is built around real Outlier tasks — not theory. You leave each week able to do the work, not just understand it.</p>
+            <h2 className="ac-h2">6 weeks. <span className="ac-grad-amber">One platform mastered.</span></h2>
+            <p className="ac-head-sub">Every module is built around real Outlier tasks — not theory. You leave each week able to do the work, not just understand it.</p>
           </div>
 
           <div className="ac-modules">
@@ -433,14 +433,15 @@ export default function AcademyPage() {
         /* ── HERO ── */
         .ac-hero {
           position: relative; overflow: hidden;
-          background: var(--bg-dark);
+          background: var(--bg-secondary);
+          border-bottom: 1px solid var(--border);
           padding: 100px 0 88px;
         }
         .ac-hero-grid {
           position: absolute; inset: 0;
           background-image:
-            linear-gradient(rgba(245,158,11,0.06) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(245,158,11,0.06) 1px, transparent 1px);
+            linear-gradient(rgba(37,99,235,0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(37,99,235,0.05) 1px, transparent 1px);
           background-size: 50px 50px;
           mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%);
           -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 100%);
@@ -448,7 +449,7 @@ export default function AcademyPage() {
         .ac-hero-glow {
           position: absolute; top: -180px; left: 50%; transform: translateX(-50%);
           width: 800px; height: 500px;
-          background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 65%);
+          background: radial-gradient(circle, rgba(217,119,6,0.1) 0%, transparent 65%);
           filter: blur(20px); pointer-events: none;
         }
         .ac-hero-inner {
@@ -459,23 +460,24 @@ export default function AcademyPage() {
           .ac-hero-inner { grid-template-columns: 1fr; }
           .ac-hero-card { order: -1; }
         }
-        .ac-hero-text { color: #fff; }
+        .ac-hero-text { color: var(--text-primary); }
         .ac-h1 {
           font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px);
           font-weight: 800; line-height: 1.04; letter-spacing: -0.03em; margin-bottom: 20px;
+          color: var(--text-primary);
         }
         .ac-h1-grad {
-          background: linear-gradient(120deg, #F59E0B, #FCD34D 50%, #F97316);
+          background: linear-gradient(120deg, #D97706, #F59E0B 50%, #F97316);
           -webkit-background-clip: text; background-clip: text; color: transparent;
         }
-        .ac-sub { font-size: 17px; line-height: 1.75; color: #94A3B8; margin-bottom: 32px; max-width: 480px; }
+        .ac-sub { font-size: 17px; line-height: 1.75; color: var(--text-secondary); margin-bottom: 32px; max-width: 480px; }
         .ac-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
         /* floating card */
         .ac-hero-card {
-          background: #0B1220; border: 1px solid rgba(245,158,11,0.2);
+          background: #0B1220; border: 1px solid rgba(217,119,6,0.25);
           border-radius: var(--radius-xl); overflow: hidden;
-          box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+          box-shadow: var(--shadow-xl);
           animation: float 7s ease-in-out infinite;
         }
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
@@ -509,20 +511,18 @@ export default function AcademyPage() {
           .ac-strip-item:nth-child(2) { border-right: none; }
           .ac-strip-item:nth-child(1), .ac-strip-item:nth-child(2) { border-bottom: 1px solid var(--border); }
         }
-        .ac-strip-val { display: block; font-family: var(--font-display); font-size: 32px; font-weight: 800; background: linear-gradient(120deg, #D97706, #F59E0B); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .ac-strip-val { display: block; font-family: var(--font-display); font-size: 32px; font-weight: 800; background: linear-gradient(120deg, #2563EB, #7C3AED); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .ac-strip-label { font-size: 12px; color: var(--text-muted); font-weight: 600; margin-top: 4px; display: block; }
 
         /* SECTIONS */
         .ac-section { padding: 88px 0; }
-        .ac-dark { background: var(--bg-dark); }
+        .ac-curriculum { background: var(--bg-primary); }
         .ac-head { text-align: center; max-width: 680px; margin: 0 auto 52px; }
         .ac-eyebrow { font-family: ${MONO}; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-primary); display: inline-block; margin-bottom: 14px; }
-        .ac-eyebrow.amber { color: #F59E0B; }
+        .ac-eyebrow.amber { color: #D97706; }
         .ac-h2 { font-family: var(--font-display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; letter-spacing: -.025em; line-height: 1.1; margin-bottom: 14px; color: var(--text-primary); }
-        .ac-h2.light { color: #fff; }
-        .ac-grad-amber { background: linear-gradient(120deg, #F59E0B, #FCD34D); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .ac-grad-amber { background: linear-gradient(120deg, #D97706, #F59E0B); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .ac-head-sub { color: var(--text-secondary); font-size: 16px; line-height: 1.75; max-width: 560px; margin: 0 auto; }
-        .ac-head-sub.light { color: #94A3B8; }
 
         /* MODULES */
         .ac-modules { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
@@ -530,25 +530,26 @@ export default function AcademyPage() {
         @media (max-width: 560px) { .ac-modules { grid-template-columns: 1fr; } }
         .ac-module {
           position: relative; overflow: hidden;
-          background: linear-gradient(160deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
-          border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius-xl); padding: 26px;
-          transition: transform .35s cubic-bezier(.22,1,.36,1), border-color .35s;
+          background: var(--bg-card);
+          border: 1.5px solid var(--border); border-radius: var(--radius-xl); padding: 26px;
+          box-shadow: var(--shadow-xs);
+          transition: transform .35s cubic-bezier(.22,1,.36,1), border-color .35s, box-shadow .35s;
         }
-        .ac-module:hover { transform: translateY(-5px); border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+        .ac-module:hover { transform: translateY(-5px); border-color: color-mix(in srgb, var(--accent) 50%, transparent); box-shadow: 0 20px 48px rgba(var(--glow),.14); }
         .ac-module-glow {
           position: absolute; top: -40%; right: -20%; width: 200px; height: 200px;
-          background: radial-gradient(circle, rgba(var(--glow),.22), transparent 70%);
+          background: radial-gradient(circle, rgba(var(--glow),.14), transparent 70%);
           opacity: 0; transition: opacity .4s; pointer-events: none;
         }
         .ac-module:hover .ac-module-glow { opacity: 1; }
         .ac-module-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-        .ac-module-icon { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); transition: transform .35s cubic-bezier(.22,1,.36,1); }
+        .ac-module-icon { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent); transition: transform .35s cubic-bezier(.22,1,.36,1); }
         .ac-module:hover .ac-module-icon { transform: scale(1.08) rotate(-3deg); }
-        .ac-module-week { font-family: ${MONO}; font-size: 12px; font-weight: 700; color: rgba(255,255,255,.25); letter-spacing: .06em; }
-        .ac-module-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #F1F5F9; margin-bottom: 14px; }
+        .ac-module-week { font-family: ${MONO}; font-size: 12px; font-weight: 700; color: var(--text-light); letter-spacing: .06em; }
+        .ac-module-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; }
         .ac-module-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
-        .ac-module-list li { display: flex; align-items: flex-start; gap: 9px; font-size: 13.5px; color: #94A3B8; line-height: 1.55; }
-        .ac-mod-check { color: #F59E0B; flex-shrink: 0; margin-top: 2px; }
+        .ac-module-list li { display: flex; align-items: flex-start; gap: 9px; font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
+        .ac-mod-check { color: #D97706; flex-shrink: 0; margin-top: 2px; }
 
         /* OUTCOMES */
         .ac-outcomes { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
