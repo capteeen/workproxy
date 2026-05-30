@@ -40,6 +40,7 @@ export default function AdminClient({ adminData }: { adminData: AdminData }) {
 
   const [activeTab, setActiveTab] = useState("Overview");
   const [loading, setLoading] = useState<string | null>(null);
+  const [selectedListing, setSelectedListing] = useState<any | null>(null);
 
   const [form, setForm] = useState({
     userEmail: "",
@@ -238,20 +239,103 @@ export default function AdminClient({ adminData }: { adminData: AdminData }) {
 
           {/* Listings */}
           {activeTab === "Listings" && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {adminData.pendingListings.length === 0 && <p className="text-muted">No pending listings.</p>}
               {adminData.pendingListings.map((l) => (
-                <div key={l.id} className="card" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16 }}>
-                  <div>
-                    <h3 style={{ fontFamily: "var(--font-display)", fontSize: 16 }}>{l.platform}</h3>
-                    <p className="text-sm text-secondary">Earning: ${l.avgEarning} · Split: {l.ownerSplit}%</p>
+                <div
+                  key={l.id}
+                  className="listing-row-card"
+                  onClick={() => setSelectedListing(l)}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: 14, flex: 1, minWidth: 0 }}>
+                    <div className="listing-avatar">{l.platform?.[0] ?? "?"}</div>
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 2 }}>{l.platform}</div>
+                      <div className="text-sm text-secondary" style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                        <span>Earning: <b>${l.avgEarning}</b></span>
+                        <span>Split: <b>{l.ownerSplit}%</b></span>
+                        <span>Age: <b>{l.accountAge}</b></span>
+                        {l.owner && <span style={{ color: "var(--accent-primary)" }}>👤 {l.owner.name || l.owner.email}</span>}
+                      </div>
+                    </div>
                   </div>
-                  <div style={{ display: "flex", gap: 8 }}>
+                  <div style={{ display: "flex", gap: 8, flexShrink: 0 }} onClick={e => e.stopPropagation()}>
                     <button className="btn btn-outline btn-sm" onClick={() => handleAction('listing', l.id, 'APPROVED')} disabled={!!loading}>Approve</button>
                     <button className="btn btn-danger btn-sm" onClick={() => handleAction('listing', l.id, 'REJECTED')} disabled={!!loading}>Reject</button>
                   </div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Listing Detail Modal */}
+          {selectedListing && (
+            <div className="listing-modal-overlay" onClick={() => setSelectedListing(null)}>
+              <div className="listing-modal" onClick={e => e.stopPropagation()}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
+                  <div>
+                    <div className="listing-modal-platform">{selectedListing.platform}</div>
+                    <span className="badge badge-amber" style={{ marginTop: 6 }}>Pending Review</span>
+                  </div>
+                  <button onClick={() => setSelectedListing(null)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 22, color: "var(--text-muted)", lineHeight: 1 }}>✕</button>
+                </div>
+
+                <div className="listing-detail-grid">
+                  {/* Owner Info */}
+                  <div className="listing-detail-section">
+                    <div className="listing-detail-section-title">👤 Account Owner</div>
+                    <div className="listing-detail-row"><span>Name</span><b>{selectedListing.owner?.name || "—"}</b></div>
+                    <div className="listing-detail-row"><span>Email</span><b>{selectedListing.owner?.email || "—"}</b></div>
+                    <div className="listing-detail-row"><span>Member Since</span><b>{selectedListing.owner?.createdAt ? new Date(selectedListing.owner.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "—"}</b></div>
+                    <div className="listing-detail-row"><span>Owner ID</span><code style={{ fontSize: 11 }}>{selectedListing.ownerId}</code></div>
+                  </div>
+
+                  {/* Listing Info */}
+                  <div className="listing-detail-section">
+                    <div className="listing-detail-section-title">📋 Listing Details</div>
+                    <div className="listing-detail-row"><span>Platform</span><b>{selectedListing.platform}</b></div>
+                    <div className="listing-detail-row"><span>Avg Earning</span><b style={{ color: "var(--accent-emerald)" }}>${selectedListing.avgEarning}/mo</b></div>
+                    <div className="listing-detail-row"><span>Owner Split</span><b>{selectedListing.ownerSplit}%</b></div>
+                    <div className="listing-detail-row"><span>Account Age</span><b>{selectedListing.accountAge}</b></div>
+                    <div className="listing-detail-row"><span>Availability</span><b>{selectedListing.availability}</b></div>
+                    <div className="listing-detail-row"><span>Requires Trial</span><b>{selectedListing.requireTrial ? `Yes — ${selectedListing.trialDays} days` : "No"}</b></div>
+                  </div>
+                </div>
+
+                {/* Task types */}
+                {selectedListing.taskTypes?.length > 0 && (
+                  <div style={{ marginTop: 20 }}>
+                    <div className="listing-detail-section-title" style={{ marginBottom: 10 }}>🏷️ Task Types</div>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                      {selectedListing.taskTypes.map((t: string) => (
+                        <span key={t} className="badge badge-purple">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Description */}
+                {selectedListing.description && (
+                  <div style={{ marginTop: 20 }}>
+                    <div className="listing-detail-section-title" style={{ marginBottom: 8 }}>📝 Description</div>
+                    <p className="text-sm text-secondary" style={{ lineHeight: 1.7, background: "#f8fafc", padding: "12px 16px", borderRadius: 8 }}>{selectedListing.description}</p>
+                  </div>
+                )}
+
+                {/* Proof URL */}
+                {selectedListing.proofUrl && (
+                  <div style={{ marginTop: 16 }}>
+                    <div className="listing-detail-section-title" style={{ marginBottom: 6 }}>🔗 Proof URL</div>
+                    <a href={selectedListing.proofUrl} target="_blank" rel="noopener noreferrer" className="text-sm" style={{ color: "var(--accent-primary)", wordBreak: "break-all" }}>{selectedListing.proofUrl}</a>
+                  </div>
+                )}
+
+                <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid var(--border)", display: "flex", gap: 10, justifyContent: "flex-end" }}>
+                  <button className="btn btn-ghost btn-sm" onClick={() => setSelectedListing(null)}>Close</button>
+                  <button className="btn btn-danger btn-sm" disabled={!!loading} onClick={() => { handleAction('listing', selectedListing.id, 'REJECTED'); setSelectedListing(null); }}>Reject</button>
+                  <button className="btn btn-primary btn-sm" disabled={!!loading} onClick={() => { handleAction('listing', selectedListing.id, 'APPROVED'); setSelectedListing(null); }}>✓ Approve</button>
+                </div>
+              </div>
             </div>
           )}
 
@@ -368,6 +452,19 @@ export default function AdminClient({ adminData }: { adminData: AdminData }) {
       </main>
 
       <style>{`
+        .listing-row-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 16px 20px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
+        .listing-row-card:hover { border-color: var(--accent-primary); box-shadow: 0 4px 16px rgba(37,99,235,0.08); }
+        .listing-avatar { width: 42px; height: 42px; border-radius: 10px; background: var(--accent-primary); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; flex-shrink: 0; }
+        .listing-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .listing-modal { background: #fff; border-radius: 16px; padding: 32px; max-width: 680px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.18); }
+        .listing-modal-platform { font-family: var(--font-display); font-size: 22px; font-weight: 800; }
+        .listing-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 8px; }
+        @media (max-width: 600px) { .listing-detail-grid { grid-template-columns: 1fr; } }
+        .listing-detail-section { background: #f8fafc; border-radius: 10px; padding: 16px; }
+        .listing-detail-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 12px; }
+        .listing-detail-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+        .listing-detail-row:last-child { border-bottom: none; }
+        .listing-detail-row span { color: var(--text-secondary); }
         .dash-layout { display: flex; min-height: 100vh; background: var(--bg-primary); }
         .dash-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
         .dash-topbar { display: flex; align-items: center; justify-content: space-between; padding: 20px 32px; border-bottom: 1px solid var(--border); background: #ffffff; }

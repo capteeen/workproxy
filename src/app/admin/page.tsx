@@ -15,7 +15,7 @@ export default async function AdminPage() {
   // Fetch real platform data
   const [workerApps, listings, users, userCount, activeListings, blogPosts] = await Promise.all([
     prisma.workerApplication.findMany({ where: { status: "PENDING" }, orderBy: { appliedAt: 'desc' } }),
-    prisma.accountListing.findMany({ where: { status: "PENDING" }, orderBy: { createdAt: 'desc' } }),
+    prisma.accountListing.findMany({ where: { status: "PENDING" }, orderBy: { createdAt: 'desc' }, include: { owner: { select: { id: true, name: true, email: true, createdAt: true } } } }),
     prisma.user.findMany({ take: 10, orderBy: { createdAt: 'desc' } }),
     prisma.user.count(),
     prisma.accountListing.count({ where: { status: "APPROVED" } }),
