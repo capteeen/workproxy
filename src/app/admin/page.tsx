@@ -16,7 +16,7 @@ export default async function AdminPage() {
   const [workerApps, listings, users, userCount, activeListings, blogPosts] = await Promise.all([
     prisma.workerApplication.findMany({ where: { status: "PENDING" }, orderBy: { appliedAt: 'desc' } }),
     prisma.accountListing.findMany({ where: { status: "PENDING" }, orderBy: { createdAt: 'desc' }, include: { owner: { select: { id: true, name: true, email: true, createdAt: true } } } }),
-    prisma.user.findMany({ take: 10, orderBy: { createdAt: 'desc' } }),
+    prisma.user.findMany({ orderBy: { createdAt: 'desc' }, select: { id: true, name: true, email: true, role: true, createdAt: true } }),
     prisma.user.count(),
     prisma.accountListing.count({ where: { status: "APPROVED" } }),
     prisma.blogPost.findMany({ orderBy: { createdAt: 'desc' } })
@@ -31,12 +31,17 @@ export default async function AdminPage() {
       payoutRate: "100%",
     },
     pendingWorkerApps: workerApps,
-    pendingListings: listings,
+    pendingListings: listings.map((l: any) => ({
+      ...l,
+      // Ensure owner is populated — fall back to users array lookup if include missed it
+      owner: l.owner ?? users.find((u: any) => u.id === l.ownerId) ?? null,
+    })),
     users: users.map((u: any) => ({
       id: u.id,
       name: u.name,
       email: u.email,
       role: u.role,
+      createdAt: u.createdAt,
     })),
     blogPosts: blogPosts,
   };
