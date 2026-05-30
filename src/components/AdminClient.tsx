@@ -286,6 +286,7 @@ export default function AdminClient({ adminData }: { adminData: AdminData }) {
                     <div className="listing-detail-section-title">👤 Account Owner</div>
                     <div className="listing-detail-row"><span>Name</span><b>{selectedListing.owner?.name || "—"}</b></div>
                     <div className="listing-detail-row"><span>Email</span><b>{selectedListing.owner?.email || "—"}</b></div>
+                    <div className="listing-detail-row"><span>WhatsApp</span><b>{selectedListing.owner?.phone ? <a href={`https://wa.me/${selectedListing.owner.phone.replace(/\D/g,'')}`} target="_blank" rel="noopener noreferrer" style={{ color: "#25D366" }}>{selectedListing.owner.phone}</a> : "—"}</b></div>
                     <div className="listing-detail-row"><span>Member Since</span><b>{selectedListing.owner?.createdAt ? new Date(selectedListing.owner.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "—"}</b></div>
                     <div className="listing-detail-row"><span>Owner ID</span><code style={{ fontSize: 11 }}>{selectedListing.ownerId}</code></div>
                   </div>
