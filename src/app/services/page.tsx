@@ -15,10 +15,14 @@ const paidServices = [
   {
     id: "assessment",
     title: "Onboarding Assessment Writing",
-    price: "₦40,000",
-    rawPrice: 40000,
+    managedPrice: "₦60,000",
+    managedRaw: 60000,
+    selfPrice: "₦100,000",
+    selfRaw: 100000,
     icon: <GraduationCap size={24} />,
     description: "Our experts will take the qualification assessment test on your behalf to ensure you pass with a high score.",
+    managedNote: "Discounted because Work Proxy manages your account — bundled service.",
+    selfNote: "Standalone price — no account management included.",
     features: [
       "Done-for-you assessment writing",
       "Guaranteed passing scores",
@@ -29,10 +33,14 @@ const paidServices = [
   {
     id: "registration",
     title: "Managed Account Registration",
-    price: "₦60,000",
-    rawPrice: 60000,
+    managedPrice: "₦60,000",
+    managedRaw: 60000,
+    selfPrice: "₦120,000",
+    selfRaw: 120000,
     icon: <UserPlus size={24} />,
     description: "We handle the entire platform registration and profile setup process for you using owner credentials.",
+    managedNote: "Discounted when bundled with Work Proxy account management.",
+    selfNote: "Standalone registration without ongoing account management.",
     features: [
       "Done-for-you platform signup",
       "Identity protection & VPN setup",
@@ -43,10 +51,14 @@ const paidServices = [
   {
     id: "training",
     title: "Professional Tasker Training",
-    price: "₦60,000",
-    rawPrice: 60000,
+    managedPrice: "₦100,000",
+    managedRaw: 100000,
+    selfPrice: "₦100,000",
+    selfRaw: 100000,
     icon: <Briefcase size={24} />,
     description: "Master the art of high-quality tasking. Learn how to maintain 4.5+ ratings and avoid project removal.",
+    managedNote: "Same price regardless of account management.",
+    selfNote: "Same price regardless of account management.",
     features: [
       "Advanced tasking techniques",
       "Quality control mastery",
@@ -58,19 +70,24 @@ const paidServices = [
 
 export default function ServicesPage() {
   const [selectedService, setSelectedService] = useState(paidServices[0]);
+  const [managed, setManaged] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     platform: "Outlier AI",
     email: ""
   });
 
+  const currentPrice = managed ? selectedService.managedPrice : selectedService.selfPrice;
+  const currentNote = managed ? selectedService.managedNote : selectedService.selfNote;
+
   const handleBooking = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const message = `Hello Work Proxy, I want to book a service:
-    
+
 *Service:* ${selectedService.title}
-*Price:* ${selectedService.price}
+*Price:* ${currentPrice}
+*Account Management:* ${managed ? "Yes — Work Proxy managing my account" : "No — standalone service"}
 *Platform:* ${formData.platform}
 *Name:* ${formData.name}
 *Email:* ${formData.email}
@@ -103,11 +120,35 @@ Please provide payment details to proceed.`;
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <div className="svc-booking-container">
-            
+
+            {/* Managed Toggle */}
+            <div className="svc-toggle-wrap">
+              <div className="svc-toggle-label">
+                <span style={{ fontWeight: 700, color: "var(--text-primary)" }}>Will Work Proxy manage your account?</span>
+                <span className="text-sm text-muted" style={{ marginTop: 2 }}>Prices adjust based on your selection</span>
+              </div>
+              <div className="svc-toggle-btns">
+                <button
+                  className={`svc-toggle-btn ${managed ? "active" : ""}`}
+                  onClick={() => setManaged(true)}
+                >
+                  ✓ Yes — Work Proxy manages it
+                </button>
+                <button
+                  className={`svc-toggle-btn ${!managed ? "active" : ""}`}
+                  onClick={() => setManaged(false)}
+                >
+                  No — standalone service
+                </button>
+              </div>
+            </div>
+
             {/* Service Selection */}
             <div className="svc-selection-grid">
-              {paidServices.map((service) => (
-                <button 
+              {paidServices.map((service) => {
+                const price = managed ? service.managedPrice : service.selfPrice;
+                return (
+                <button
                   key={service.id}
                   className={`svc-option-card ${selectedService.id === service.id ? 'active' : ''}`}
                   onClick={() => setSelectedService(service)}
@@ -116,13 +157,14 @@ Please provide payment details to proceed.`;
                   <div className="svc-option-content">
                     <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>{service.title}</h3>
                     <p className="text-sm text-secondary" style={{ marginBottom: 12 }}>{service.description}</p>
-                    <div className="svc-option-price">{service.price}</div>
+                    <div className="svc-option-price">{price}</div>
                   </div>
                   <div className="svc-check">
                     {selectedService.id === service.id ? <CheckCircle2 size={24} /> : <Circle size={24} />}
                   </div>
                 </button>
-              ))}
+                );
+              })}
             </div>
 
             {/* Booking Form Card */}
@@ -180,10 +222,17 @@ Please provide payment details to proceed.`;
                         <span className="text-sm">Service:</span>
                         <span className="text-sm font-bold">{selectedService.title}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm">Grand Total (₦):</span>
-                        <span className="text-lg font-bold text-accent">{selectedService.price}</span>
+                      <div className="flex justify-between" style={{ marginBottom: 8 }}>
+                        <span className="text-sm">Account Managed:</span>
+                        <span className="text-sm font-bold" style={{ color: managed ? "var(--accent-emerald)" : "var(--text-muted)" }}>{managed ? "Yes ✓" : "No"}</span>
                       </div>
+                      <div className="flex justify-between" style={{ borderTop: "1px solid var(--border)", paddingTop: 10, marginTop: 4 }}>
+                        <span className="text-sm">Grand Total (₦):</span>
+                        <span className="text-lg font-bold text-accent">{currentPrice}</span>
+                      </div>
+                      {currentNote && (
+                        <p className="text-xs text-muted" style={{ marginTop: 8, fontStyle: "italic" }}>{currentNote}</p>
+                      )}
                     </div>
 
                     <button type="submit" className="btn btn-primary btn-lg w-full" style={{ justifyContent: "center", gap: 8, marginTop: 12 }}>
@@ -238,6 +287,51 @@ Please provide payment details to proceed.`;
         .svc-booking-container {
           max-width: 1000px;
           margin: 0 auto;
+        }
+
+        .svc-toggle-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 24px;
+          flex-wrap: wrap;
+          background: #ffffff;
+          border: 1.5px solid var(--border-accent);
+          border-radius: var(--radius-xl);
+          padding: 20px 24px;
+          margin-bottom: 28px;
+          box-shadow: var(--shadow-sm);
+        }
+        .svc-toggle-label {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+        .svc-toggle-btns {
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .svc-toggle-btn {
+          font-size: 13.5px;
+          font-weight: 600;
+          padding: 10px 20px;
+          border-radius: var(--radius-full);
+          border: 1.5px solid var(--border);
+          color: var(--text-secondary);
+          background: var(--bg-primary);
+          cursor: pointer;
+          transition: all .2s;
+        }
+        .svc-toggle-btn:hover {
+          border-color: var(--border-accent);
+          color: var(--accent-primary);
+        }
+        .svc-toggle-btn.active {
+          background: var(--accent-primary);
+          border-color: var(--accent-primary);
+          color: #ffffff;
+          box-shadow: var(--shadow-button);
         }
 
         .svc-selection-grid {
