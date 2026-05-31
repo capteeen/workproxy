@@ -29,7 +29,6 @@ export async function POST(req: Request) {
         email,
         passwordHash,
         name: `${firstName} ${lastName}`.trim(),
-        phone: phone || null,
         role, // "owner" or "worker"
       },
     });
