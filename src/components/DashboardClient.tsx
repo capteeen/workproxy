@@ -386,26 +386,7 @@ function OverviewTab({ workerData }: { workerData: DashboardData }) {
           ))}
         </div>
 
-        <div className="card">
-          <h3 style={{ fontFamily: "var(--font-display)", fontSize: 16, marginBottom: 16 }}>Earnings Breakdown</h3>
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {[
-              { label: "Work Proxy (50%)", pct: 50, color: "var(--accent-rose)", amount: Math.round(d.earnings.total * 0.5) },
-              { label: "You (Worker, 13.5%)", pct: 13.5, color: "var(--accent-primary)", amount: Math.round(d.earnings.total * 0.135) },
-              { label: "Account Owner (36.5%)", pct: 36.5, color: "#0099ff", amount: Math.round(d.earnings.total * 0.365) },
-            ].map((item) => (
-              <div key={item.label}>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                  <span className="text-sm text-secondary">{item.label}</span>
-                  <span className="text-sm font-semibold" style={{ color: item.color }}>${item.amount}</span>
-                </div>
-                <div className="progress-bar" style={{ height: 8 }}>
-                  <div className="progress-fill" style={{ width: `${item.pct}%`, background: item.color }} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+
       </div>
 
       <style>{`
