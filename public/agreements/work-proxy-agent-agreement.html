@@ -6,10 +6,11 @@
 <title>Work Proxy Agent Partnership Agreement</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --accent: #2563EB;
+    --accent-dark: #1d4ed8;
     --accent-soft: #EEF2FF;
     --ink: #0B1120;
     --muted: #475569;
@@ -26,6 +27,191 @@
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
+
+  /* ========== FORM VIEW ========== */
+  .form-wrap {
+    max-width: 640px;
+    margin: 40px auto;
+    background: var(--bg);
+    padding: 48px;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(11, 17, 32, 0.08);
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .form-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--accent), #7c3aed, #2563EB);
+  }
+  .form-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .form-head img {
+    width: 48px; height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid var(--line);
+  }
+  .form-head h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 26px;
+    line-height: 1.2;
+    margin: 0 0 4px;
+    letter-spacing: -0.02em;
+    font-weight: 800;
+  }
+  .form-head p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-grid .full { grid-column: 1 / -1; }
+  .field-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .field-group label .req { color: #DC2626; }
+  .field-group input,
+  .field-group select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14.5px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    background: white;
+    color: var(--ink);
+  }
+  .field-group input:focus,
+  .field-group select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  }
+  .ng-warning {
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #991B1B;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-top: 10px;
+    display: none;
+  }
+  .ng-warning.show { display: block; }
+
+  .signature-pad-wrap {
+    border: 2px dashed var(--line);
+    border-radius: 12px;
+    background: #fafbff;
+    padding: 12px;
+    position: relative;
+  }
+  .signature-pad-wrap .sig-label {
+    font-size: 11px;
+    color: var(--muted);
+    position: absolute;
+    top: 8px;
+    left: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  #signaturePad {
+    display: block;
+    width: 100%;
+    height: 160px;
+    background: white;
+    border-radius: 8px;
+    cursor: crosshair;
+    margin-top: 22px;
+    touch-action: none;
+  }
+  .sig-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+  .clear-btn {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .clear-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 28px;
+    letter-spacing: 0.01em;
+    transition: background 0.15s, transform 0.1s;
+    box-shadow: 0 10px 24px rgba(37,99,235,0.25);
+  }
+  .submit-btn:hover { background: var(--accent-dark); }
+  .submit-btn:active { transform: translateY(1px); }
+  .submit-btn:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .terms-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .terms-checkbox input {
+    margin-top: 3px;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ========== AGREEMENT VIEW ========== */
   .page {
     max-width: 820px;
     margin: 40px auto;
@@ -36,6 +222,7 @@
     border: 1px solid var(--line);
     position: relative;
     overflow: hidden;
+    display: none;
   }
   .page::before {
     content: '';
@@ -52,14 +239,9 @@
     padding-bottom: 24px;
     margin-bottom: 32px;
   }
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  .brand { display: flex; align-items: center; gap: 12px; }
   .brand img {
-    width: 48px;
-    height: 48px;
+    width: 48px; height: 48px;
     border-radius: 10px;
     object-fit: cover;
     border: 1px solid var(--line);
@@ -74,11 +256,9 @@
     text-align: right;
     font-size: 12px;
     color: var(--muted);
-    line-height: 1.5;
   }
   .doc-meta .label {
-    font-weight: 600;
-    color: var(--ink);
+    font-weight: 600; color: var(--ink);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     font-size: 10px;
@@ -103,11 +283,7 @@
     letter-spacing: -0.02em;
     font-weight: 800;
   }
-  .subtitle {
-    color: var(--muted);
-    font-size: 15px;
-    margin-bottom: 36px;
-  }
+  .subtitle { color: var(--muted); font-size: 15px; margin-bottom: 36px; }
   h2 {
     font-family: 'Bricolage Grotesque', sans-serif;
     font-size: 18px;
@@ -115,21 +291,16 @@
     margin: 36px 0 12px;
     padding-bottom: 8px;
     border-bottom: 1px solid var(--line);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; align-items: center; gap: 10px;
   }
   h2 .num {
     display: inline-flex;
-    width: 28px;
-    height: 28px;
+    width: 28px; height: 28px;
     background: var(--accent);
     color: white;
     border-radius: 8px;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 700;
+    align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
   }
   p { margin: 10px 0; font-size: 14.5px; }
   ul, ol { padding-left: 22px; font-size: 14.5px; }
@@ -145,8 +316,7 @@
     font-size: 14px;
   }
   .info-box .info-title {
-    font-weight: 700;
-    color: var(--accent);
+    font-weight: 700; color: var(--accent);
     margin-bottom: 4px;
     font-size: 13px;
     text-transform: uppercase;
@@ -166,9 +336,7 @@
   }
   .commission-card .big {
     font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 48px;
-    font-weight: 800;
-    line-height: 1;
+    font-size: 48px; font-weight: 800; line-height: 1;
   }
   .commission-card .label {
     font-size: 12px;
@@ -177,10 +345,7 @@
     opacity: 0.85;
     margin-bottom: 4px;
   }
-  .commission-card .desc {
-    font-size: 14px;
-    opacity: 0.92;
-  }
+  .commission-card .desc { font-size: 14px; opacity: 0.92; }
 
   .platforms-grid {
     display: grid;
@@ -194,16 +359,10 @@
     padding: 14px;
     text-align: center;
   }
-  .platform-pill .name {
-    font-weight: 700;
-    font-size: 15px;
-    margin-bottom: 2px;
-  }
+  .platform-pill .name { font-weight: 700; font-size: 15px; margin-bottom: 2px; }
   .platform-pill .meta {
-    font-size: 11px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    font-size: 11px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.04em;
   }
 
   .restriction-banner {
@@ -214,22 +373,50 @@
     border-radius: 10px;
     margin: 20px 0;
     font-size: 14px;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
+    display: flex; gap: 12px; align-items: flex-start;
   }
   .restriction-banner .icon {
-    background: #DC2626;
-    color: white;
-    width: 24px;
-    height: 24px;
+    background: #DC2626; color: white;
+    width: 24px; height: 24px;
     border-radius: 50%;
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center; justify-content: center;
     flex-shrink: 0;
-    font-weight: 800;
-    font-size: 14px;
+    font-weight: 800; font-size: 14px;
+  }
+
+  .agent-details-card {
+    background: var(--accent-soft);
+    border: 1.5px solid var(--accent);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .agent-details-card h3 {
+    margin: 0 0 12px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .agent-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 24px;
+    font-size: 13.5px;
+  }
+  .agent-details-grid .item .lbl {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 2px;
+    font-weight: 600;
+  }
+  .agent-details-grid .item .val {
+    font-weight: 600;
+    color: var(--ink);
   }
 
   .signature-area {
@@ -238,32 +425,31 @@
     grid-template-columns: 1fr 1fr;
     gap: 40px;
   }
-  .sig-box {
-    border-top: 2px solid var(--ink);
-    padding-top: 10px;
-  }
+  .sig-box { border-top: 2px solid var(--ink); padding-top: 10px; }
   .sig-box .role {
-    font-weight: 700;
-    font-size: 13px;
-    margin-bottom: 18px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-weight: 700; font-size: 13px; margin-bottom: 18px;
+    text-transform: uppercase; letter-spacing: 0.05em;
     color: var(--ink);
   }
-  .sig-box .field {
-    margin-bottom: 14px;
-  }
+  .sig-box .field { margin-bottom: 12px; }
   .sig-box .field-label {
-    font-size: 10px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 2px;
-    font-weight: 600;
+    font-size: 10px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 2px; font-weight: 600;
   }
   .sig-box .field-line {
     border-bottom: 1px solid var(--line);
-    height: 28px;
+    min-height: 22px;
+    padding-top: 2px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .sig-image {
+    max-height: 80px;
+    max-width: 100%;
+    margin-top: 4px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 6px;
   }
 
   .footer {
@@ -274,43 +460,157 @@
     color: var(--muted);
     font-size: 12px;
   }
-  .footer .url {
-    color: var(--accent);
-    font-weight: 600;
-  }
+  .footer .url { color: var(--accent); font-weight: 600; }
 
-  .print-btn {
+  .action-bar {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 20px; right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+  }
+  .action-btn {
     background: var(--accent);
     color: white;
     border: none;
-    padding: 12px 24px;
+    padding: 12px 22px;
     border-radius: 999px;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 10px 24px rgba(37,99,235,0.4);
     font-family: inherit;
     font-size: 14px;
+    box-shadow: 0 10px 24px rgba(37,99,235,0.3);
   }
-  .print-btn:hover { background: #1d4ed8; }
+  .action-btn:hover { background: var(--accent-dark); }
+  .action-btn.ghost {
+    background: white;
+    color: var(--ink);
+    border: 1.5px solid var(--line);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  @media (max-width: 640px) {
+    .form-wrap, .page { padding: 28px; margin: 16px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .platforms-grid { grid-template-columns: 1fr; }
+    .signature-area { grid-template-columns: 1fr; gap: 24px; }
+    h1 { font-size: 26px; }
+    .commission-card { flex-direction: column; text-align: center; }
+    .action-bar { flex-direction: column; right: 12px; top: 12px; }
+  }
 
   @media print {
     body { background: white; }
-    .page { box-shadow: none; border: none; margin: 0; max-width: 100%; padding: 40px 50px; border-radius: 0; }
-    .print-btn { display: none; }
+    .form-wrap { display: none !important; }
+    .action-bar { display: none !important; }
+    .page {
+      box-shadow: none; border: none;
+      margin: 0; max-width: 100%;
+      padding: 40px 50px; border-radius: 0;
+    }
     h2 { page-break-after: avoid; }
-    .commission-card, .info-box, .restriction-banner { page-break-inside: avoid; }
+    .commission-card, .info-box, .restriction-banner, .agent-details-card { page-break-inside: avoid; }
   }
 </style>
 </head>
 <body>
 
-<button class="print-btn" onclick="window.print()">⬇ Save as PDF / Print</button>
+<!-- ========== STEP 1: FORM ========== -->
+<div class="form-wrap" id="formView">
+  <div class="form-head">
+    <img src="/logo.jpg" alt="Work Proxy" />
+    <div>
+      <span class="badge">Step 1 of 2 · Your Details</span>
+      <h1>Work Proxy Agent Application</h1>
+      <p>Fill in your details to generate your personal Agent Partnership Agreement.</p>
+    </div>
+  </div>
 
-<div class="page">
+  <form id="agentForm">
+    <div class="form-grid">
+      <div class="field-group">
+        <label>First Name <span class="req">*</span></label>
+        <input type="text" id="firstName" required placeholder="John" />
+      </div>
+      <div class="field-group">
+        <label>Last Name <span class="req">*</span></label>
+        <input type="text" id="lastName" required placeholder="Doe" />
+      </div>
+      <div class="field-group full">
+        <label>Email Address <span class="req">*</span></label>
+        <input type="email" id="email" required placeholder="you@example.com" />
+      </div>
+      <div class="field-group full">
+        <label>WhatsApp Number <span class="req">*</span></label>
+        <input type="tel" id="phone" required placeholder="+44 7000 000000" />
+      </div>
+      <div class="field-group">
+        <label>Country of Residence <span class="req">*</span></label>
+        <select id="country" required>
+          <option value="">Select country...</option>
+          <option>United Kingdom</option>
+          <option>United States</option>
+          <option>Canada</option>
+          <option>Australia</option>
+          <option>Germany</option>
+          <option>Netherlands</option>
+          <option>Ireland</option>
+          <option>France</option>
+          <option>Italy</option>
+          <option>Spain</option>
+          <option>Belgium</option>
+          <option>Sweden</option>
+          <option>Norway</option>
+          <option>Denmark</option>
+          <option>Finland</option>
+          <option>New Zealand</option>
+          <option>Switzerland</option>
+          <option>Austria</option>
+          <option>Portugal</option>
+          <option style="color:#DC2626">Nigeria</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label>Date of Birth <span class="req">*</span></label>
+        <input type="date" id="dob" required />
+      </div>
+      <div class="field-group full">
+        <label>Residential Address <span class="req">*</span></label>
+        <input type="text" id="address" required placeholder="Street, City, Postcode" />
+      </div>
+      <div class="field-group full">
+        <label>Your Signature <span class="req">*</span></label>
+        <div class="signature-pad-wrap">
+          <span class="sig-label">Sign with mouse or finger</span>
+          <canvas id="signaturePad"></canvas>
+          <div class="sig-actions">
+            <button type="button" class="clear-btn" id="clearSig">Clear signature</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <div class="ng-warning" id="ngWarning">
+      <strong>⚠ Geographic restriction:</strong> Work Proxy Agent partnership is currently available only to applicants <strong>outside Nigeria</strong>. Please select a different country, or contact us at <strong>+234 707 624 5153</strong> for other opportunities.
+    </div>
+
+    <label class="terms-checkbox">
+      <input type="checkbox" id="agreeTerms" required />
+      <span>I confirm the details above are accurate, that I am outside Nigeria, and I agree to be bound by the Work Proxy Agent Partnership Agreement on the next page.</span>
+    </label>
+
+    <button type="submit" class="submit-btn" id="submitBtn">Generate My Agreement →</button>
+  </form>
+</div>
+
+<!-- ========== STEP 2: AGREEMENT (Hidden until form submitted) ========== -->
+<div class="action-bar" id="actionBar" style="display: none;">
+  <button class="action-btn ghost" onclick="editForm()">← Edit details</button>
+  <button class="action-btn" onclick="window.print()">⬇ Download as PDF</button>
+</div>
+
+<div class="page" id="agreementView">
   <div class="header">
     <div class="brand">
       <img src="/logo.jpg" alt="Work Proxy" />
@@ -322,8 +622,8 @@
     <div class="doc-meta">
       <div class="label">Document</div>
       <div>Agent Partnership Agreement</div>
-      <div class="label" style="margin-top: 8px;">Version</div>
-      <div>v1.0 · May 2026</div>
+      <div class="label" style="margin-top: 8px;">Date Issued</div>
+      <div id="docDate">—</div>
     </div>
   </div>
 
@@ -331,9 +631,21 @@
   <h1>Work Proxy <span style="color: var(--accent);">Agent</span> Partnership Agreement</h1>
   <p class="subtitle">This document outlines the terms, responsibilities, and commission structure between Work Proxy and its independent referral Agents.</p>
 
+  <div class="agent-details-card">
+    <h3>Agent Details</h3>
+    <div class="agent-details-grid">
+      <div class="item"><div class="lbl">Full Name</div><div class="val" id="agName">—</div></div>
+      <div class="item"><div class="lbl">Email</div><div class="val" id="agEmail">—</div></div>
+      <div class="item"><div class="lbl">WhatsApp</div><div class="val" id="agPhone">—</div></div>
+      <div class="item"><div class="lbl">Country</div><div class="val" id="agCountry">—</div></div>
+      <div class="item"><div class="lbl">Date of Birth</div><div class="val" id="agDob">—</div></div>
+      <div class="item"><div class="lbl">Address</div><div class="val" id="agAddress">—</div></div>
+    </div>
+  </div>
+
   <div class="commission-card">
     <div>
-      <div class="label">Agent Commission</div>
+      <div class="label">Agent Commission · Paid Weekly</div>
       <div class="desc">Earned on each verified, active account you bring</div>
     </div>
     <div class="big">5%</div>
@@ -345,18 +657,9 @@
   <h2><span class="num">2</span> Purpose of Engagement</h2>
   <p>The Agent agrees to act as an independent referral partner for Work Proxy, identifying and introducing qualified candidates ("Referred Workers") who will register and operate accounts on the following platforms under Work Proxy's management:</p>
   <div class="platforms-grid">
-    <div class="platform-pill">
-      <div class="name">Outlier AI</div>
-      <div class="meta">AI Training</div>
-    </div>
-    <div class="platform-pill">
-      <div class="name">OneForma</div>
-      <div class="meta">Data Tasking</div>
-    </div>
-    <div class="platform-pill">
-      <div class="name">Handshake</div>
-      <div class="meta">Talent Platform</div>
-    </div>
+    <div class="platform-pill"><div class="name">Outlier AI</div><div class="meta">AI Training</div></div>
+    <div class="platform-pill"><div class="name">OneForma</div><div class="meta">Data Tasking</div></div>
+    <div class="platform-pill"><div class="name">Handshake</div><div class="meta">Talent Platform</div></div>
   </div>
 
   <h2><span class="num">3</span> Eligibility &amp; Geographic Restriction</h2>
@@ -389,19 +692,19 @@
   <ul>
     <li>Commission is earned on the <strong>worker's portion</strong> of platform payouts after account verification and first successful payout.</li>
     <li>Commission accrues continuously for the lifetime of each active account under Work Proxy's management, subject to Section 7.</li>
-    <li>Payouts are issued monthly via bank transfer, PayPal, or other Work Proxy-supported channels.</li>
-    <li>A minimum payout threshold of $20 USD equivalent applies before disbursement.</li>
+    <li><strong>Payouts are issued weekly</strong> every Friday via bank transfer, PayPal, or other Work Proxy-supported channels.</li>
+    <li>A minimum payout threshold of $20 USD equivalent applies before disbursement; balances below this roll over to the following week.</li>
   </ul>
 
   <div class="info-box">
     <div class="info-title">Example Calculation</div>
-    A Referred Worker earns $400 on Outlier AI in a given month. After Work Proxy's standard split, the worker's portion is calculated. The Agent receives 5% of that worker portion, paid out at month-end.
+    A Referred Worker earns $400 on Outlier AI in a given week. After Work Proxy's standard split, the worker's portion is calculated. The Agent receives 5% of that worker portion, paid out the following Friday.
   </div>
 
   <h2><span class="num">6</span> Payment Terms</h2>
   <ul>
-    <li>Commission statements will be issued by the 5th of each calendar month for the prior month's earnings.</li>
-    <li>Payouts will be processed by the 10th of each calendar month, subject to verification.</li>
+    <li>Weekly commission statements are issued every <strong>Monday</strong> covering the prior week (Mon–Sun).</li>
+    <li><strong>Payouts are processed every Friday</strong> directly to the Agent's nominated account.</li>
     <li>The Agent is responsible for declaring and paying any local taxes on commission income.</li>
     <li>Work Proxy reserves the right to withhold commission in cases of fraudulent referral, account chargeback, or violation of this Agreement.</li>
   </ul>
@@ -409,7 +712,7 @@
   <h2><span class="num">7</span> Term &amp; Termination</h2>
   <p>This Agreement begins on the date of signature and continues until terminated by either Party with seven (7) days' written notice. Upon termination:</p>
   <ul>
-    <li>Commissions accrued up to the termination date will be paid in the next regular payout cycle.</li>
+    <li>Commissions accrued up to the termination date will be paid in the next regular weekly payout cycle.</li>
     <li>The Agent will retain no future commission rights for any Referred Worker beyond the termination date.</li>
     <li>The Agent must cease all representation of Work Proxy services immediately.</li>
   </ul>
@@ -426,41 +729,18 @@
   <div class="signature-area">
     <div class="sig-box">
       <div class="role">Agent</div>
-      <div class="field">
-        <div class="field-label">Full Name</div>
-        <div class="field-line"></div>
-      </div>
-      <div class="field">
-        <div class="field-label">Email Address</div>
-        <div class="field-line"></div>
-      </div>
-      <div class="field">
-        <div class="field-label">Country of Residence</div>
-        <div class="field-line"></div>
-      </div>
-      <div class="field">
-        <div class="field-label">Signature &amp; Date</div>
-        <div class="field-line"></div>
-      </div>
+      <div class="field"><div class="field-label">Full Name</div><div class="field-line" id="sigName">—</div></div>
+      <div class="field"><div class="field-label">Email</div><div class="field-line" id="sigEmail">—</div></div>
+      <div class="field"><div class="field-label">Country of Residence</div><div class="field-line" id="sigCountry">—</div></div>
+      <div class="field"><div class="field-label">Signature</div><img id="sigImage" class="sig-image" alt="Agent signature" /></div>
+      <div class="field"><div class="field-label">Date Signed</div><div class="field-line" id="sigDate">—</div></div>
     </div>
     <div class="sig-box">
       <div class="role">Work Proxy (Authorized Representative)</div>
-      <div class="field">
-        <div class="field-label">Full Name</div>
-        <div class="field-line"></div>
-      </div>
-      <div class="field">
-        <div class="field-label">Title</div>
-        <div class="field-line"></div>
-      </div>
-      <div class="field">
-        <div class="field-label">Email Address</div>
-        <div class="field-line"></div>
-      </div>
-      <div class="field">
-        <div class="field-label">Signature &amp; Date</div>
-        <div class="field-line"></div>
-      </div>
+      <div class="field"><div class="field-label">Full Name</div><div class="field-line"></div></div>
+      <div class="field"><div class="field-label">Title</div><div class="field-line"></div></div>
+      <div class="field"><div class="field-label">Email Address</div><div class="field-line"></div></div>
+      <div class="field"><div class="field-label">Signature &amp; Date</div><div class="field-line"></div></div>
     </div>
   </div>
 
@@ -468,8 +748,125 @@
     <p><strong>Work Proxy</strong> · Bridging global platform access for skilled professionals</p>
     <p><span class="url">workproxy.fun</span> · WhatsApp: +234 707 624 5153 · © 2026 Work Proxy. All rights reserved.</p>
   </div>
-
 </div>
+
+<script>
+  // Signature pad
+  const canvas = document.getElementById('signaturePad');
+  const ctx = canvas.getContext('2d');
+  let drawing = false, hasSignature = false;
+
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+    ctx.strokeStyle = '#0B1120';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+    return {x, y};
+  }
+  function startDraw(e) {
+    e.preventDefault();
+    drawing = true;
+    hasSignature = true;
+    const p = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+  }
+  function draw(e) {
+    if (!drawing) return;
+    e.preventDefault();
+    const p = getPos(e);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+  }
+  function endDraw() { drawing = false; }
+
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', endDraw);
+  canvas.addEventListener('mouseleave', endDraw);
+  canvas.addEventListener('touchstart', startDraw);
+  canvas.addEventListener('touchmove', draw);
+  canvas.addEventListener('touchend', endDraw);
+
+  document.getElementById('clearSig').addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hasSignature = false;
+  });
+
+  // Nigeria warning
+  const countrySelect = document.getElementById('country');
+  const ngWarning = document.getElementById('ngWarning');
+  const submitBtn = document.getElementById('submitBtn');
+  countrySelect.addEventListener('change', () => {
+    if (countrySelect.value === 'Nigeria') {
+      ngWarning.classList.add('show');
+      submitBtn.disabled = true;
+    } else {
+      ngWarning.classList.remove('show');
+      submitBtn.disabled = false;
+    }
+  });
+
+  // Form submission
+  document.getElementById('agentForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!hasSignature) {
+      alert('Please add your signature before submitting.');
+      return;
+    }
+    const fn = document.getElementById('firstName').value.trim();
+    const ln = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const country = document.getElementById('country').value;
+    const dob = document.getElementById('dob').value;
+    const address = document.getElementById('address').value.trim();
+    const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    // Populate agreement
+    document.getElementById('agName').textContent = `${fn} ${ln}`;
+    document.getElementById('agEmail').textContent = email;
+    document.getElementById('agPhone').textContent = phone;
+    document.getElementById('agCountry').textContent = country;
+    document.getElementById('agDob').textContent = new Date(dob).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('agAddress').textContent = address;
+
+    document.getElementById('sigName').textContent = `${fn} ${ln}`;
+    document.getElementById('sigEmail').textContent = email;
+    document.getElementById('sigCountry').textContent = country;
+    document.getElementById('sigDate').textContent = today;
+    document.getElementById('docDate').textContent = today;
+
+    // Convert signature canvas to image
+    document.getElementById('sigImage').src = canvas.toDataURL('image/png');
+
+    // Switch views
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('agreementView').style.display = 'block';
+    document.getElementById('actionBar').style.display = 'flex';
+    window.scrollTo(0, 0);
+  });
+
+  function editForm() {
+    document.getElementById('formView').style.display = 'block';
+    document.getElementById('agreementView').style.display = 'none';
+    document.getElementById('actionBar').style.display = 'none';
+    window.scrollTo(0, 0);
+  }
+</script>
 
 </body>
 </html>
