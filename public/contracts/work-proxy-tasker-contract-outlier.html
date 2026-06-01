@@ -31,237 +31,205 @@
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-  .page {
-    max-width: 840px;
+
+  /* ========== FORM VIEW ========== */
+  .form-wrap {
+    max-width: 640px;
     margin: 40px auto;
     background: var(--bg);
-    padding: 60px 68px;
-    box-shadow: 0 20px 60px rgba(11, 17, 32, 0.08);
+    padding: 48px;
     border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(11, 17, 32, 0.08);
     border: 1px solid var(--line);
     position: relative;
     overflow: hidden;
   }
-  .page::before {
+  .form-wrap::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 6px;
     background: linear-gradient(90deg, var(--accent), #7c3aed, #2563EB);
   }
+  .form-head { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+  .form-head img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; border: 1px solid var(--line); }
+  .form-head h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 24px; line-height: 1.2; margin: 0 0 4px;
+    letter-spacing: -0.02em; font-weight: 800;
+  }
+  .form-head p { margin: 0; color: var(--muted); font-size: 14px; }
+  .badge {
+    display: inline-block; background: var(--accent-soft); color: var(--accent);
+    padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-grid .full { grid-column: 1 / -1; }
+  .field-group label {
+    display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px;
+    color: var(--ink); letter-spacing: 0.02em;
+  }
+  .field-group label .req { color: var(--red); }
+  .field-group input,
+  .field-group select {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--line);
+    border-radius: 10px; font-family: inherit; font-size: 14.5px;
+    transition: border-color 0.15s, box-shadow 0.15s; background: white; color: var(--ink);
+  }
+  .field-group input:focus,
+  .field-group select:focus {
+    outline: none; border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  }
+
+  .signature-pad-wrap {
+    border: 2px dashed var(--line); border-radius: 12px;
+    background: #fafbff; padding: 12px; position: relative;
+  }
+  .signature-pad-wrap .sig-label {
+    font-size: 11px; color: var(--muted); position: absolute; top: 8px; left: 14px;
+    font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  #signaturePad {
+    display: block; width: 100%; height: 160px; background: white;
+    border-radius: 8px; cursor: crosshair; margin-top: 22px; touch-action: none;
+  }
+  .sig-actions { display: flex; justify-content: flex-end; margin-top: 8px; }
+  .clear-btn {
+    background: none; border: 1px solid var(--line); color: var(--muted);
+    font-family: inherit; font-size: 12px; padding: 6px 12px; border-radius: 999px; cursor: pointer;
+  }
+  .clear-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+  .submit-btn {
+    width: 100%; background: var(--accent); color: white; border: none;
+    padding: 16px; border-radius: 12px; font-family: inherit; font-size: 15px;
+    font-weight: 700; cursor: pointer; margin-top: 28px; letter-spacing: 0.01em;
+    transition: background 0.15s, transform 0.1s; box-shadow: 0 10px 24px rgba(37,99,235,0.25);
+  }
+  .submit-btn:hover { background: var(--accent-dark); }
+  .submit-btn:active { transform: translateY(1px); }
+
+  .terms-checkbox {
+    display: flex; align-items: flex-start; gap: 10px; margin-top: 20px;
+    font-size: 13px; color: var(--muted);
+  }
+  .terms-checkbox input { margin-top: 3px; accent-color: var(--accent); flex-shrink: 0; }
+
+  .rules-preview {
+    background: var(--red-soft); border: 1px solid #FECACA; border-radius: 12px;
+    padding: 16px 18px; margin-top: 22px; font-size: 13px; color: #7f1d1d;
+  }
+  .rules-preview .rp-title {
+    font-weight: 700; color: var(--red); margin-bottom: 6px; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .rules-preview ul { margin: 0; padding-left: 18px; }
+  .rules-preview li { margin: 4px 0; }
+
+  /* ========== CONTRACT VIEW ========== */
+  .page {
+    max-width: 840px; margin: 40px auto; background: var(--bg);
+    padding: 60px 68px; box-shadow: 0 20px 60px rgba(11, 17, 32, 0.08);
+    border-radius: 16px; border: 1px solid var(--line);
+    position: relative; overflow: hidden; display: none;
+  }
+  .page::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+    background: linear-gradient(90deg, var(--accent), #7c3aed, #2563EB);
+  }
   .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 2px solid var(--line);
-    padding-bottom: 24px;
-    margin-bottom: 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 2px solid var(--line); padding-bottom: 24px; margin-bottom: 32px;
   }
   .brand { display: flex; align-items: center; gap: 12px; }
-  .brand img {
-    width: 48px; height: 48px;
-    border-radius: 10px;
-    object-fit: cover;
-    border: 1px solid var(--line);
-  }
-  .brand-name {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-weight: 800;
-    font-size: 24px;
-    letter-spacing: -0.01em;
-  }
+  .brand img { width: 48px; height: 48px; border-radius: 10px; object-fit: cover; border: 1px solid var(--line); }
+  .brand-name { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 24px; letter-spacing: -0.01em; }
   .doc-meta { text-align: right; font-size: 12px; color: var(--muted); }
-  .doc-meta .label {
-    font-weight: 600; color: var(--ink);
-    text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px;
-  }
+  .doc-meta .label { font-weight: 600; color: var(--ink); text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px; }
   .hero-badge {
-    display: inline-block;
-    background: var(--accent-soft);
-    color: var(--accent);
-    padding: 6px 14px;
-    border-radius: 999px;
-    font-size: 12px; font-weight: 600;
-    letter-spacing: 0.04em; text-transform: uppercase;
-    margin-bottom: 16px;
+    display: inline-block; background: var(--accent-soft); color: var(--accent);
+    padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 16px;
   }
-  h1 {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 36px; line-height: 1.14;
-    margin: 0 0 12px; letter-spacing: -0.02em; font-weight: 800;
-  }
+  h1 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 36px; line-height: 1.14; margin: 0 0 12px; letter-spacing: -0.02em; font-weight: 800; }
   .subtitle { color: var(--muted); font-size: 15px; margin-bottom: 28px; }
-
   h2 {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 18px; font-weight: 700;
-    margin: 38px 0 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--line);
+    font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; font-weight: 700;
+    margin: 38px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
     display: flex; align-items: center; gap: 10px;
   }
   h2 .num {
-    display: inline-flex;
-    width: 28px; height: 28px;
-    background: var(--accent); color: white;
-    border-radius: 8px;
-    align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 700; flex-shrink: 0;
+    display: inline-flex; width: 28px; height: 28px; background: var(--accent); color: white;
+    border-radius: 8px; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;
   }
   p { margin: 10px 0; font-size: 14.5px; }
   ul, ol { padding-left: 22px; font-size: 14.5px; }
   li { margin: 7px 0; }
   strong { color: var(--ink); font-weight: 600; }
 
-  /* Parties block */
-  .parties {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin: 22px 0;
-  }
-  .party-card {
-    border: 1.5px solid var(--line);
-    border-radius: 12px;
-    padding: 18px 20px;
-  }
+  .parties { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+  .party-card { border: 1.5px solid var(--line); border-radius: 12px; padding: 18px 20px; }
   .party-card.company { background: var(--accent-soft); border-color: var(--accent); }
   .party-card h3 {
-    margin: 0 0 12px;
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;
-    color: var(--accent);
+    margin: 0 0 12px; font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent);
   }
   .party-card.tasker h3 { color: var(--ink); }
   .party-row { font-size: 13.5px; margin-bottom: 8px; }
-  .party-row .lbl {
-    font-size: 10px; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;
-  }
+  .party-row .lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
   .party-row .val { font-weight: 600; color: var(--ink); }
-  .blank {
-    display: inline-block;
-    border-bottom: 1.5px solid var(--ink);
-    min-width: 60%;
-    min-height: 18px;
-  }
-  .blank.sm { min-width: 40%; }
-  .blank.full { display: block; min-width: 100%; margin-top: 2px; }
 
-  /* Pay schedule cards */
-  .pay-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin: 18px 0;
-  }
-  .pay-card {
-    border-radius: 14px;
-    padding: 18px 22px;
-    color: white;
-    background: linear-gradient(135deg, #2563EB 0%, #1e40af 100%);
-  }
+  .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+  .pay-card { border-radius: 14px; padding: 18px 22px; color: white; background: linear-gradient(135deg, #2563EB 0%, #1e40af 100%); }
   .pay-card .region { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.85; }
-  .pay-card .day {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 28px; font-weight: 800; line-height: 1.1; margin: 4px 0;
-  }
+  .pay-card .day { font-family: 'Bricolage Grotesque', sans-serif; font-size: 28px; font-weight: 800; line-height: 1.1; margin: 4px 0; }
   .pay-card .sub { font-size: 13px; opacity: 0.92; }
 
   .rate-banner {
-    background: var(--green-soft);
-    border: 1.5px solid #A7F3D0;
-    border-radius: 12px;
-    padding: 18px 22px;
-    margin: 18px 0;
-    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    background: var(--green-soft); border: 1.5px solid #A7F3D0; border-radius: 12px;
+    padding: 18px 22px; margin: 18px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px;
   }
-  .rate-banner .big {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 44px; font-weight: 800; color: var(--green); line-height: 1;
-  }
+  .rate-banner .big { font-family: 'Bricolage Grotesque', sans-serif; font-size: 44px; font-weight: 800; color: var(--green); line-height: 1; }
   .rate-banner .txt { font-size: 14px; }
   .rate-banner .txt strong { color: #065f46; }
 
-  /* Rule callouts */
-  .rule-box {
-    background: var(--red-soft);
-    border-left: 4px solid var(--red);
-    border-radius: 0 10px 10px 0;
-    padding: 14px 20px;
-    margin: 14px 0;
-    font-size: 14px;
-  }
+  .rule-box { background: var(--red-soft); border-left: 4px solid var(--red); border-radius: 0 10px 10px 0; padding: 14px 20px; margin: 14px 0; font-size: 14px; }
   .rule-box .rule-title { font-weight: 700; color: var(--red); margin-bottom: 3px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; }
-  .info-box {
-    background: var(--accent-soft);
-    border-left: 4px solid var(--accent);
-    border-radius: 0 10px 10px 0;
-    padding: 14px 20px;
-    margin: 14px 0;
-    font-size: 14px;
-  }
+  .info-box { background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: 0 10px 10px 0; padding: 14px 20px; margin: 14px 0; font-size: 14px; }
   .info-box .info-title { font-weight: 700; color: var(--accent); margin-bottom: 3px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; }
 
-  /* Signature */
-  .signature-area {
-    margin-top: 48px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-  }
+  .signature-area { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
   .sig-box { border-top: 2px solid var(--ink); padding-top: 10px; }
-  .sig-box .role {
-    font-weight: 700; font-size: 13px; margin-bottom: 18px;
-    text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink);
-  }
-  .sig-box .field { margin-bottom: 16px; }
-  .sig-box .field-label {
-    font-size: 10px; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.06em;
-    margin-bottom: 4px; font-weight: 600;
-  }
-  .sig-box .field-line {
-    border-bottom: 1px solid var(--ink);
-    min-height: 26px;
-  }
-  .sig-box .ceo-sign {
-    font-family: 'Caveat', cursive;
-    font-size: 30px;
-    color: var(--accent);
-    line-height: 1;
-    padding-bottom: 2px;
-  }
+  .sig-box .role { font-weight: 700; font-size: 13px; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink); }
+  .sig-box .field { margin-bottom: 12px; }
+  .sig-box .field-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; font-weight: 600; }
+  .sig-box .field-line { border-bottom: 1px solid var(--line); min-height: 22px; padding-top: 2px; font-size: 14px; font-weight: 500; }
+  .sig-image { max-height: 80px; max-width: 100%; margin-top: 4px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  .sig-box .ceo-sign { font-family: 'Caveat', cursive; font-size: 30px; color: var(--accent); line-height: 1; padding-bottom: 2px; border-bottom: 1px solid var(--line); }
 
-  .footer {
-    margin-top: 52px;
-    padding-top: 24px;
-    border-top: 1px solid var(--line);
-    text-align: center;
-    color: var(--muted);
-    font-size: 12px;
-  }
+  .footer { margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--line); text-align: center; color: var(--muted); font-size: 12px; }
   .footer .url { color: var(--accent); font-weight: 600; }
 
-  .action-bar { position: fixed; top: 20px; right: 20px; z-index: 100; }
+  .action-bar { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 100; }
   .action-btn {
-    background: var(--accent); color: white; border: none;
-    padding: 12px 22px; border-radius: 999px;
-    font-weight: 600; cursor: pointer;
-    font-family: inherit; font-size: 14px;
-    box-shadow: 0 10px 24px rgba(37,99,235,0.3);
+    background: var(--accent); color: white; border: none; padding: 12px 22px; border-radius: 999px;
+    font-weight: 600; cursor: pointer; font-family: inherit; font-size: 14px; box-shadow: 0 10px 24px rgba(37,99,235,0.3);
   }
   .action-btn:hover { background: var(--accent-dark); }
+  .action-btn.ghost { background: white; color: var(--ink); border: 1.5px solid var(--line); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 
   @media (max-width: 720px) {
-    .page { padding: 28px; margin: 14px; }
-    .parties, .pay-grid, .signature-area { grid-template-columns: 1fr; }
+    .form-wrap, .page { padding: 28px; margin: 16px; }
+    .form-grid, .parties, .pay-grid, .signature-area { grid-template-columns: 1fr; }
     .rate-banner { flex-direction: column; text-align: center; }
     h1 { font-size: 27px; }
-    .action-bar { top: 12px; right: 12px; }
+    .action-bar { flex-direction: column; right: 12px; top: 12px; }
   }
   @media print {
     body { background: white; }
+    .form-wrap { display: none !important; }
     .action-bar { display: none !important; }
     .page { box-shadow: none; border: none; margin: 0; max-width: 100%; padding: 30px 40px; border-radius: 0; }
     h2 { page-break-after: avoid; }
@@ -271,11 +239,96 @@
 </head>
 <body>
 
-<div class="action-bar">
-  <button class="action-btn" onclick="window.print()">⬇ Download / Print</button>
+<!-- ========== STEP 1: FORM ========== -->
+<div class="form-wrap" id="formView">
+  <div class="form-head">
+    <img src="/logo.jpg" alt="Work Proxy" />
+    <div>
+      <span class="badge">Step 1 of 2 · Your Details</span>
+      <h1>Work Proxy Outlier Tasker Contract</h1>
+      <p>Fill in your details and sign below to generate your personal Tasker Contract.</p>
+    </div>
+  </div>
+
+  <form id="taskerForm">
+    <div class="form-grid">
+      <div class="field-group">
+        <label>First Name <span class="req">*</span></label>
+        <input type="text" id="firstName" required placeholder="John" />
+      </div>
+      <div class="field-group">
+        <label>Last Name <span class="req">*</span></label>
+        <input type="text" id="lastName" required placeholder="Doe" />
+      </div>
+      <div class="field-group full">
+        <label>Email Address <span class="req">*</span></label>
+        <input type="email" id="email" required placeholder="you@example.com" />
+      </div>
+      <div class="field-group full">
+        <label>Phone / WhatsApp Number <span class="req">*</span></label>
+        <input type="tel" id="phone" required placeholder="+234 800 000 0000" />
+      </div>
+      <div class="field-group">
+        <label>Date of Birth <span class="req">*</span></label>
+        <input type="date" id="dob" required />
+      </div>
+      <div class="field-group">
+        <label>Account Region You Work <span class="req">*</span></label>
+        <select id="region" required>
+          <option value="">Select...</option>
+          <option value="UK">UK-based account (Paid Tuesday)</option>
+          <option value="US">US-based account (Paid Thursday)</option>
+          <option value="Both">Both UK &amp; US accounts</option>
+        </select>
+      </div>
+      <div class="field-group full">
+        <label>Residential Address <span class="req">*</span></label>
+        <input type="text" id="address" required placeholder="Street, City, State" />
+      </div>
+      <div class="field-group full">
+        <label>Preferred Payout Method &amp; Details <span class="req">*</span></label>
+        <input type="text" id="payout" required placeholder="e.g. Bank name + account number / PayPal email" />
+      </div>
+      <div class="field-group full">
+        <label>Your Signature <span class="req">*</span></label>
+        <div class="signature-pad-wrap">
+          <span class="sig-label">Sign with mouse or finger</span>
+          <canvas id="signaturePad"></canvas>
+          <div class="sig-actions">
+            <button type="button" class="clear-btn" id="clearSig">Clear signature</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rules-preview">
+      <div class="rp-title">⚠ By signing you agree to these rules</div>
+      <ul>
+        <li>Report to your Team Lead — <strong>not the CEO</strong> — and communicate respectfully.</li>
+        <li><strong>No logging into another tasker's PC or account.</strong></li>
+        <li>Stay active — inactivity may lead to removal.</li>
+        <li>Protect the account; never risk suspension, low ratings, or project removal.</li>
+        <li>Keep all credentials and Work Proxy information confidential.</li>
+        <li>Strict action (including withheld pay and removal) for any breach.</li>
+      </ul>
+    </div>
+
+    <label class="terms-checkbox">
+      <input type="checkbox" id="agreeTerms" required />
+      <span>I confirm my details are accurate and I agree to be bound by the Work Proxy Outlier Tasker Contract, including all rules, on the next page.</span>
+    </label>
+
+    <button type="submit" class="submit-btn" id="submitBtn">Generate My Contract →</button>
+  </form>
 </div>
 
-<div class="page">
+<!-- ========== STEP 2: CONTRACT (hidden until submitted) ========== -->
+<div class="action-bar" id="actionBar" style="display: none;">
+  <button class="action-btn ghost" onclick="editForm()">← Edit details</button>
+  <button class="action-btn" onclick="window.print()">⬇ Download as PDF</button>
+</div>
+
+<div class="page" id="contractView">
   <div class="header">
     <div class="brand">
       <img src="/logo.jpg" alt="Work Proxy" />
@@ -287,8 +340,8 @@
     <div class="doc-meta">
       <div class="label">Document</div>
       <div>Tasker Contract — Outlier</div>
-      <div class="label" style="margin-top: 8px;">Date</div>
-      <div>______ / ______ / 2026</div>
+      <div class="label" style="margin-top: 8px;">Date Issued</div>
+      <div id="docDate">—</div>
     </div>
   </div>
 
@@ -296,9 +349,8 @@
   <h1>Work Proxy <span style="color: var(--accent);">Tasker</span> Contract</h1>
   <p class="subtitle">This Agreement sets out the terms between Work Proxy and the Tasker for work performed on <strong>Outlier AI</strong> accounts under Work Proxy management. This contract applies to Outlier AI work specifically.</p>
 
-  <!-- Parties -->
   <h2><span class="num">1</span> Parties to the Agreement</h2>
-  <p>This Agreement is made between the following parties (the "Parties") on the date signed below:</p>
+  <p>This Agreement is made between the following parties (the "Parties") on the date issued above:</p>
   <div class="parties">
     <div class="party-card company">
       <h3>The Company</h3>
@@ -306,19 +358,19 @@
       <div class="party-row"><div class="lbl">Represented by (CEO)</div><div class="val">Jafar Liman</div></div>
       <div class="party-row"><div class="lbl">Email</div><div class="val">lmnjfar@gmail.com</div></div>
       <div class="party-row"><div class="lbl">Address</div><div class="val">Sultan Road, House 40, Kano</div></div>
-      <div class="party-row"><div class="lbl">Website</div><div class="val">workproxy.fun</div></div>
+      <div class="party-row"><div class="lbl">Team Lead</div><div class="val">Ibrahim Ismail Maikaita</div></div>
     </div>
     <div class="party-card tasker">
       <h3>The Tasker</h3>
-      <div class="party-row"><div class="lbl">Full Name</div><div class="blank full"></div></div>
-      <div class="party-row"><div class="lbl">Email</div><div class="blank full"></div></div>
-      <div class="party-row"><div class="lbl">Phone / WhatsApp</div><div class="blank full"></div></div>
-      <div class="party-row"><div class="lbl">Residential Address</div><div class="blank full"></div></div>
-      <div class="party-row"><div class="lbl">Date of Birth</div><div class="blank full"></div></div>
+      <div class="party-row"><div class="lbl">Full Name</div><div class="val" id="tkName">—</div></div>
+      <div class="party-row"><div class="lbl">Email</div><div class="val" id="tkEmail">—</div></div>
+      <div class="party-row"><div class="lbl">Phone / WhatsApp</div><div class="val" id="tkPhone">—</div></div>
+      <div class="party-row"><div class="lbl">Account Region</div><div class="val" id="tkRegion">—</div></div>
+      <div class="party-row"><div class="lbl">Date of Birth</div><div class="val" id="tkDob">—</div></div>
+      <div class="party-row"><div class="lbl">Address</div><div class="val" id="tkAddress">—</div></div>
     </div>
   </div>
 
-  <!-- Purpose -->
   <h2><span class="num">2</span> Purpose &amp; Scope</h2>
   <p>The Tasker agrees to perform task work on <strong>Outlier AI</strong> accounts assigned and managed by Work Proxy. The Tasker will complete tasks diligently, follow all platform and Work Proxy guidelines, and work to maintain the account in good standing (high ratings, no violations, no project removals).</p>
   <div class="info-box">
@@ -326,17 +378,14 @@
     This contract covers Outlier AI only. Separate terms apply for any other platform (OneForma, Handshake, etc.).
   </div>
 
-  <!-- Hierarchy -->
   <h2><span class="num">3</span> Reporting &amp; Hierarchy</h2>
   <ol>
-    <li>Work Proxy has appointed a <strong>Manager / Team Lead</strong> to oversee all tasker work. The Tasker reports directly to the appointed Manager.</li>
-    <li>Manager assigned to the Tasker: <span class="blank sm"></span></li>
-    <li>All questions, updates, issues, and reports must go to the <strong>Manager</strong> — not directly to the CEO, unless instructed otherwise.</li>
-    <li>The Tasker agrees to follow the Manager's instructions and to treat the Manager with the same respect owed to the Company.</li>
+    <li>Work Proxy has appointed <strong>Ibrahim Ismail Maikaita</strong> as Team Lead to oversee all tasker work. The Tasker reports directly to the Team Lead.</li>
+    <li>All questions, updates, issues, and reports must go to the <strong>Team Lead</strong> — not directly to the CEO, unless instructed otherwise.</li>
+    <li>The Tasker agrees to follow the Team Lead's instructions and to treat the Team Lead with the same respect owed to the Company.</li>
     <li>Professional, respectful communication is required at all times.</li>
   </ol>
 
-  <!-- Pay -->
   <h2><span class="num">4</span> Pay Structure &amp; Schedule</h2>
   <div class="rate-banner">
     <div class="big">10%</div>
@@ -357,22 +406,19 @@
   </div>
   <ul>
     <li>Commission is calculated on the Tasker's verified pay share for the week (Monday–Sunday).</li>
-    <li>Payouts are made to the Tasker's nominated payment method below.</li>
+    <li>Payouts are made to the Tasker's nominated payment method: <strong id="tkPayout">—</strong></li>
     <li>Work Proxy may withhold or adjust pay in cases of fraud, account loss caused by the Tasker, or breach of this contract.</li>
   </ul>
-  <div class="party-row" style="margin-top:14px;"><div class="lbl">Tasker's preferred payout method &amp; details</div><div class="blank full"></div></div>
 
-  <!-- RULES -->
   <h2><span class="num">5</span> Rules &amp; Code of Conduct</h2>
   <p>The following rules are mandatory. Breaching any of them may result in strict action, including suspension, withheld pay, or removal.</p>
-
   <div class="rule-box">
     <div class="rule-title">Rule 1 · No shared logins</div>
     No Tasker is permitted to log into another Tasker's PC or account. Every Tasker works only their own assigned device/account so that, if anything goes wrong, the source can always be identified.
   </div>
   <div class="rule-box">
     <div class="rule-title">Rule 2 · Follow the hierarchy</div>
-    Report to your assigned Manager, not the CEO. Follow the Manager's instructions and communicate respectfully at all times.
+    Report to your Team Lead (Ibrahim Ismail Maikaita), not the CEO. Follow the Team Lead's instructions and communicate respectfully at all times.
   </div>
   <div class="rule-box">
     <div class="rule-title">Rule 3 · Stay active</div>
@@ -391,7 +437,6 @@
     No fraud, no falsifying work, no manipulation of earnings or ratings. All work must be genuine and to the required quality standard.
   </div>
 
-  <!-- Term -->
   <h2><span class="num">6</span> Term, Breach &amp; Termination</h2>
   <ul>
     <li>This Agreement begins on the date of signature and continues until terminated by either Party.</li>
@@ -401,34 +446,120 @@
     <li>On termination, the Tasker must immediately stop all access to and use of Work Proxy accounts and return/erase any credentials.</li>
   </ul>
 
-  <!-- Independent -->
   <h2><span class="num">7</span> Independent Contractor Status</h2>
   <p>The Tasker is engaged as an independent contractor, not an employee. The Tasker is responsible for their own taxes and any local obligations. Nothing in this Agreement creates a partnership or employment relationship.</p>
 
-  <!-- Acceptance -->
   <h2><span class="num">8</span> Acceptance &amp; Signatures</h2>
   <p>By signing below, both Parties confirm they have read, understood, and agree to be bound by all terms and rules of this Agreement.</p>
-
   <div class="signature-area">
     <div class="sig-box">
       <div class="role">The Tasker</div>
-      <div class="field"><div class="field-label">Full Name</div><div class="field-line"></div></div>
-      <div class="field"><div class="field-label">Signature</div><div class="field-line"></div></div>
-      <div class="field"><div class="field-label">Date</div><div class="field-line"></div></div>
+      <div class="field"><div class="field-label">Full Name</div><div class="field-line" id="sigName">—</div></div>
+      <div class="field"><div class="field-label">Signature</div><img id="sigImage" class="sig-image" alt="Tasker signature" /></div>
+      <div class="field"><div class="field-label">Date Signed</div><div class="field-line" id="sigDate">—</div></div>
     </div>
     <div class="sig-box">
       <div class="role">Work Proxy (CEO)</div>
-      <div class="field"><div class="field-label">Full Name</div><div class="field-line" style="font-weight:600;padding-top:4px;">Jafar Liman</div></div>
-      <div class="field"><div class="field-label">Signature</div><div class="field-line ceo-sign">Jafar Liman</div></div>
-      <div class="field"><div class="field-label">Date</div><div class="field-line"></div></div>
+      <div class="field"><div class="field-label">Full Name</div><div class="field-line" style="font-weight:600;">Jafar Liman</div></div>
+      <div class="field"><div class="field-label">Signature</div><div class="ceo-sign">Jafar Liman</div></div>
+      <div class="field"><div class="field-label">Date</div><div class="field-line" id="ceoDate">—</div></div>
     </div>
   </div>
 
   <div class="footer">
-    <p><strong>Work Proxy</strong> · CEO: Jafar Liman · Sultan Road, House 40, Kano · lmnjfar@gmail.com</p>
+    <p><strong>Work Proxy</strong> · CEO: Jafar Liman · Team Lead: Ibrahim Ismail Maikaita · Sultan Road, House 40, Kano</p>
     <p><span class="url">workproxy.fun</span> · © 2026 Work Proxy. All rights reserved. · Outlier AI Tasker Contract</p>
   </div>
 </div>
+
+<script>
+  // Signature pad
+  const canvas = document.getElementById('signaturePad');
+  const ctx = canvas.getContext('2d');
+  let drawing = false, hasSignature = false;
+
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+    ctx.strokeStyle = '#0B1120';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+    return { x, y };
+  }
+  function startDraw(e) { e.preventDefault(); drawing = true; hasSignature = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }
+  function draw(e) { if (!drawing) return; e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }
+  function endDraw() { drawing = false; }
+
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', endDraw);
+  canvas.addEventListener('mouseleave', endDraw);
+  canvas.addEventListener('touchstart', startDraw);
+  canvas.addEventListener('touchmove', draw);
+  canvas.addEventListener('touchend', endDraw);
+
+  document.getElementById('clearSig').addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hasSignature = false;
+  });
+
+  // Form submission
+  document.getElementById('taskerForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!hasSignature) { alert('Please add your signature before submitting.'); return; }
+
+    const fn = document.getElementById('firstName').value.trim();
+    const ln = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const dob = document.getElementById('dob').value;
+    const region = document.getElementById('region').value;
+    const address = document.getElementById('address').value.trim();
+    const payout = document.getElementById('payout').value.trim();
+    const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    const regionLabel = { UK: 'UK-based (Paid Tuesday)', US: 'US-based (Paid Thursday)', Both: 'UK & US accounts' }[region] || region;
+
+    document.getElementById('tkName').textContent = `${fn} ${ln}`;
+    document.getElementById('tkEmail').textContent = email;
+    document.getElementById('tkPhone').textContent = phone;
+    document.getElementById('tkRegion').textContent = regionLabel;
+    document.getElementById('tkDob').textContent = dob ? new Date(dob).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
+    document.getElementById('tkAddress').textContent = address;
+    document.getElementById('tkPayout').textContent = payout;
+
+    document.getElementById('sigName').textContent = `${fn} ${ln}`;
+    document.getElementById('sigDate').textContent = today;
+    document.getElementById('ceoDate').textContent = today;
+    document.getElementById('docDate').textContent = today;
+
+    document.getElementById('sigImage').src = canvas.toDataURL('image/png');
+
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('contractView').style.display = 'block';
+    document.getElementById('actionBar').style.display = 'flex';
+    window.scrollTo(0, 0);
+  });
+
+  function editForm() {
+    document.getElementById('formView').style.display = 'block';
+    document.getElementById('contractView').style.display = 'none';
+    document.getElementById('actionBar').style.display = 'none';
+    window.scrollTo(0, 0);
+  }
+</script>
 
 </body>
 </html>
