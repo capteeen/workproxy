@@ -996,13 +996,33 @@
     document.getElementById('docDate').textContent = today;
 
     // Convert signature canvas to image
-    document.getElementById('sigImage').src = canvas.toDataURL('image/png');
+    const signatureImage = canvas.toDataURL('image/png');
+    document.getElementById('sigImage').src = signatureImage;
 
     // Switch views
     document.getElementById('formView').style.display = 'none';
     document.getElementById('agreementView').style.display = 'block';
     document.getElementById('actionBar').style.display = 'flex';
     window.scrollTo(0, 0);
+
+    // Save the submission to the database (date of signing is stamped server-side)
+    fetch('/api/contracts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        docType: 'AGENT_AGREEMENT',
+        fullName: `${fn} ${ln}`,
+        firstName: fn,
+        lastName: ln,
+        email: email,
+        phone: phone,
+        country: country,
+        dob: dob,
+        address: address,
+        commissionRate: rate,
+        signatureImage: signatureImage
+      })
+    }).catch((err) => console.error('Could not save agreement:', err));
   });
 
   function editForm() {

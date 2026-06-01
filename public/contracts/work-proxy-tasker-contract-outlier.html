@@ -548,12 +548,33 @@
     document.getElementById('ceoDate').textContent = today;
     document.getElementById('docDate').textContent = today;
 
-    document.getElementById('sigImage').src = canvas.toDataURL('image/png');
+    const signatureImage = canvas.toDataURL('image/png');
+    document.getElementById('sigImage').src = signatureImage;
 
     document.getElementById('formView').style.display = 'none';
     document.getElementById('contractView').style.display = 'block';
     document.getElementById('actionBar').style.display = 'flex';
     window.scrollTo(0, 0);
+
+    // Save the submission to the database (date of signing is stamped server-side)
+    fetch('/api/contracts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        docType: 'TASKER_CONTRACT_OUTLIER',
+        fullName: `${fn} ${ln}`,
+        firstName: fn,
+        lastName: ln,
+        email: email,
+        phone: phone,
+        region: region,
+        dob: dob,
+        address: address,
+        payoutMethod: payout,
+        teamLead: 'Ibrahim Ismail Maikaita',
+        signatureImage: signatureImage
+      })
+    }).catch((err) => console.error('Could not save contract:', err));
   });
 
   function editForm() {
