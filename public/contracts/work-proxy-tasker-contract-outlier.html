@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Work Proxy · Outlier Tasker Contract</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #2563EB;
+    --accent-dark: #1d4ed8;
+    --accent-soft: #EEF2FF;
+    --ink: #0B1120;
+    --muted: #475569;
+    --line: #E2E8F0;
+    --red: #DC2626;
+    --red-soft: #FEF2F2;
+    --green: #16a34a;
+    --green-soft: #ECFDF5;
+    --bg: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Instrument Sans', system-ui, sans-serif;
+    color: var(--ink);
+    background: #f1f5f9;
+    margin: 0;
+    line-height: 1.65;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    max-width: 840px;
+    margin: 40px auto;
+    background: var(--bg);
+    padding: 60px 68px;
+    box-shadow: 0 20px 60px rgba(11, 17, 32, 0.08);
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .page::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--accent), #7c3aed, #2563EB);
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--line);
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand img {
+    width: 48px; height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid var(--line);
+  }
+  .brand-name {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+  }
+  .doc-meta { text-align: right; font-size: 12px; color: var(--muted); }
+  .doc-meta .label {
+    font-weight: 600; color: var(--ink);
+    text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 36px; line-height: 1.14;
+    margin: 0 0 12px; letter-spacing: -0.02em; font-weight: 800;
+  }
+  .subtitle { color: var(--muted); font-size: 15px; margin-bottom: 28px; }
+
+  h2 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 18px; font-weight: 700;
+    margin: 38px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 10px;
+  }
+  h2 .num {
+    display: inline-flex;
+    width: 28px; height: 28px;
+    background: var(--accent); color: white;
+    border-radius: 8px;
+    align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  p { margin: 10px 0; font-size: 14.5px; }
+  ul, ol { padding-left: 22px; font-size: 14.5px; }
+  li { margin: 7px 0; }
+  strong { color: var(--ink); font-weight: 600; }
+
+  /* Parties block */
+  .parties {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 22px 0;
+  }
+  .party-card {
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .party-card.company { background: var(--accent-soft); border-color: var(--accent); }
+  .party-card h3 {
+    margin: 0 0 12px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--accent);
+  }
+  .party-card.tasker h3 { color: var(--ink); }
+  .party-row { font-size: 13.5px; margin-bottom: 8px; }
+  .party-row .lbl {
+    font-size: 10px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;
+  }
+  .party-row .val { font-weight: 600; color: var(--ink); }
+  .blank {
+    display: inline-block;
+    border-bottom: 1.5px solid var(--ink);
+    min-width: 60%;
+    min-height: 18px;
+  }
+  .blank.sm { min-width: 40%; }
+  .blank.full { display: block; min-width: 100%; margin-top: 2px; }
+
+  /* Pay schedule cards */
+  .pay-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 18px 0;
+  }
+  .pay-card {
+    border-radius: 14px;
+    padding: 18px 22px;
+    color: white;
+    background: linear-gradient(135deg, #2563EB 0%, #1e40af 100%);
+  }
+  .pay-card .region { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.85; }
+  .pay-card .day {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 28px; font-weight: 800; line-height: 1.1; margin: 4px 0;
+  }
+  .pay-card .sub { font-size: 13px; opacity: 0.92; }
+
+  .rate-banner {
+    background: var(--green-soft);
+    border: 1.5px solid #A7F3D0;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 18px 0;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  }
+  .rate-banner .big {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 44px; font-weight: 800; color: var(--green); line-height: 1;
+  }
+  .rate-banner .txt { font-size: 14px; }
+  .rate-banner .txt strong { color: #065f46; }
+
+  /* Rule callouts */
+  .rule-box {
+    background: var(--red-soft);
+    border-left: 4px solid var(--red);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 20px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .rule-box .rule-title { font-weight: 700; color: var(--red); margin-bottom: 3px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .info-box {
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 20px;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  .info-box .info-title { font-weight: 700; color: var(--accent); margin-bottom: 3px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* Signature */
+  .signature-area {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .sig-box { border-top: 2px solid var(--ink); padding-top: 10px; }
+  .sig-box .role {
+    font-weight: 700; font-size: 13px; margin-bottom: 18px;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink);
+  }
+  .sig-box .field { margin-bottom: 16px; }
+  .sig-box .field-label {
+    font-size: 10px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 4px; font-weight: 600;
+  }
+  .sig-box .field-line {
+    border-bottom: 1px solid var(--ink);
+    min-height: 26px;
+  }
+  .sig-box .ceo-sign {
+    font-family: 'Caveat', cursive;
+    font-size: 30px;
+    color: var(--accent);
+    line-height: 1;
+    padding-bottom: 2px;
+  }
+
+  .footer {
+    margin-top: 52px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .footer .url { color: var(--accent); font-weight: 600; }
+
+  .action-bar { position: fixed; top: 20px; right: 20px; z-index: 100; }
+  .action-btn {
+    background: var(--accent); color: white; border: none;
+    padding: 12px 22px; border-radius: 999px;
+    font-weight: 600; cursor: pointer;
+    font-family: inherit; font-size: 14px;
+    box-shadow: 0 10px 24px rgba(37,99,235,0.3);
+  }
+  .action-btn:hover { background: var(--accent-dark); }
+
+  @media (max-width: 720px) {
+    .page { padding: 28px; margin: 14px; }
+    .parties, .pay-grid, .signature-area { grid-template-columns: 1fr; }
+    .rate-banner { flex-direction: column; text-align: center; }
+    h1 { font-size: 27px; }
+    .action-bar { top: 12px; right: 12px; }
+  }
+  @media print {
+    body { background: white; }
+    .action-bar { display: none !important; }
+    .page { box-shadow: none; border: none; margin: 0; max-width: 100%; padding: 30px 40px; border-radius: 0; }
+    h2 { page-break-after: avoid; }
+    .rule-box, .info-box, .pay-card, .rate-banner, .party-card, .signature-area { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="action-bar">
+  <button class="action-btn" onclick="window.print()">⬇ Download / Print</button>
+</div>
+
+<div class="page">
+  <div class="header">
+    <div class="brand">
+      <img src="/logo.jpg" alt="Work Proxy" />
+      <div>
+        <div class="brand-name">Work Proxy</div>
+        <div style="font-size: 11px; color: var(--muted); margin-top: 2px;">workproxy.fun</div>
+      </div>
+    </div>
+    <div class="doc-meta">
+      <div class="label">Document</div>
+      <div>Tasker Contract — Outlier</div>
+      <div class="label" style="margin-top: 8px;">Date</div>
+      <div>______ / ______ / 2026</div>
+    </div>
+  </div>
+
+  <span class="hero-badge">Outlier AI · Tasker Agreement</span>
+  <h1>Work Proxy <span style="color: var(--accent);">Tasker</span> Contract</h1>
+  <p class="subtitle">This Agreement sets out the terms between Work Proxy and the Tasker for work performed on <strong>Outlier AI</strong> accounts under Work Proxy management. This contract applies to Outlier AI work specifically.</p>
+
+  <!-- Parties -->
+  <h2><span class="num">1</span> Parties to the Agreement</h2>
+  <p>This Agreement is made between the following parties (the "Parties") on the date signed below:</p>
+  <div class="parties">
+    <div class="party-card company">
+      <h3>The Company</h3>
+      <div class="party-row"><div class="lbl">Company</div><div class="val">Work Proxy</div></div>
+      <div class="party-row"><div class="lbl">Represented by (CEO)</div><div class="val">Jafar Liman</div></div>
+      <div class="party-row"><div class="lbl">Email</div><div class="val">lmnjfar@gmail.com</div></div>
+      <div class="party-row"><div class="lbl">Address</div><div class="val">Sultan Road, House 40, Kano</div></div>
+      <div class="party-row"><div class="lbl">Website</div><div class="val">workproxy.fun</div></div>
+    </div>
+    <div class="party-card tasker">
+      <h3>The Tasker</h3>
+      <div class="party-row"><div class="lbl">Full Name</div><div class="blank full"></div></div>
+      <div class="party-row"><div class="lbl">Email</div><div class="blank full"></div></div>
+      <div class="party-row"><div class="lbl">Phone / WhatsApp</div><div class="blank full"></div></div>
+      <div class="party-row"><div class="lbl">Residential Address</div><div class="blank full"></div></div>
+      <div class="party-row"><div class="lbl">Date of Birth</div><div class="blank full"></div></div>
+    </div>
+  </div>
+
+  <!-- Purpose -->
+  <h2><span class="num">2</span> Purpose &amp; Scope</h2>
+  <p>The Tasker agrees to perform task work on <strong>Outlier AI</strong> accounts assigned and managed by Work Proxy. The Tasker will complete tasks diligently, follow all platform and Work Proxy guidelines, and work to maintain the account in good standing (high ratings, no violations, no project removals).</p>
+  <div class="info-box">
+    <div class="info-title">Outlier-specific</div>
+    This contract covers Outlier AI only. Separate terms apply for any other platform (OneForma, Handshake, etc.).
+  </div>
+
+  <!-- Hierarchy -->
+  <h2><span class="num">3</span> Reporting &amp; Hierarchy</h2>
+  <ol>
+    <li>Work Proxy has appointed a <strong>Manager / Team Lead</strong> to oversee all tasker work. The Tasker reports directly to the appointed Manager.</li>
+    <li>Manager assigned to the Tasker: <span class="blank sm"></span></li>
+    <li>All questions, updates, issues, and reports must go to the <strong>Manager</strong> — not directly to the CEO, unless instructed otherwise.</li>
+    <li>The Tasker agrees to follow the Manager's instructions and to treat the Manager with the same respect owed to the Company.</li>
+    <li>Professional, respectful communication is required at all times.</li>
+  </ol>
+
+  <!-- Pay -->
+  <h2><span class="num">4</span> Pay Structure &amp; Schedule</h2>
+  <div class="rate-banner">
+    <div class="big">10%</div>
+    <div class="txt">The Tasker earns a <strong>flat 10% of each pay share</strong> generated on the Outlier account they work, <strong>paid weekly</strong>. The remaining balance belongs to Work Proxy and the account owner per their own arrangement.</div>
+  </div>
+  <p>Weekly payouts are scheduled by the region of the account worked:</p>
+  <div class="pay-grid">
+    <div class="pay-card">
+      <div class="region">🇬🇧 UK-based account</div>
+      <div class="day">Paid Tuesday</div>
+      <div class="sub">Every week, for the prior week's earnings</div>
+    </div>
+    <div class="pay-card" style="background: linear-gradient(135deg,#7c3aed 0%,#5b21b6 100%);">
+      <div class="region">🇺🇸 US-based account</div>
+      <div class="day">Paid Thursday</div>
+      <div class="sub">Every week, for the prior week's earnings</div>
+    </div>
+  </div>
+  <ul>
+    <li>Commission is calculated on the Tasker's verified pay share for the week (Monday–Sunday).</li>
+    <li>Payouts are made to the Tasker's nominated payment method below.</li>
+    <li>Work Proxy may withhold or adjust pay in cases of fraud, account loss caused by the Tasker, or breach of this contract.</li>
+  </ul>
+  <div class="party-row" style="margin-top:14px;"><div class="lbl">Tasker's preferred payout method &amp; details</div><div class="blank full"></div></div>
+
+  <!-- RULES -->
+  <h2><span class="num">5</span> Rules &amp; Code of Conduct</h2>
+  <p>The following rules are mandatory. Breaching any of them may result in strict action, including suspension, withheld pay, or removal.</p>
+
+  <div class="rule-box">
+    <div class="rule-title">Rule 1 · No shared logins</div>
+    No Tasker is permitted to log into another Tasker's PC or account. Every Tasker works only their own assigned device/account so that, if anything goes wrong, the source can always be identified.
+  </div>
+  <div class="rule-box">
+    <div class="rule-title">Rule 2 · Follow the hierarchy</div>
+    Report to your assigned Manager, not the CEO. Follow the Manager's instructions and communicate respectfully at all times.
+  </div>
+  <div class="rule-box">
+    <div class="rule-title">Rule 3 · Stay active</div>
+    Taskers must remain consistently active. Inactivity without prior notice may result in removal from the team.
+  </div>
+  <div class="rule-box">
+    <div class="rule-title">Rule 4 · Protect the account</div>
+    Follow all Outlier and Work Proxy guidelines to keep accounts in good standing. Do not engage in any activity that risks account suspension, low ratings, or project removal. We cannot afford to lose accounts.
+  </div>
+  <div class="rule-box">
+    <div class="rule-title">Rule 5 · Confidentiality</div>
+    Account credentials, internal processes, client information, and Work Proxy methods are confidential and must never be shared with anyone outside Work Proxy.
+  </div>
+  <div class="rule-box">
+    <div class="rule-title">Rule 6 · Honesty &amp; integrity</div>
+    No fraud, no falsifying work, no manipulation of earnings or ratings. All work must be genuine and to the required quality standard.
+  </div>
+
+  <!-- Term -->
+  <h2><span class="num">6</span> Term, Breach &amp; Termination</h2>
+  <ul>
+    <li>This Agreement begins on the date of signature and continues until terminated by either Party.</li>
+    <li>Work Proxy may suspend or remove a Tasker immediately for any breach of the rules in Section 5.</li>
+    <li><strong>Strict action will be taken</strong> against any Tasker who violates this contract, including withholding of pay and permanent removal.</li>
+    <li>Earnings genuinely accrued up to the termination date will be paid in the next regular weekly cycle, subject to Section 4.</li>
+    <li>On termination, the Tasker must immediately stop all access to and use of Work Proxy accounts and return/erase any credentials.</li>
+  </ul>
+
+  <!-- Independent -->
+  <h2><span class="num">7</span> Independent Contractor Status</h2>
+  <p>The Tasker is engaged as an independent contractor, not an employee. The Tasker is responsible for their own taxes and any local obligations. Nothing in this Agreement creates a partnership or employment relationship.</p>
+
+  <!-- Acceptance -->
+  <h2><span class="num">8</span> Acceptance &amp; Signatures</h2>
+  <p>By signing below, both Parties confirm they have read, understood, and agree to be bound by all terms and rules of this Agreement.</p>
+
+  <div class="signature-area">
+    <div class="sig-box">
+      <div class="role">The Tasker</div>
+      <div class="field"><div class="field-label">Full Name</div><div class="field-line"></div></div>
+      <div class="field"><div class="field-label">Signature</div><div class="field-line"></div></div>
+      <div class="field"><div class="field-label">Date</div><div class="field-line"></div></div>
+    </div>
+    <div class="sig-box">
+      <div class="role">Work Proxy (CEO)</div>
+      <div class="field"><div class="field-label">Full Name</div><div class="field-line" style="font-weight:600;padding-top:4px;">Jafar Liman</div></div>
+      <div class="field"><div class="field-label">Signature</div><div class="field-line ceo-sign">Jafar Liman</div></div>
+      <div class="field"><div class="field-label">Date</div><div class="field-line"></div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p><strong>Work Proxy</strong> · CEO: Jafar Liman · Sultan Road, House 40, Kano · lmnjfar@gmail.com</p>
+    <p><span class="url">workproxy.fun</span> · © 2026 Work Proxy. All rights reserved. · Outlier AI Tasker Contract</p>
+  </div>
+</div>
+
+</body>
+</html>
