@@ -3,7 +3,9 @@ import { prisma } from "@/lib/prisma";
 
 const SITE = "https://workproxy.fun";
 
-export const dynamic = "force-dynamic";
+// Cache the sitemap as a static response, regenerating hourly. This avoids
+// cold-start/DB-timeout failures when search engines fetch it.
+export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
