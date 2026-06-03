@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const url = `${SITE}/blog/${slug}`;
   const images = post.imageUrl ? [post.imageUrl] : [];
   return {
-    title: `${post.title} | Work Proxy`,
+    title: post.title,
     description,
     alternates: { canonical: url },
     openGraph: { title: post.title, description, type: "article", url, images },
