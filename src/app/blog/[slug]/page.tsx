@@ -59,12 +59,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 function cleanContent(text: string): string {
-  let c = text;
-  c = c.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{200D}\u{20E3}\u{E0020}-\u{E007F}\u{FE0F}]/gu, '');
-  c = c.replace(/\s*\*\*\s*$/gm, '').replace(/^\s*[\*\-_]{3,}\s*$/gm, '').replace(/^\*\*\s*/gm, '').replace(/\*\s+\*/g, '').replace(/^\*\s*/gm, '- ').replace(/\s*\*\s*$/gm, '').replace(/^\s*[-*+]\s*$/gm, '');
-  c = c.replace(/([^\n])(#{1,6}\s)/g, '$1\n\n$2').replace(/([^\n\d])(\d+\.\s)/g, '$1\n\n$2').replace(/([^\n])(- )/g, '$1\n$2');
-  c = c.replace(/\n{3,}/g, '\n\n').replace(/ {2,}/g, ' ');
-  return c.trim();
+  // Strip emojis only
+  let c = text.replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{200D}\u{20E3}\u{E0020}-\u{E007F}\u{FE0F}]/gu, '');
+  // Process line-by-line so markdown tables and inline **bold** are never mangled.
+  const cleaned = c.split('\n').map((line) => {
+    if (line.includes('|')) return line;            // table row — preserve verbatim
+    let l = line;
+    l = l.replace(/^\s*[*\-_]{3,}\s*$/, '');         // horizontal rule of repeated symbols
+    l = l.replace(/^\s*\*\*\s*$/, '');               // a line that is only "**"
+    l = l.replace(/^\s*[-*+]\s*$/, '');              // empty bullet
+    l = l.replace(/^(\s*)\*\s+/, '$1- ');            // "* item" -> "- item"
+    return l;
+  }).join('\n');
+  return cleaned.replace(/\n{3,}/g, '\n\n').trim();
 }
 
 function readTime(content: string) {
