@@ -24,6 +24,7 @@ export default function Navbar() {
             <Link href="/listings" className="nav-link">Browse Accounts</Link>
             <Link href="/rdp" className="nav-link">RDP Servers</Link>
             <Link href="/services" className="nav-link">Onboarding Services</Link>
+            <Link href="/agents" className="nav-link">Become an Agent</Link>
             <Link href="/jobs" className="nav-link">Jobs</Link>
             <Link href="/academy" className="nav-link">Academy</Link>
             <Link href="/blog" className="nav-link">Blog</Link>
@@ -59,6 +60,7 @@ export default function Navbar() {
             <Link href="/listings" className="mobile-link" onClick={() => setMobileOpen(false)}>Browse Accounts</Link>
             <Link href="/rdp" className="mobile-link" onClick={() => setMobileOpen(false)}>RDP Servers</Link>
             <Link href="/services" className="mobile-link" onClick={() => setMobileOpen(false)}>Onboarding Services</Link>
+            <Link href="/agents" className="mobile-link" onClick={() => setMobileOpen(false)}>Become an Agent</Link>
             <Link href="/jobs" className="mobile-link" onClick={() => setMobileOpen(false)}>Jobs</Link>
             <Link href="/academy" className="mobile-link" onClick={() => setMobileOpen(false)}>Academy</Link>
             <Link href="/blog" className="mobile-link" onClick={() => setMobileOpen(false)}>Blog</Link>

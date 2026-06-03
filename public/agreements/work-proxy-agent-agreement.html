@@ -699,7 +699,7 @@
           <option>Switzerland</option>
           <option>Austria</option>
           <option>Portugal</option>
-          <option style="color:#DC2626">Nigeria</option>
+          <option>Nigeria</option>
           <option>Other</option>
         </select>
       </div>
@@ -724,12 +724,12 @@
     </div>
 
     <div class="ng-warning" id="ngWarning">
-      <strong>⚠ Geographic restriction:</strong> Work Proxy Agent partnership is currently available only to applicants <strong>outside Nigeria</strong>. Please select a different country, or contact us at <strong>+234 707 624 5153</strong> for other opportunities.
+      <strong>Note for Nigeria-based agents:</strong> You're welcome to join as an agent from Nigeria. Please remember the <strong>people you refer (account holders)</strong> must be located <strong>outside Nigeria</strong> to qualify for onboarding under Work Proxy.
     </div>
 
     <label class="terms-checkbox">
       <input type="checkbox" id="agreeTerms" required />
-      <span>I confirm the details above are accurate, that I am outside Nigeria, and I agree to be bound by the Work Proxy Agent Partnership Agreement on the next page.</span>
+      <span>I confirm the details above are accurate, that the people I refer will be based outside Nigeria, and I agree to be bound by the Work Proxy Agent Partnership Agreement on the next page.</span>
     </label>
 
     <button type="submit" class="submit-btn" id="submitBtn">Generate My Agreement →</button>
@@ -938,17 +938,15 @@
     hasSignature = false;
   });
 
-  // Nigeria warning
+  // Nigeria note (informational — does NOT block Nigerian agents)
   const countrySelect = document.getElementById('country');
   const ngWarning = document.getElementById('ngWarning');
   const submitBtn = document.getElementById('submitBtn');
   countrySelect.addEventListener('change', () => {
     if (countrySelect.value === 'Nigeria') {
       ngWarning.classList.add('show');
-      submitBtn.disabled = true;
     } else {
       ngWarning.classList.remove('show');
-      submitBtn.disabled = false;
     }
   });
 
