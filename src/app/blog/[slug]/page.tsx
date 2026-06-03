@@ -6,10 +6,57 @@ import { prisma } from "@/lib/prisma";
 import { ArrowLeft, Calendar, User, Clock, ArrowRight, BookOpen } from "lucide-react";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import type { Metadata } from "next";
 
 export const dynamic = 'force-dynamic';
 
 const MONO = "ui-monospace, 'SF Mono', SFMono-Regular, Menlo, monospace";
+const SITE = "https://workproxy.fun";
+
+// Strip markdown to plain text (for meta description + schema)
+function toPlain(md: string): string {
+  return md
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/[#>*_`~|]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Parse a "## FAQ"/"Frequently Asked Questions" section into Q&A pairs for FAQ schema
+function parseFaq(md: string): { q: string; a: string }[] {
+  const out: { q: string; a: string }[] = [];
+  let inFaq = false, q = "", a: string[] = [];
+  const flush = () => { if (q && a.length) out.push({ q, a: toPlain(a.join(" ")) }); q = ""; a = []; };
+  for (const line of md.split("\n")) {
+    if (/^##\s/.test(line)) {
+      flush();
+      inFaq = /faq|frequently asked/i.test(line);
+      continue;
+    }
+    if (!inFaq) continue;
+    if (/^###\s/.test(line)) { flush(); q = line.replace(/^###\s+/, "").trim(); }
+    else if (line.trim()) a.push(line.trim());
+  }
+  flush();
+  return out;
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await prisma.blogPost.findUnique({ where: { slug } });
+  if (!post) return { title: "Article — Work Proxy" };
+  const description = toPlain(post.content).slice(0, 155);
+  const url = `${SITE}/blog/${slug}`;
+  const images = post.imageUrl ? [post.imageUrl] : [];
+  return {
+    title: `${post.title} | Work Proxy`,
+    description,
+    alternates: { canonical: url },
+    openGraph: { title: post.title, description, type: "article", url, images },
+    twitter: { card: "summary_large_image", title: post.title, description, images },
+  };
+}
 
 function cleanContent(text: string): string {
   let c = text;
@@ -45,8 +92,37 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const mins = readTime(post.content);
   const initials = (post.author.name ?? post.author.email ?? 'W').substring(0, 2).toUpperCase();
 
+  // Structured data: Article (+ FAQ if the post has an FAQ section)
+  const url = `${SITE}/blog/${slug}`;
+  const faqs = parseFaq(post.content);
+  const graph: any[] = [
+    {
+      "@type": "Article",
+      headline: post.title,
+      description: toPlain(post.content).slice(0, 155),
+      image: post.imageUrl ? [post.imageUrl] : undefined,
+      datePublished: new Date(post.createdAt).toISOString(),
+      dateModified: new Date(post.updatedAt).toISOString(),
+      author: { "@type": "Organization", name: "Work Proxy", url: SITE },
+      publisher: { "@type": "Organization", name: "Work Proxy", logo: { "@type": "ImageObject", url: `${SITE}/logo.jpg` } },
+      mainEntityOfPage: url,
+    },
+  ];
+  if (faqs.length) {
+    graph.push({
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    });
+  }
+  const jsonLd = { "@context": "https://schema.org", "@graph": graph };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Navbar />
 
       {/* ── POST HERO ── */}
