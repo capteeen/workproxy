@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Download } from "lucide-react";
+import { ArrowLeft, Download, Infinity, TrendingUp, RefreshCw, Zap } from "lucide-react";
 
 const tiers = [
   {
@@ -247,22 +247,22 @@ export default function AgentReferralPage() {
           <div className="section-title" style={{ marginTop: 28 }}>Why Agents Win</div>
           <div className="why-grid">
             <div className="why-card">
-              <div className="why-icon">♾️</div>
+              <div className="why-icon"><Infinity size={20} color="#2563eb" /></div>
               <strong>No cap on accounts</strong>
               <p>There is no limit to how many accounts you can refer. Every single one pays you every single week.</p>
             </div>
             <div className="why-card">
-              <div className="why-icon">📈</div>
+              <div className="why-icon"><TrendingUp size={20} color="#7c3aed" /></div>
               <strong>Rate goes up, never down</strong>
               <p>Once you unlock a higher tier, your entire portfolio earns at the new rate. Growth compounds.</p>
             </div>
             <div className="why-card">
-              <div className="why-icon">🔁</div>
+              <div className="why-icon"><RefreshCw size={20} color="#059669" /></div>
               <strong>Recurring, not one-time</strong>
               <p>You refer once. You earn every week for the lifetime of that account. This is passive income.</p>
             </div>
             <div className="why-card">
-              <div className="why-icon">⚡</div>
+              <div className="why-icon"><Zap size={20} color="#d97706" /></div>
               <strong>Fast payouts</strong>
               <p>Commissions are paid every Wednesday (UK) or Thursday (US/CA) — no waiting, no chasing.</p>
             </div>
@@ -490,7 +490,7 @@ export default function AgentReferralPage() {
           background: #f8fafc; border: 1px solid #e2e8f0;
           border-radius: 10px; padding: 18px;
         }
-        .why-icon { font-size: 20px; margin-bottom: 8px; }
+        .why-icon { display: flex; align-items: center; margin-bottom: 10px; }
         .why-card strong { display: block; font-size: 13.5px; color: #0b1120; margin-bottom: 6px; }
         .why-card p { font-size: 13px; color: #475569; line-height: 1.65; margin: 0; }
 
