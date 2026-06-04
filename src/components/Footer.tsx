@@ -35,6 +35,7 @@ export default function Footer() {
             <Link href="/#earnings">Earnings Model</Link>
             <Link href="/#faq">FAQ</Link>
             <Link href="/how-to-register">How to Register</Link>
+            <Link href="/agent-referral">Agent Referral Programme</Link>
           </div>
 
           <div className="footer-col">
