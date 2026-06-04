@@ -34,7 +34,7 @@ export default function Footer() {
             <Link href="/#how">How It Works</Link>
             <Link href="/#earnings">Earnings Model</Link>
             <Link href="/#faq">FAQ</Link>
-
+            <Link href="/how-to-register">How to Register</Link>
           </div>
 
           <div className="footer-col">

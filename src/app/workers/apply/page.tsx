@@ -114,7 +114,10 @@ export default function WorkerApplyPage() {
     <div className="auth-page" style={{ alignItems: "flex-start", paddingTop: 40 }}>
       <div className="auth-bg" />
       <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 640, margin: "0 auto" }}>
-        <Link href="/" className="auth-back"><ArrowLeft size={14} style={{ display: "inline", marginRight: 4 }} /> Back to Home</Link>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+          <Link href="/" className="auth-back" style={{ margin: 0 }}><ArrowLeft size={14} style={{ display: "inline", marginRight: 4 }} /> Back to Home</Link>
+          <Link href="/how-to-register" style={{ fontSize: 13, color: "var(--accent-primary)", fontWeight: 500 }}>What do I need to register? →</Link>
+        </div>
  
          <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 20, display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
           <Key size={18} color="var(--accent-primary)" />
