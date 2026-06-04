@@ -45,11 +45,11 @@ export default function HowToRegisterPage() {
               </div>
             )}
             <div className="doc-title-block">
-              <h1>Registration Requirements</h1>
+              <h1>Outlier Registration Requirements</h1>
               <p className="doc-subtitle">
-                Everything you need to have ready before signing up with Work Proxy.
+                Everything you need to have ready before you can start working on Outlier AI.
                 Read through each section carefully — having these items prepared
-                makes the application process take under five minutes.
+                makes the registration process take under five minutes.
               </p>
             </div>
             <div className="doc-divider" />
@@ -62,15 +62,15 @@ export default function HowToRegisterPage() {
               <h2>Dedicated Gmail Account</h2>
               <p>
                 You will need a <strong>brand-new Gmail address</strong> — one you are
-                completely comfortable giving the Work Proxy team access to. Do{" "}
+                completely comfortable sharing with the team managing your account. Do{" "}
                 <strong>not</strong> use a personal inbox you rely on for private
                 communication.
               </p>
               <ul>
-                <li>Go to <strong>gmail.com</strong> and create a new account (e.g. <em>yourname.proxy@gmail.com</em>)</li>
-                <li>The team will use this account to manage your assigned platform(s) on your behalf</li>
-                <li>Keep the login credentials saved somewhere safe — you will hand them over during onboarding</li>
-                <li>Your personal email stays completely private; only the proxy Gmail is shared</li>
+                <li>Go to <strong>gmail.com</strong> and create a new account (e.g. <em>yourname.outlier@gmail.com</em>)</li>
+                <li>This account will be used to register and operate your Outlier AI profile</li>
+                <li>Keep the login credentials saved somewhere safe — you will need to provide them during onboarding</li>
+                <li>Your personal email stays completely private; only this dedicated Gmail is used</li>
               </ul>
             </div>
           </div>
@@ -167,12 +167,14 @@ export default function HowToRegisterPage() {
           {/* Footer */}
           <div className="doc-footer">
             <p>
-              Once you have everything above in order, head to{" "}
-              <strong>workproxy.fun/workers/apply</strong> to complete your application.
+              Once you have everything above in order, you are ready to begin your
+              Outlier AI registration. For questions, contact your onboarding manager.
             </p>
-            <p className="doc-footer-meta">
-              Work Proxy · workproxy.fun · For questions contact your onboarding manager
-            </p>
+            {showLogo && (
+              <p className="doc-footer-meta">
+                Work Proxy · workproxy.fun · Your trusted remote work partner
+              </p>
+            )}
           </div>
 
         </div>
