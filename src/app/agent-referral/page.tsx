@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Download, Infinity, TrendingUp, RefreshCw, Zap } from "lucide-react";
+import { ArrowLeft, Download, Infinity, TrendingUp, RefreshCw, Zap, User, Users, Wallet } from "lucide-react";
 
 const tiers = [
   {
@@ -148,6 +148,71 @@ export default function AgentReferralPage() {
               <div>
                 <strong>You get paid</strong>
                 <p>Every Wednesday (UK) or Thursday (US/Canada), your commission lands — automatically, for every active account you own.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="rule" />
+
+          {/* ── Pay breakdown ── */}
+          <div className="section-title" style={{ marginTop: 28 }}>How Each Account's Pay Is Split</div>
+          <p className="section-sub">
+            Every active account generates an average of <strong>$1,200 per week</strong>.
+            Here is exactly how that is distributed between all parties.
+          </p>
+
+          <div className="split-block">
+            <div className="split-bar-wrap">
+              <div className="split-bar-seg" style={{ width: "50%", background: "#059669" }} />
+              <div className="split-bar-seg" style={{ width: "10%", background: "#D97706" }} />
+              <div className="split-bar-seg" style={{ width: "40%", background: "#e2e8f0" }} />
+            </div>
+            <div className="split-legend">
+              <span className="split-dot" style={{ background: "#059669" }} />
+              <span className="split-legend-label">Account Owner</span>
+              <span className="split-legend-pct">50%</span>
+            </div>
+            <div className="split-legend">
+              <span className="split-dot" style={{ background: "#D97706" }} />
+              <span className="split-legend-label">Agent Commission (up to)</span>
+              <span className="split-legend-pct">5 – 10%</span>
+            </div>
+            <div className="split-legend">
+              <span className="split-dot" style={{ background: "#cbd5e1" }} />
+              <span className="split-legend-label">Work Proxy Operations</span>
+              <span className="split-legend-pct">40 – 45%</span>
+            </div>
+          </div>
+
+          <div className="owner-cards">
+            <div className="owner-card" style={{ borderColor: "rgba(5,150,105,0.25)", background: "rgba(5,150,105,0.05)" }}>
+              <div className="owner-card-icon" style={{ background: "rgba(5,150,105,0.12)", color: "#059669" }}>
+                <User size={18} />
+              </div>
+              <div>
+                <div className="owner-card-title">Account Owner</div>
+                <div className="owner-card-amount" style={{ color: "#059669" }}>$600 / week</div>
+                <div className="owner-card-note">Fixed 50% of account earnings. Paid every Wednesday (UK) or Thursday (US/CA).</div>
+              </div>
+            </div>
+            <div className="owner-card" style={{ borderColor: "rgba(217,119,6,0.25)", background: "rgba(217,119,6,0.05)" }}>
+              <div className="owner-card-icon" style={{ background: "rgba(217,119,6,0.12)", color: "#D97706" }}>
+                <Users size={18} />
+              </div>
+              <div>
+                <div className="owner-card-title">Agent (you)</div>
+                <div className="owner-card-amount" style={{ color: "#D97706" }}>$60 – $120 / account / week</div>
+                <div className="owner-card-note">5% to 10% depending on your tier. Grows as you refer more accounts.</div>
+              </div>
+            </div>
+            <div className="owner-card" style={{ borderColor: "rgba(37,99,235,0.18)", background: "rgba(37,99,235,0.04)" }}>
+              <div className="owner-card-icon" style={{ background: "rgba(37,99,235,0.1)", color: "#2563EB" }}>
+                <Wallet size={18} />
+              </div>
+              <div>
+                <div className="owner-card-title">Work Proxy</div>
+                <div className="owner-card-amount" style={{ color: "#2563EB" }}>$480 – $540 / account / week</div>
+                <div className="owner-card-note">Covers platform management, compliance, infrastructure, and support.</div>
               </div>
             </div>
           </div>
@@ -502,6 +567,50 @@ export default function AgentReferralPage() {
         .doc-footer p { font-size: 13.5px; color: #334155; line-height: 1.7; margin-bottom: 8px; }
         .doc-footer-meta { color: #94a3b8 !important; font-size: 12px !important; }
 
+        /* ── Pay split ── */
+        .split-block {
+          background: #f8fafc; border: 1px solid #e2e8f0;
+          border-radius: 12px; padding: 20px 24px; margin-bottom: 16px;
+        }
+        .split-bar-wrap {
+          display: flex; height: 12px; border-radius: 9999px;
+          overflow: hidden; margin-bottom: 16px; gap: 2px;
+        }
+        .split-bar-seg { height: 100%; border-radius: 9999px; }
+        .split-legend {
+          display: flex; align-items: center; gap: 10px;
+          font-size: 13px; color: #334155; margin-bottom: 8px;
+        }
+        .split-legend:last-child { margin-bottom: 0; }
+        .split-dot {
+          width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+        }
+        .split-legend-label { flex: 1; }
+        .split-legend-pct { font-weight: 700; color: #0b1120; }
+
+        .owner-cards {
+          display: grid; grid-template-columns: repeat(3, 1fr);
+          gap: 12px; margin-bottom: 8px;
+        }
+        .owner-card {
+          display: flex; gap: 12px; align-items: flex-start;
+          border: 1px solid; border-radius: 10px; padding: 16px;
+        }
+        .owner-card-icon {
+          width: 36px; height: 36px; border-radius: 8px;
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+        }
+        .owner-card-title {
+          font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+          text-transform: uppercase; color: #64748b; margin-bottom: 4px;
+        }
+        .owner-card-amount {
+          font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+          font-size: 15px; font-weight: 800; margin-bottom: 6px; line-height: 1.2;
+        }
+        .owner-card-note { font-size: 12px; color: #64748b; line-height: 1.55; }
+
         /* ── Print ── */
         @media print {
           .no-print { display: none !important; }
@@ -519,6 +628,7 @@ export default function AgentReferralPage() {
           .doc { padding: 32px 20px; }
           .how-grid { grid-template-columns: 1fr; }
           .why-grid { grid-template-columns: 1fr; }
+          .owner-cards { grid-template-columns: 1fr; }
           .toolbar { padding: 10px 16px; }
           .year-total { flex-direction: column; }
           .year-total-amount { font-size: 32px; }
