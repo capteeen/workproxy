@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef } from "react";
-import { Download, RefreshCw, Monitor, Cpu, HardDrive, Globe, Wifi, Clock, Shield, Copy, Check } from "lucide-react";
+import { useState } from "react";
+import { Download, RefreshCw, Shield, Copy, Check, Monitor, Clock } from "lucide-react";
 
 interface RDPData {
   customerName: string;
@@ -158,13 +158,11 @@ function Card({ d, ref: cardRef }: { d: RDPData; ref?: React.RefObject<HTMLDivEl
 
 export default function RdpPanelPage() {
   const [d, setD] = useState<RDPData>({ ...EMPTY, orderId: genOrderId() });
-  const [printing, setPrinting] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
   const up = (k: keyof RDPData, v: string) => setD(f => ({ ...f, [k]: v }));
 
   const handleDownload = () => {
-    setPrinting(true);
-    setTimeout(() => { window.print(); setPrinting(false); }, 100);
+    const params = new URLSearchParams(d as any).toString();
+    window.open(`/rdp-panel/print?${params}`, "_blank");
   };
 
   const fields: { label: string; key: keyof RDPData; placeholder: string; type?: string; options?: string[] }[] = [
@@ -247,18 +245,13 @@ export default function RdpPanelPage() {
           {/* Card preview */}
           <div className="preview-panel">
             <div style={{ fontSize: 11, color: "#94a3b8", textAlign: "center", marginBottom: 16, letterSpacing: "0.05em", textTransform: "uppercase" }}>Live Preview</div>
-            <Card d={d} ref={cardRef} />
+            <Card d={d} />
             <p style={{ fontSize: 11, color: "#94a3b8", textAlign: "center", marginTop: 14, lineHeight: 1.5 }}>
-              Click <strong>Download Card</strong> → Save as PDF in the print dialog<br />
-              then screenshot or share the PDF directly with the customer.
+              Click <strong>Download Card</strong> — a print page opens.<br />
+              Choose <strong>Save as PDF</strong> and send it to the customer.
             </p>
           </div>
         </div>
-      </div>
-
-      {/* Print-only card */}
-      <div className="print-only">
-        <Card d={d} />
       </div>
 
       <style>{`
