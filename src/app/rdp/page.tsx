@@ -151,7 +151,7 @@ export default function RdpPage() {
 *Includes:* Unmetered Bandwidth, Dual 25 Gbps, 1 Dedicated IP, Licensed Windows
 
 Please share the available locations and payment details.`;
-    window.open(`https://wa.me/2347076245153?text=${encodeURIComponent(message)}`, "_blank");
+    window.open(`https://wa.me/2347010638676?text=${encodeURIComponent(message)}`, "_blank");
   };
 
   return (
