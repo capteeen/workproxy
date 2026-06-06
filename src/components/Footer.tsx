@@ -36,6 +36,7 @@ export default function Footer() {
             <Link href="/#faq">FAQ</Link>
             <Link href="/how-to-register">How to Register</Link>
             <Link href="/agent-referral">Agent Referral Programme</Link>
+            <Link href="/creator-program">Creator Programme</Link>
           </div>
 
           <div className="footer-col">
