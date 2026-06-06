@@ -10,7 +10,7 @@ const EMAIL_BODY = `Hey [Name] 👋
 
 I came across your TikTok and genuinely love your content — your energy is exactly what we're looking for.
 
-I'm reaching out from Work Proxy (workproxy.fun) — we help people access remote income opportunities on platforms like Outlier AI, and we're building our creator community.
+I'm reaching out from Work Proxy (workproxy.fun) — we help people access remote work opportunities on global platforms like Outlier AI, Telus International, Handshake, and OneForma. We're building our creator community and would love to have you as part of it.
 
 We'd love to partner with you on a simple monthly content deal:
 
@@ -27,7 +27,7 @@ I've attached a one-pager with the full details. If this sounds interesting, jus
 Looking forward to working with you 🙌
 
 — The Work Proxy Team
-workproxy.fun`;
+workproxy.fun | @work.proxy on TikTok`;
 
 function CopyBlock({ label, value }: { label: string; value: string }) {
   const [copied, setCopied] = useState(false);
@@ -119,10 +119,10 @@ export default function CreatorProgramPage() {
             {/* What is Work Proxy */}
             <div className="section-label">What is Work Proxy?</div>
             <p className="body-text">
-              Work Proxy connects people with remote income opportunities on global AI platforms
-              like <strong>Outlier AI</strong> — where workers can earn up to <strong>$1,200 per week</strong> doing
-              tasks like writing, reviewing, and training AI models. We handle the technical side
-              so people can focus on earning.
+              Work Proxy connects people with remote work opportunities on leading global platforms —
+              including <strong>Outlier AI</strong>, <strong>Telus International</strong>, <strong>Handshake</strong>,
+              and <strong>OneForma</strong>. We handle the technical setup and onboarding so that
+              people can start working on these platforms quickly and without the usual barriers.
             </p>
 
             <div className="rule" />
@@ -149,7 +149,7 @@ export default function CreatorProgramPage() {
                     <li>Can be a voiceover, a talking head, or a POV format</li>
                     <li>Minimum 30 seconds, up to you on length</li>
                   </ul>
-                  <div className="video-example">Example caption: <em>"This is how people are making $1,200 a week from home 👀 #WorkProxy #EarnOnline"</em></div>
+                  <div className="video-example">Example caption: <em>"This is how people are accessing remote work from home 👀 #WorkProxy #RemoteWork"</em></div>
                 </div>
               </div>
 
@@ -164,7 +164,7 @@ export default function CreatorProgramPage() {
                     <li>Wear your Work Proxy merch — hoodie, tee, or cap</li>
                     <li>No need to talk about us — just wear it on camera</li>
                     <li>Post it as a regular lifestyle, GRWM, or fit check video</li>
-                    <li>Tag <strong>@workproxy</strong> and use <strong>#WorkProxy</strong></li>
+                    <li>Tag <strong>@work.proxy</strong> and use <strong>#WorkProxy</strong></li>
                     <li>Your normal content style — we just want the brand visible</li>
                   </ul>
                   <div className="video-example">Example: A daily vlog, GRWM, or outfit video where you happen to be wearing the merch.</div>
@@ -201,8 +201,8 @@ export default function CreatorProgramPage() {
               {[
                 ["4 videos per calendar month", "Any day, any time — you control the schedule"],
                 ["Videos must be posted on TikTok", "Reposts to Instagram Reels are a bonus, not a requirement"],
-                ["Tag @workproxy + use #WorkProxy", "Required on all 4 videos for us to track them"],
-                ["No false claims", "Do not make up earnings figures — stick to what is real"],
+                ["Tag @work.proxy + use #WorkProxy", "Required on all 4 videos for us to track them"],
+                ["Keep content accurate", "Do not make misleading claims about the platforms or services"],
                 ["Merch must be clearly visible", "In the 2 merch videos, the logo should be readable on screen"],
                 ["Minimum 300 followers", "We work with micro creators — you do not need a huge audience"],
               ].map(([rule, note]) => (
