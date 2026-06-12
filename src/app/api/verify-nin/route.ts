@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
+import { rateLimit, rateLimitResponse, clientIp } from '@/lib/rate-limit';
 
 export async function POST(req: Request) {
   try {
+    const limited = rateLimit(`verify-nin:${clientIp(req)}`, 5, 60 * 1000);
+    if (!limited.ok) return rateLimitResponse(limited.retryAfterSeconds);
+
     const { nin } = await req.json();
 
     if (!nin || nin.length !== 11) {
