@@ -84,7 +84,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const [post, morePosts] = await Promise.all([
     prisma.blogPost.findUnique({
       where: { slug },
-      include: { author: { select: { name: true, email: true } } }
+      include: { author: { select: { name: true, email: true, image: true } } }
     }),
     prisma.blogPost.findMany({
       where: { published: true, NOT: { slug } },
@@ -154,7 +154,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <h1 className="bp-title">{cleanContent(post.title)}</h1>
           <div className="bp-meta">
             <div className="bp-author-chip">
-              <div className="bp-avatar">{initials}</div>
+              <div className="bp-avatar">
+                {post.author.image
+                  ? <img src={post.author.image} alt={post.author.name ?? 'Author'} className="bp-author-photo" />
+                  : initials}
+              </div>
               <span>{post.author.name ?? post.author.email}</span>
             </div>
             <span className="bp-meta-dot" />
@@ -182,7 +186,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
             {/* ── AUTHOR CARD ── */}
             <div className="bp-author-card">
-              <div className="bp-author-avatar-lg">{initials}</div>
+              <div className="bp-author-avatar-lg">
+                {post.author.image
+                  ? <img src={post.author.image} alt={post.author.name ?? 'Author'} className="bp-author-photo" />
+                  : initials}
+              </div>
               <div>
                 <div className="bp-author-name">{post.author.name ?? post.author.email}</div>
                 <div className="bp-author-role">Work Proxy Team</div>
@@ -277,6 +285,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           background: linear-gradient(135deg, #2563EB, #7C3AED);
           color: #fff; font-size: 12px; font-weight: 700;
           display: flex; align-items: center; justify-content: center;
+          overflow: hidden;
         }
         .bp-author-chip span { font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,0.85); }
         .bp-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.3); }
@@ -345,7 +354,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           background: linear-gradient(135deg, #2563EB, #7C3AED);
           color: #fff; font-size: 18px; font-weight: 700;
           display: flex; align-items: center; justify-content: center;
+          overflow: hidden;
         }
+        .bp-author-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
         .bp-author-name { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text-primary); }
         .bp-author-role { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
 

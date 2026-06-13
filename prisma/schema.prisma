@@ -16,6 +16,7 @@ model User {
   passwordHash  String?
   name          String?
   bio           String?
+  image         String?
   resumeUrl     String?
   twitterUrl    String?
   role          String             @default("worker") // "admin", "owner", "worker"
