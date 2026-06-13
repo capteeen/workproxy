@@ -39,7 +39,7 @@ export default async function BlogPage() {
   const posts = await prisma.blogPost.findMany({
     where: { published: true },
     orderBy: { createdAt: 'desc' },
-    include: { author: { select: { name: true } } }
+    include: { author: { select: { name: true, image: true } } }
   });
 
   const featured = posts[0] ?? null;
@@ -113,7 +113,7 @@ export default async function BlogPage() {
                     <p className="bl-featured-excerpt">{excerpt(featured.content, 200)}</p>
                     <div className="bl-featured-meta">
                       <div className="bl-author">
-                        <div className="bl-avatar">{(featured.author.name ?? 'A').charAt(0).toUpperCase()}</div>
+                        <div className="bl-avatar">{featured.author.image ? <img src={featured.author.image} alt={featured.author.name ?? 'Author'} className="bl-avatar-photo" /> : (featured.author.name ?? 'A').charAt(0).toUpperCase()}</div>
                         <span>{featured.author.name ?? 'Work Proxy'}</span>
                       </div>
                       <span className="bl-dot" />
@@ -164,7 +164,7 @@ export default async function BlogPage() {
                         <p className="bl-card-excerpt">{excerpt(post.content)}</p>
                         <div className="bl-card-footer">
                           <div className="bl-author">
-                            <div className="bl-avatar bl-avatar-sm">{(post.author.name ?? 'A').charAt(0).toUpperCase()}</div>
+                            <div className="bl-avatar bl-avatar-sm">{post.author.image ? <img src={post.author.image} alt={post.author.name ?? 'Author'} className="bl-avatar-photo" /> : (post.author.name ?? 'A').charAt(0).toUpperCase()}</div>
                             <span>{post.author.name ?? 'Work Proxy'}</span>
                           </div>
                           <span className="bl-card-date">
@@ -335,8 +335,10 @@ export default async function BlogPage() {
           background: linear-gradient(135deg, var(--accent-primary), var(--accent-violet));
           color: #fff; font-size: 12px; font-weight: 700;
           display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+          overflow: hidden;
         }
         .bl-avatar-sm { width: 24px; height: 24px; font-size: 11px; }
+        .bl-avatar-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 
         /* ── COVER SHARED ── */
         .bl-cover-dots {
