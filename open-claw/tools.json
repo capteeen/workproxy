@@ -1,0 +1,35 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "create_order",
+      "description": "Create a Work Proxy service booking. Call this once the customer has chosen a service and given their name and WhatsApp number. Returns an order reference the customer must quote when paying. Also emails the team.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "Customer full name" },
+          "service": { "type": "string", "description": "Exact service name, e.g. 'Academy', 'Managed Account Registration'" },
+          "amount": { "type": "string", "description": "Total due, including currency, e.g. '₦100,000'" },
+          "whatsapp": { "type": "string", "description": "Customer WhatsApp number in international format" },
+          "email": { "type": "string", "description": "Customer email (optional)" },
+          "notes": { "type": "string", "description": "Any extra detail about the request (optional)" }
+        },
+        "required": ["name", "service", "amount", "whatsapp"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "check_order_status",
+      "description": "Check whether a booked order has been paid. Poll this after the customer says they have paid. When status is 'PAID', share the returned whatsappLink with the customer so they can chat the team. Do NOT share WhatsApp before status is PAID.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "reference": { "type": "string", "description": "Order reference returned by create_order, e.g. 'WP-7F3K9Q'" }
+        },
+        "required": ["reference"]
+      }
+    }
+  }
+]
