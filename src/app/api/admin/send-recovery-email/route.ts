@@ -10,7 +10,7 @@ const RECOVERY_EMAIL_TEMPLATE = `<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recover Your WorkProxy Account</title>
+    <title>Recover Your Outlier Account</title>
     <style>
         * {
             margin: 0;
@@ -139,7 +139,7 @@ const RECOVERY_EMAIL_TEMPLATE = `<!DOCTYPE html>
 <body>
     <div class="container">
         <div class="header">
-            <div class="header-logo">🔐 WorkProxy</div>
+            <div class="header-logo">🔐 Outlier</div>
             <div class="header-subtitle">Account Recovery</div>
         </div>
 
@@ -147,15 +147,11 @@ const RECOVERY_EMAIL_TEMPLATE = `<!DOCTYPE html>
             <div class="greeting">Hi there,</div>
 
             <div class="message">
-                We received a request to recover your WorkProxy account. If this was you, click the button below to <span class="highlight">verify your identity and regain access</span> to your account.
+                We received a request to recover your Outlier account. If this was you, click the button below to <span class="highlight">verify your identity and regain access</span> to your account.
             </div>
 
             <div class="cta-container">
-                <a href="{{RECOVERY_LINK}}" class="cta-button">Recover My Account</a>
-                <div class="cta-text">
-                    Or paste this link in your browser:<br>
-                    <a href="{{RECOVERY_LINK}}">{{RECOVERY_LINK}}</a>
-                </div>
+                <a href="{{RECOVERY_LINK}}" class="cta-button">Recover My Outlier Account</a>
             </div>
 
             <hr class="divider">
@@ -177,8 +173,8 @@ const RECOVERY_EMAIL_TEMPLATE = `<!DOCTYPE html>
 
         <div class="footer">
             <div class="footer-text">
-                <strong>WorkProxy</strong><br>
-                Helping you work better, together
+                <strong>Outlier</strong><br>
+                Quality AI training data for innovative models
             </div>
             <div class="footer-links">
                 <a href="#">Help Center</a>
@@ -187,7 +183,7 @@ const RECOVERY_EMAIL_TEMPLATE = `<!DOCTYPE html>
             </div>
             <hr class="divider">
             <div class="footer-text" style="font-size: 11px; color: #bbb;">
-                © 2026 WorkProxy. All rights reserved.<br>
+                © 2026 Outlier. All rights reserved.<br>
                 You're receiving this because recovery was requested for your account.
             </div>
         </div>
@@ -232,7 +228,7 @@ export async function POST(req: NextRequest) {
     const response = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || "noreply@workproxy.fun",
       to: email,
-      subject: "Recover Your WorkProxy Account",
+      subject: "Recover Your Outlier Account",
       html: htmlContent,
     });
 
