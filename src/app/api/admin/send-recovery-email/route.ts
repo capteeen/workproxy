@@ -230,7 +230,7 @@ export async function POST(req: NextRequest) {
 
     // Send email via Resend
     const response = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || "noreply@workproxy.com",
+      from: process.env.RESEND_FROM_EMAIL || "noreply@workproxy.fun",
       to: email,
       subject: "Recover Your WorkProxy Account",
       html: htmlContent,
