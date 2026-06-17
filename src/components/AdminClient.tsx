@@ -31,12 +31,13 @@ function adminTabIcon(tab: string) {
     case "Matches": return <Handshake size={16} />;
     case "Disputes": return <Scale size={16} />;
     case "Payouts": return <DollarSign size={16} />;
+    case "Recovery Email": return <Key size={16} />;
     default: return <Activity size={16} />;
   }
 }
 
 export default function AdminClient({ adminData }: { adminData: AdminData }) {
-  const tabs = ["Overview", "Worker Apps", "Listings", "Manual Listing", "Users", "Blog Posts"];
+  const tabs = ["Overview", "Worker Apps", "Listings", "Manual Listing", "Users", "Recovery Email", "Blog Posts"];
 
   const [activeTab, setActiveTab] = useState("Overview");
   const [loading, setLoading] = useState<string | null>(null);
@@ -47,6 +48,11 @@ export default function AdminClient({ adminData }: { adminData: AdminData }) {
     platform: "",
     avgEarning: "",
     ownerSplit: "35",
+  });
+
+  const [recoveryForm, setRecoveryForm] = useState({
+    email: "",
+    recoveryLink: "https://app.outlier.ai/expert/referrals/link/i_9IJ6BFhXX39Ufvdn_a9pfJIFY",
   });
 
   const [blogForm, setBlogForm] = useState({
@@ -74,6 +80,37 @@ export default function AdminClient({ adminData }: { adminData: AdminData }) {
       }
     } catch (e) {
       alert("Error");
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const handleSendRecoveryEmail = async () => {
+    if (!recoveryForm.email.trim()) {
+      alert("Please enter an email address");
+      return;
+    }
+    if (!recoveryForm.recoveryLink.trim()) {
+      alert("Please enter a recovery link");
+      return;
+    }
+
+    setLoading('recovery');
+    try {
+      const res = await fetch('/api/admin/send-recovery-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(recoveryForm)
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert(`✓ Recovery email sent to ${recoveryForm.email}`);
+        setRecoveryForm({ ...recoveryForm, email: "" });
+      } else {
+        alert(data.error || "Failed to send email");
+      }
+    } catch (e) {
+      alert("Error sending recovery email");
     } finally {
       setLoading(null);
     }
@@ -384,6 +421,53 @@ export default function AdminClient({ adminData }: { adminData: AdminData }) {
                   ))}
                 </tbody>
               </table>
+            </div>
+          )}
+
+          {/* Recovery Email */}
+          {activeTab === "Recovery Email" && (
+            <div className="card" style={{ maxWidth: 700 }}>
+              <h3 style={{ marginBottom: 8 }}>Send Account Recovery Email</h3>
+              <p className="text-sm text-secondary" style={{ marginBottom: 24 }}>Send a recovery email with an Outlier referral link to users requesting account recovery.</p>
+
+              <div className="form-group" style={{ marginBottom: 16 }}>
+                <label className="form-label" style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6 }}>Recipient Email *</label>
+                <input
+                  className="form-input"
+                  style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border)' }}
+                  placeholder="user@example.com"
+                  type="email"
+                  value={recoveryForm.email}
+                  onChange={e => setRecoveryForm({...recoveryForm, email: e.target.value})}
+                />
+                <p className="text-sm text-secondary" style={{ marginTop: 4 }}>The email address to send the recovery link to</p>
+              </div>
+
+              <div className="form-group" style={{ marginBottom: 24 }}>
+                <label className="form-label" style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 6 }}>Recovery Link *</label>
+                <input
+                  className="form-input"
+                  style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border)' }}
+                  placeholder="https://..."
+                  value={recoveryForm.recoveryLink}
+                  onChange={e => setRecoveryForm({...recoveryForm, recoveryLink: e.target.value})}
+                />
+                <p className="text-sm text-secondary" style={{ marginTop: 4 }}>The Outlier referral/recovery link to include in the email</p>
+              </div>
+
+              <div style={{ background: '#f0f4ff', border: '1px solid #e0e7ff', borderRadius: '8px', padding: '12px 16px', marginBottom: 24 }}>
+                <p className="text-sm" style={{ color: '#4f46e5', fontWeight: 500 }}>ℹ️ Email Preview</p>
+                <p className="text-sm text-secondary" style={{ marginTop: 4 }}>A professional recovery email will be sent with your recovery link. It includes security tips and never asks for passwords.</p>
+              </div>
+
+              <button
+                className="btn btn-primary"
+                style={{ width: '100%', padding: '12px', justifyContent: 'center' }}
+                disabled={loading === 'recovery' || !recoveryForm.email.trim()}
+                onClick={handleSendRecoveryEmail}
+              >
+                {loading === 'recovery' ? 'Sending...' : 'Send Recovery Email 🔐'}
+              </button>
             </div>
           )}
 
