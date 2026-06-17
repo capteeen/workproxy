@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, RotateCcw, Ban, FileX, MoonStar, Power,
@@ -8,39 +7,13 @@ import {
 } from "lucide-react";
 
 const WHATSAPP = "2347076245153";
-const DISCOUNT_HOURS = 24;
-const STORAGE_KEY = "wp_outlier_recovery_deadline";
 
 function waLink(plan: string) {
   const msg = `Hi Work Proxy 👋 I want the Outlier Account Recovery service (${plan}). My account is: [banned / failed assessment / deactivated]. Here are the details:`;
   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
 }
 
-function useCountdown() {
-  const [left, setLeft] = useState<number | null>(null);
-  useEffect(() => {
-    let deadline = Number(localStorage.getItem(STORAGE_KEY));
-    if (!deadline || Number.isNaN(deadline)) {
-      deadline = Date.now() + DISCOUNT_HOURS * 3600 * 1000;
-      localStorage.setItem(STORAGE_KEY, String(deadline));
-    }
-    const tick = () => setLeft(Math.max(0, deadline - Date.now()));
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-  return left;
-}
-
-const pad = (n: number) => String(n).padStart(2, "0");
-
 export default function OutlierRecoveryPage() {
-  const left = useCountdown();
-  const expired = left !== null && left <= 0;
-  const h = left !== null ? Math.floor(left / 3600000) : 0;
-  const m = left !== null ? Math.floor((left % 3600000) / 60000) : 0;
-  const s = left !== null ? Math.floor((left % 60000) / 1000) : 0;
-
   return (
     <div className="orx">
       <div className="gridbg" aria-hidden />
@@ -60,22 +33,6 @@ export default function OutlierRecoveryPage() {
           Outlier account, bring it to Work Proxy. We recover it, restore good standing, and make sure
           real work is waiting on the other side.
         </p>
-
-        {/* BIG COUNTDOWN */}
-        <div className={`timer ${expired ? "off" : ""}`}>
-          <div className="tlabel">{expired ? "// DISCOUNT WINDOW CLOSED" : "// LAUNCH DISCOUNT ENDS IN"}</div>
-          {expired ? (
-            <div className="tclosed">STANDARD PRICING ACTIVE</div>
-          ) : (
-            <div className="digits">
-              <div className="dgroup"><span className="dnum">{pad(h)}</span><span className="dlab">HRS</span></div>
-              <span className="colon">:</span>
-              <div className="dgroup"><span className="dnum">{pad(m)}</span><span className="dlab">MIN</span></div>
-              <span className="colon">:</span>
-              <div className="dgroup"><span className="dnum">{pad(s)}</span><span className="dlab">SEC</span></div>
-            </div>
-          )}
-        </div>
       </header>
 
       {/* WHAT WE RECOVER */}
@@ -98,10 +55,8 @@ export default function OutlierRecoveryPage() {
             <h3>Managed Recovery</h3>
             <p className="cardsub">We recover your account and manage it for you, so projects keep coming. Hands-off.</p>
             <div className="price">
-              {!expired && <span className="old">₦100,000</span>}
-              <span className="now">₦{expired ? "100,000" : "80,000"}</span>
+              <span className="now">₦150,000</span>
             </div>
-            {!expired && <div className="save">SAVE ₦20,000 TODAY</div>}
             <ul className="feats">
               <li><CheckCircle2 size={15} /> Full account recovery</li>
               <li><CheckCircle2 size={15} /> We manage and run it for you</li>
@@ -117,10 +72,8 @@ export default function OutlierRecoveryPage() {
             <h3>Recovery Only</h3>
             <p className="cardsub">We recover your account and hand it fully back. You run it yourself.</p>
             <div className="price">
-              {!expired && <span className="old">₦200,000</span>}
-              <span className="now">₦{expired ? "200,000" : "150,000"}</span>
+              <span className="now">₦200,000</span>
             </div>
-            {!expired && <div className="save">SAVE ₦50,000 TODAY</div>}
             <ul className="feats">
               <li><CheckCircle2 size={15} /> Full account recovery</li>
               <li><CheckCircle2 size={15} /> Account handed back to you</li>
@@ -162,8 +115,7 @@ export default function OutlierRecoveryPage() {
         <div className="faq">
           <details><summary>What kind of accounts can you recover?</summary><p>Banned and suspended accounts, accounts locked after a failed assessment, accounts gone inactive with no tasks on Aether, and fully deactivated accounts.</p></details>
           <details><summary>Do I pay before or after?</summary><p>You pay once we confirm your account can be recovered. We check first, then you decide.</p></details>
-          <details><summary>What is the difference between the two plans?</summary><p>Managed Recovery (₦80,000 today) means we recover it and keep running it for you, with projects coming in. Recovery Only (₦150,000 today) means we recover it and hand it fully back so you manage it yourself.</p></details>
-          <details><summary>Is the discount really only for today?</summary><p>Yes. The launch prices hold until the timer above hits zero, then standard pricing (₦100,000 managed / ₦200,000 recovery only) applies.</p></details>
+          <details><summary>What is the difference between the two plans?</summary><p>Managed Recovery (₦150,000) means we recover it and keep running it for you, with projects coming in. Recovery Only (₦200,000) means we recover it and hand it fully back so you manage it yourself.</p></details>
           <details><summary>How do I start?</summary><p>Tap any “Start on WhatsApp” button and tell us what happened to your account. We take it from there.</p></details>
         </div>
         <a className="cta big" href={waLink("Account Recovery")} target="_blank" rel="noreferrer">
