@@ -281,6 +281,32 @@ Training, Academy, etc.) directly through support, then pay into the official ac
 > ⚠️ All payments go to OPay **8152688569** only. Never ask users to pay any individual,
 > agent, or any other account. Agents must never collect money from referrals.
 
+### Order notifications (how the team gets alerted)
+
+When a user confirms a booking, the bot calls the Work Proxy order endpoint, which emails
+the team an instant alert (no dashboard needed — email only).
+
+- **Endpoint:** `POST /api/orders`
+- **Auth header:** `Authorization: Bearer <ORDER_WEBHOOK_SECRET>`
+- **JSON body:** `{ "name", "service", "amount", "whatsapp", "email"?, "notes"? }`
+  (`name`, `service`, `amount`, `whatsapp` are required)
+- **Result:** an email titled *"New order: <service> — <amount> (<name>)"* is sent to
+  `ORDER_NOTIFY_EMAIL` (default `onboarding@workproxy.fun`) via Resend.
+
+**Required environment variables:**
+- `RESEND_API_KEY` — Resend key (already used by the app)
+- `RESEND_FROM_EMAIL` — sender, defaults to `noreply@workproxy.fun`
+- `ORDER_NOTIFY_EMAIL` — where alerts go (e.g. your inbox)
+- `ORDER_WEBHOOK_SECRET` — shared secret the bot must send (leave unset to disable auth)
+
+Example call:
+```
+curl -X POST https://workproxy.fun/api/orders \
+  -H "Authorization: Bearer $ORDER_WEBHOOK_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Ada O.","service":"Academy","amount":"₦100,000","whatsapp":"+23480...","email":"ada@x.com"}'
+```
+
 ---
 
 ## 17. Quick Stats (for fast answers)
