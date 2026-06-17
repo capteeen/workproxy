@@ -3,7 +3,7 @@
 import Link from "next/link";
 import {
   ArrowLeft, RotateCcw, Ban, FileX, MoonStar, Power,
-  CheckCircle2, MessageCircle, ShieldCheck,
+  CheckCircle2, MessageCircle, ShieldCheck, Undo2, Clock, Mail,
 } from "lucide-react";
 
 const WHATSAPP = "2347076245153";
@@ -109,6 +109,17 @@ export default function OutlierRecoveryPage() {
         </div>
       </section>
 
+      {/* REFUND POLICY */}
+      <section className="block">
+        <div className="seclabel">// REFUND POLICY</div>
+        <div className="refund">
+          <div className="rrow"><Undo2 size={18} /><div><b>Full refund if we cannot recover it</b><p>You only pay after we confirm recovery looks possible. If we try and the account genuinely cannot be brought back, you get your money back in full.</p></div></div>
+          <div className="rrow"><Clock size={18} /><div><b>Refunds processed within 2 working days</b><p>We allow up to two days before refunding, to fully confirm the account is unrecoverable and not just delayed on the platform side.</p></div></div>
+          <div className="rrow"><Mail size={18} /><div><b>We may need email access to confirm</b><p>To prove a recovery attempt has truly failed, we may need temporary full access to the email tied to your Outlier account. It is used only to verify the account status, then handed straight back.</p></div></div>
+          <div className="rrow"><CheckCircle2 size={18} /><div><b>Refunded the same way you paid</b><p>Refunds go back through the same channel you used to pay, with no hidden deductions beyond what the payment provider charges.</p></div></div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="block">
         <div className="seclabel">// QUESTIONS</div>
@@ -116,6 +127,7 @@ export default function OutlierRecoveryPage() {
           <details><summary>What kind of accounts can you recover?</summary><p>Banned and suspended accounts, accounts locked after a failed assessment, accounts gone inactive with no tasks on Aether, and fully deactivated accounts.</p></details>
           <details><summary>Do I pay before or after?</summary><p>You pay once we confirm your account can be recovered. We check first, then you decide.</p></details>
           <details><summary>What is the difference between the two plans?</summary><p>Managed Recovery (₦150,000) means we recover it and keep running it for you, with projects coming in. Recovery Only (₦200,000) means we recover it and hand it fully back so you manage it yourself.</p></details>
+          <details><summary>What is your refund policy?</summary><p>You only pay after we confirm recovery looks possible. If we try and the account cannot be recovered, you get a full refund, processed within two working days once we have confirmed it is truly unrecoverable. To verify that, we may need temporary access to the email linked to your account, used only to check status and then returned.</p></details>
           <details><summary>How do I start?</summary><p>Tap any “Start on WhatsApp” button and tell us what happened to your account. We take it from there.</p></details>
         </div>
         <a className="cta big" href={waLink("Account Recovery")} target="_blank" rel="noreferrer">
@@ -196,6 +208,12 @@ export default function OutlierRecoveryPage() {
         .orx .assure { display: flex; gap: 14px; align-items: flex-start; background: rgba(0,229,255,.05); border: 1px solid rgba(0,229,255,.22); border-radius: 20px; padding: 24px; color: #00E5FF; }
         .orx .assure b { color: #fff; font-size: 16px; font-weight: 600; }
         .orx .assure p { color: #A1A1AA; font-size: 14px; line-height: 1.65; margin: 6px 0 0; font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+        .orx .refund { display: flex; flex-direction: column; gap: 12px; }
+        .orx .rrow { display: flex; gap: 14px; align-items: flex-start; background: #18181B; border: 1px solid #27272A; border-radius: 16px; padding: 20px; color: #00E5FF; }
+        .orx .rrow b { display: block; color: #fff; font-size: 15px; font-weight: 600; }
+        .orx .rrow p { color: #A1A1AA; font-size: 13.5px; line-height: 1.6; margin: 6px 0 0; font-family: 'JetBrains Mono', ui-monospace, monospace; }
+        .orx .rrow svg { flex-shrink: 0; }
 
         .orx .faq { display: flex; flex-direction: column; gap: 10px; }
         .orx .faq details { background: #18181B; border: 1px solid #27272A; border-radius: 12px; padding: 4px 20px; }
