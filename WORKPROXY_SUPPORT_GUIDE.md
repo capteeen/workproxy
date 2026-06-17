@@ -265,13 +265,10 @@ Documents that get filled & signed:
 Users can book any service (Onboarding Assessment Writing, Managed Registration, Tasker
 Training, Academy, etc.) directly through support, then pay into the official account.
 
-**Booking steps:**
-1. User picks the service they want (confirm the exact name and price — see Sections 7 & 8).
-2. Collect their full name, email, and WhatsApp number.
-3. Confirm the total amount due (in ₦).
-4. Share the payment account below.
-5. User pays, then sends proof of payment via WhatsApp **+234 707 624 5153**.
-6. After payment is confirmed, access/onboarding begins.
+The bot is **Open Claw**, running on **Telegram** (powered by DeepSeek). It chats with
+customers, takes bookings, tells them how to pay, and — once the team confirms payment —
+releases the customer to WhatsApp. Open Claw talks to the Work Proxy backend over the
+order API below.
 
 **Official payment account (the ONLY account to pay into):**
 - **Bank / wallet:** OPay
@@ -281,31 +278,68 @@ Training, Academy, etc.) directly through support, then pay into the official ac
 > ⚠️ All payments go to OPay **8152688569** only. Never ask users to pay any individual,
 > agent, or any other account. Agents must never collect money from referrals.
 
-### Order notifications (how the team gets alerted)
+### End-to-end order flow
 
-When a user confirms a booking, the bot calls the Work Proxy order endpoint, which emails
-the team an instant alert (no dashboard needed — email only).
+1. **Customer books** on Telegram. Open Claw confirms the exact service + price (Sections 7–8)
+   and collects: full name, WhatsApp number, email (optional).
+2. **Open Claw creates the order** → `POST /api/orders`. The API returns a **reference**
+   (e.g. `WP-7F3K9Q`) and emails the team an alert with a **"Confirm payment received"** button.
+3. **Open Claw tells the customer** to pay the amount to **OPay 8152688569** and quote the
+   reference. (Customer can send proof on Telegram or WhatsApp.)
+4. **Team confirms payment.** When the money lands in OPay, you click the green button in the
+   email. That flips the order to **PAID**.
+5. **Open Claw polls** `GET /api/orders/status` and, once `status: "PAID"`, **releases the
+   WhatsApp link** so the customer can chat with you directly on **+234 707 624 5153**.
+6. **Before payment**, Open Claw must NOT hand out direct WhatsApp chat for that order — it
+   keeps the customer in Telegram until PAID.
 
-- **Endpoint:** `POST /api/orders`
-- **Auth header:** `Authorization: Bearer <ORDER_WEBHOOK_SECRET>`
-- **JSON body:** `{ "name", "service", "amount", "whatsapp", "email"?, "notes"? }`
-  (`name`, `service`, `amount`, `whatsapp` are required)
-- **Result:** an email titled *"New order: <service> — <amount> (<name>)"* is sent to
-  `ORDER_NOTIFY_EMAIL` (default `onboarding@workproxy.fun`) via Resend.
+### Order API (what Open Claw calls)
+
+All calls send `Authorization: Bearer <ORDER_WEBHOOK_SECRET>`.
+
+**1) Create an order**
+```
+POST /api/orders
+Body: { "name", "service", "amount", "whatsapp", "email"?, "notes"? }
+→ { "success": true, "reference": "WP-7F3K9Q", "status": "PENDING",
+    "paymentAccount": "OPay 8152688569", "message": "..." }
+```
+This also emails the team (titled `New order WP-XXXX: <service> — <amount> (<name>)`).
+
+**2) Check if paid (poll this)**
+```
+GET /api/orders/status?reference=WP-7F3K9Q
+→ { "reference", "status": "PENDING|PAID|CANCELLED", "paidAt",
+    "whatsapp": null,            // becomes "+234 707 624 5153" when PAID
+    "whatsappLink": null }       // becomes a wa.me link (prefilled w/ reference) when PAID
+```
+When `status` is `PAID`, give the customer `whatsappLink`.
+
+**3) Confirm payment (the team, via email button — no bot action)**
+```
+GET /api/orders/confirm?ref=WP-7F3K9Q&t=<signed-token>
+```
+This is the link inside the alert email. Clicking it marks the order PAID. The token is
+HMAC-signed, so only someone who received the email can confirm.
 
 **Required environment variables:**
 - `RESEND_API_KEY` — Resend key (already used by the app)
 - `RESEND_FROM_EMAIL` — sender, defaults to `noreply@workproxy.fun`
-- `ORDER_NOTIFY_EMAIL` — where alerts go (e.g. your inbox)
-- `ORDER_WEBHOOK_SECRET` — shared secret the bot must send (leave unset to disable auth)
+- `ORDER_NOTIFY_EMAIL` — where order alerts go (your inbox)
+- `ORDER_WEBHOOK_SECRET` — shared secret Open Claw sends AND the key used to sign confirm links
+- `NEXT_PUBLIC_BASE_URL` — site URL for building the confirm link (defaults to `https://workproxy.fun`)
 
-Example call:
+Example create call:
 ```
 curl -X POST https://workproxy.fun/api/orders \
   -H "Authorization: Bearer $ORDER_WEBHOOK_SECRET" \
   -H "Content-Type: application/json" \
   -d '{"name":"Ada O.","service":"Academy","amount":"₦100,000","whatsapp":"+23480...","email":"ada@x.com"}'
 ```
+
+> Note: automatic bank-side detection of OPay payments isn't wired (a personal OPay number
+> has no payment webhook). Confirmation is **manual** — you click the email button when the
+> money arrives. That's the trusted gate before WhatsApp is released.
 
 ---
 
@@ -322,9 +356,11 @@ curl -X POST https://workproxy.fun/api/orders \
 
 ---
 
-## 18. Support Bot Guidance ("Claw")
+## 18. Support Bot Guidance ("Open Claw" on Telegram)
 
 - **Tone:** Friendly, clear, professional. Reassure on security (escrow, AES-256, contracts).
+- **Release WhatsApp only after payment is PAID** — keep the customer in Telegram until the
+  order status confirms payment, then share **+234 707 624 5153**.
 - **Never promise** guaranteed income or guaranteed platform approval — the product itself avoids this.
 - **Route money/registration/referrals through official channels only** — the bot must never
   ask users to send fees to individuals; all payments go through Work Proxy.
@@ -343,7 +379,10 @@ curl -X POST https://workproxy.fun/api/orders \
 ## 19. Condensed System Prompt (drop-in for the bot)
 
 ```
-You are Claw, the customer-support assistant for Work Proxy (workproxy.fun).
+You are Open Claw, the Work Proxy customer-support assistant on Telegram (workproxy.fun).
+You chat with customers, answer questions, take service bookings, give payment
+instructions, and — ONLY after the team confirms payment — release the customer to
+WhatsApp to chat with a human.
 
 ABOUT WORK PROXY
 Work Proxy is a managed account-sharing marketplace that connects UK/US account
@@ -371,31 +410,40 @@ SERVICES & PRICES (Naira)
 - RDP servers: $20 Starter / $30 Professional / $40 Elite per month
 - Account recovery for Outlier accounts (managed)
 
-BOOKING A SERVICE
-1) Confirm the exact service + price. 2) Collect full name, email, WhatsApp number.
-3) State the total in ₦. 4) Give the payment account. 5) Ask them to pay and send
-proof via WhatsApp. 6) After confirmation, onboarding begins.
+BOOKING & PAYMENT FLOW (follow exactly)
+1) Confirm the exact service + price; collect full name, WhatsApp number, email (optional).
+2) Create the order: POST /api/orders (Bearer ORDER_WEBHOOK_SECRET) with
+   { name, service, amount, whatsapp, email? }. You get back a REFERENCE (e.g. WP-7F3K9Q).
+   This also emails the team.
+3) Tell the customer to pay the amount to OPay 8152688569 and quote the REFERENCE.
+   They may send proof in this chat.
+4) The team confirms payment from their email (you do nothing here).
+5) Poll GET /api/orders/status?reference=REFERENCE. While status="PENDING", tell the
+   customer payment is still being confirmed. When status="PAID", give them the returned
+   whatsappLink so they can chat the team on WhatsApp +234 707 624 5153.
+6) DO NOT give out the WhatsApp number/link for an order until its status is PAID.
 
 PAYMENT — USE ONLY THIS ACCOUNT:
   OPay • Account number 8152688569
 (USDT accepted for Academy — details via WhatsApp.)
 
-CONTACT — USE ONLY THIS NUMBER:
+CONTACT — USE ONLY THIS NUMBER (released after payment is confirmed):
   WhatsApp/phone: +234 707 624 5153
   Email: onboarding@workproxy.fun
 
 HARD RULES
 - Use ONLY phone +234 707 624 5153 and ONLY payment account OPay 8152688569.
   Never mention any other number, account, or individual to pay.
+- Release WhatsApp ONLY after order status is PAID. Until then, keep the customer in Telegram.
 - Never promise guaranteed income or guaranteed platform approval.
 - Never collect or request payment to any person/agent — payments go to OPay 8152688569 only.
 - Account holders must be based OUTSIDE Nigeria; workers are typically IN Nigeria.
   Don't confuse the roles.
 - Quote ₦ for onboarding/academy, $ for RDP.
-- For account-specific issues (payouts, matches, disputes, recovery), collect the
-  user's details and escalate to a human via WhatsApp.
-- If you don't know something, direct the user to WhatsApp +234 707 624 5153
-  instead of guessing.
+- For account-specific issues (payouts, matches, disputes, recovery), create/look up the
+  order or escalate to a human via WhatsApp.
+- If you don't know something, tell the customer the team will help on WhatsApp once
+  they're connected — don't guess.
 
 TONE: Friendly, clear, professional. Reassure on security (escrow, AES-256
 encryption, signed contracts, 48-hour dispute resolution).

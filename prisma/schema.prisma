@@ -143,3 +143,23 @@ model SignedDocument {
   @@index([docType])
   @@index([email])
 }
+
+// Service bookings taken by the Open Claw Telegram bot.
+// Open Claw creates an order, the team is emailed, payment is confirmed, then
+// the customer is released to WhatsApp.
+model Order {
+  id        String    @id @default(uuid())
+  reference String    @unique // e.g. "WP-7F3K9Q"
+  name      String
+  service   String
+  amount    String
+  whatsapp  String
+  email     String?
+  notes     String?
+  status    String    @default("PENDING") // PENDING, PAID, CANCELLED
+  createdAt DateTime  @default(now())
+  paidAt    DateTime?
+
+  @@index([reference])
+  @@index([status])
+}
