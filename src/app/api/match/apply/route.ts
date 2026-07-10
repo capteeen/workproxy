@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
+import { rateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
   try {
@@ -13,6 +14,9 @@ export async function POST(req: Request) {
     const { listingId } = await req.json();
     const userId = (session.user as any).id;
 
+    const limited = rateLimit(`match-apply:${userId}`, 10, 60 * 1000);
+    if (!limited.ok) return rateLimitResponse(limited.retryAfterSeconds);
+
     // Check if listing exists and is approved
     const listing = await prisma.accountListing.findUnique({
       where: { id: listingId }
@@ -22,26 +26,22 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Listing not found or not available" }, { status: 404 });
     }
 
-    // Check if already applied
-    const existing = await prisma.match.findFirst({
-      where: {
-        listingId,
-        workerId: userId
+    // The unique constraint on (listingId, workerId) guarantees one
+    // application per worker per listing, even under concurrent requests.
+    try {
+      await prisma.match.create({
+        data: {
+          listingId,
+          workerId: userId,
+          status: "PENDING"
+        }
+      });
+    } catch (e: any) {
+      if (e?.code === "P2002") {
+        return NextResponse.json({ error: "You have already applied for this account" }, { status: 400 });
       }
-    });
-
-    if (existing) {
-      return NextResponse.json({ error: "You have already applied for this account" }, { status: 400 });
+      throw e;
     }
-
-    // Create Match
-    await prisma.match.create({
-      data: {
-        listingId,
-        workerId: userId,
-        status: "PENDING"
-      }
-    });
 
     return NextResponse.json({ success: true, message: "Application submitted successfully!" });
   } catch (error) {

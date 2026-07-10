@@ -52,6 +52,9 @@ model WorkerApplication {
   status        String    @default("PENDING") // PENDING, APPROVED, REJECTED
   appliedAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([status])
 }
 
 model AccountListing {
@@ -72,6 +75,9 @@ model AccountListing {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   matches         Match[]
+
+  @@index([ownerId])
+  @@index([status])
 }
 
 model Match {
@@ -84,6 +90,10 @@ model Match {
   startedAt     DateTime?
   earningsTotal Float          @default(0)
   createdAt     DateTime       @default(now())
+
+  @@unique([listingId, workerId])
+  @@index([workerId])
+  @@index([listingId])
 }
 
 model EmailVerification {
@@ -104,6 +114,8 @@ model Notification {
   type      String   @default("INFO") // INFO, SUCCESS, WARNING, ERROR
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
 }
 
 model BlogPost {
@@ -117,6 +129,25 @@ model BlogPost {
   published Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([published, createdAt])
+}
+
+// Outbound email queue. Emails are written here first, sent in the
+// background (after the response is flushed), and retried by the
+// /api/cron/process-emails drain if delivery fails.
+model QueuedEmail {
+  id        String    @id @default(uuid())
+  to        String
+  subject   String
+  html      String
+  status    String    @default("PENDING") // PENDING, SENT, FAILED
+  attempts  Int       @default(0)
+  lastError String?
+  createdAt DateTime  @default(now())
+  sentAt    DateTime?
+
+  @@index([status, createdAt])
 }
 
 // Stores every filled + signed document (agent agreements, tasker contracts).

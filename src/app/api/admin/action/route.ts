@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
+import { sendEmail } from "@/lib/email";
 
 export async function POST(req: Request) {
   try {
@@ -19,9 +20,9 @@ export async function POST(req: Request) {
       });
 
       // Create Notification for the worker
-      await prisma.notification.create({
+      if (app.userId) await prisma.notification.create({
         data: {
-          userId: app.userId!,
+          userId: app.userId,
           title: status === 'APPROVED' ? 'Application Approved! 🚀' : 'Application Update',
           message: status === 'APPROVED' 
             ? 'Your worker application was approved. You can now browse and manage accounts.' 
@@ -31,14 +32,11 @@ export async function POST(req: Request) {
       });
 
       if (status === 'APPROVED') {
-        try {
-          const { Resend } = await import('resend');
-          const resend = new Resend(process.env.RESEND_API_KEY);
-          await resend.emails.send({
-            from: 'Work Proxy <onboarding@workproxy.fun>',
-            to: app.email,
-            subject: 'Congratulations! Your Work Proxy Application is Approved 🚀',
-            html: `
+        // Queued + sent after the response flushes, so admin actions stay fast.
+        await sendEmail(
+          app.email,
+          'Congratulations! Your Work Proxy Application is Approved 🚀',
+          `
               <div style="font-family: sans-serif; max-width: 600px; padding: 20px;">
                 <h1 style="color: #0f172a;">Welcome to the Elite Network!</h1>
                 <p>Hi ${app.firstName},</p>
@@ -51,10 +49,7 @@ export async function POST(req: Request) {
                 <p>Best regards,<br/>The Work Proxy Team</p>
               </div>
             `
-          });
-        } catch (e) {
-          console.error("Failed to send approval email:", e);
-        }
+        );
       }
     } else if (type === 'listing') {
       const listing = await prisma.accountListing.update({

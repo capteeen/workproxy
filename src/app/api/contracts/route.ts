@@ -2,13 +2,21 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
+import { rateLimit, rateLimitResponse, clientIp } from "@/lib/rate-limit";
 
 const VALID_TYPES = ["AGENT_AGREEMENT", "TASKER_CONTRACT_OUTLIER"];
+
+// ~500KB of base64 — generous for a drawn signature PNG, but stops abuse of
+// this public endpoint from bloating the database.
+const MAX_SIGNATURE_LENGTH = 700_000;
 
 // POST /api/contracts — called by the public fill-and-sign documents.
 // Saves a submission and stamps the signing date automatically (server-side).
 export async function POST(req: Request) {
   try {
+    const limited = rateLimit(`contracts:${clientIp(req)}`, 5, 10 * 60 * 1000);
+    if (!limited.ok) return rateLimitResponse(limited.retryAfterSeconds);
+
     const body = await req.json();
 
     const docType = String(body.docType || "");
@@ -24,6 +32,13 @@ export async function POST(req: Request) {
       return NextResponse.json(
         { error: "Missing required fields (name, email, signature)" },
         { status: 400 }
+      );
+    }
+
+    if (signatureImage.length > MAX_SIGNATURE_LENGTH) {
+      return NextResponse.json(
+        { error: "Signature image is too large" },
+        { status: 413 }
       );
     }
 
