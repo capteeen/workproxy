@@ -72,7 +72,7 @@ export default function OutlierRecoveryPage() {
             <h3>Recovery Only</h3>
             <p className="cardsub">We recover your account and hand it fully back. You run it yourself.</p>
             <div className="price">
-              <span className="now">₦200,000</span>
+              <span className="now">₦250,000</span>
             </div>
             <ul className="feats">
               <li><CheckCircle2 size={15} /> Full account recovery</li>
@@ -81,6 +81,24 @@ export default function OutlierRecoveryPage() {
               <li><CheckCircle2 size={15} /> You manage it going forward</li>
             </ul>
             <a className="cta ghost" href={waLink("Recovery Only")} target="_blank" rel="noreferrer">
+              <MessageCircle size={16} /> START ON WHATSAPP
+            </a>
+          </div>
+
+          <div className="card">
+            <h3>Tasking Option</h3>
+            <p className="cardsub">We handle the tasking on your account and split the earnings 50/50. Your account assessment is completely FREE.</p>
+            <div className="price">
+              <span className="now">50/50</span>
+            </div>
+            <p className="save">EARNINGS SPLIT · FREE ASSESSMENT</p>
+            <ul className="feats">
+              <li><CheckCircle2 size={15} /> We handle all tasking for you</li>
+              <li><CheckCircle2 size={15} /> 50/50 earnings split</li>
+              <li><CheckCircle2 size={15} /> Account assessment 100% free</li>
+              <li><CheckCircle2 size={15} /> Ongoing support</li>
+            </ul>
+            <a className="cta ghost" href={waLink("Tasking Option — 50/50 split")} target="_blank" rel="noreferrer">
               <MessageCircle size={16} /> START ON WHATSAPP
             </a>
           </div>
@@ -113,10 +131,10 @@ export default function OutlierRecoveryPage() {
       <section className="block">
         <div className="seclabel">// REFUND POLICY</div>
         <div className="refund">
-          <div className="rrow"><Undo2 size={18} /><div><b>Full refund if we cannot recover it</b><p>You only pay after we confirm recovery looks possible. If we try and the account genuinely cannot be brought back, you get your money back in full.</p></div></div>
+          <div className="rrow"><ShieldCheck size={18} /><div><b>98% success rate</b><p>We have a 98% success rate bringing accounts back. Refunds are the rare exception, not the rule.</p></div></div>
+          <div className="rrow"><Undo2 size={18} /><div><b>Refund minus a 30% service charge</b><p>In the rare case recovery doesn&apos;t work, you get a refund of your payment minus a 30% service charge, which covers our time and attention on your case.</p></div></div>
           <div className="rrow"><Clock size={18} /><div><b>Refunds processed within 2 working days</b><p>We allow up to two days before refunding, to fully confirm the account is unrecoverable and not just delayed on the platform side.</p></div></div>
           <div className="rrow"><Mail size={18} /><div><b>We may need email access to confirm</b><p>To prove a recovery attempt has truly failed, we may need temporary full access to the email tied to your Outlier account. It is used only to verify the account status, then handed straight back.</p></div></div>
-          <div className="rrow"><CheckCircle2 size={18} /><div><b>Refunded the same way you paid</b><p>Refunds go back through the same channel you used to pay, with no hidden deductions beyond what the payment provider charges.</p></div></div>
         </div>
       </section>
 
@@ -126,8 +144,8 @@ export default function OutlierRecoveryPage() {
         <div className="faq">
           <details><summary>What kind of accounts can you recover?</summary><p>Banned and suspended accounts, accounts locked after a failed assessment, accounts gone inactive with no tasks on Aether, and fully deactivated accounts.</p></details>
           <details><summary>Do I pay before or after?</summary><p>You pay once we confirm your account can be recovered. We check first, then you decide.</p></details>
-          <details><summary>What is the difference between the two plans?</summary><p>Managed Recovery (₦150,000) means we recover it and keep running it for you, with projects coming in. Recovery Only (₦200,000) means we recover it and hand it fully back so you manage it yourself.</p></details>
-          <details><summary>What is your refund policy?</summary><p>You only pay after we confirm recovery looks possible. If we try and the account cannot be recovered, you get a full refund, processed within two working days once we have confirmed it is truly unrecoverable. To verify that, we may need temporary access to the email linked to your account, used only to check status and then returned.</p></details>
+          <details><summary>What is the difference between the plans?</summary><p>Managed Recovery (₦150,000) means we recover it and keep running it for you, with projects coming in. Recovery Only (₦250,000) means we recover it and hand it fully back so you manage it yourself. The Tasking Option means we handle the tasking on your account on a 50/50 earnings split, with a completely free account assessment.</p></details>
+          <details><summary>What is your refund policy?</summary><p>We have a 98% success rate bringing accounts back. In the rare case recovery doesn&apos;t work, you get a refund of your payment minus a 30% service charge, which covers our time and attention on your case. Refunds are processed within two working days once we have confirmed the account is truly unrecoverable. To verify that, we may need temporary access to the email linked to your account, used only to check status and then returned.</p></details>
           <details><summary>How do I start?</summary><p>Tap any “Start on WhatsApp” button and tell us what happened to your account. We take it from there.</p></details>
         </div>
         <a className="cta big" href={waLink("Account Recovery")} target="_blank" rel="noreferrer">
@@ -178,7 +196,7 @@ export default function OutlierRecoveryPage() {
         .orx .mini b { color: #fff; font-size: 14px; font-weight: 600; }
         .orx .mini span { color: #A1A1AA; font-size: 12.5px; line-height: 1.5; font-family: 'JetBrains Mono', ui-monospace, monospace; }
 
-        .orx .pricing { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .orx .pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
         .orx .card { position: relative; background: #18181B; border: 1px solid #27272A; border-radius: 20px; padding: 30px 26px; }
         .orx .card.featured { border-color: rgba(0,229,255,.45); box-shadow: 0 0 0 1px rgba(0,229,255,.12), 0 30px 70px -36px rgba(0,229,255,.35); }
         .orx .tag { position: absolute; top: -11px; left: 26px; background: linear-gradient(90deg,#00E5FF,#00CCE5); color: #050505; font-size: 10px; font-weight: 700; padding: 5px 12px; border-radius: 9999px; letter-spacing: .14em; }

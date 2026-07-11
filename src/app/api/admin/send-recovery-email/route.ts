@@ -3,8 +3,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const RECOVERY_EMAIL_TEMPLATE = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -224,7 +222,9 @@ export async function POST(req: NextRequest) {
     // Replace the recovery link placeholder in the template
     const htmlContent = RECOVERY_EMAIL_TEMPLATE.replace(/{{RECOVERY_LINK}}/g, recoveryLink);
 
-    // Send email via Resend
+    // Send email via Resend (instantiated here so a missing key fails the
+    // request, not the build)
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const response = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || "noreply@workproxy.fun",
       to: email,
