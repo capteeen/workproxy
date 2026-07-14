@@ -53,13 +53,16 @@ export default function OutlierRecoveryPage() {
           <div className="card featured">
             <span className="tag">MOST POPULAR</span>
             <h3>Managed Recovery</h3>
-            <p className="cardsub">We recover your account and manage it for you, so projects keep coming. Hands-off.</p>
+            <p className="cardsub">We recover your account, manage it and handle all the tasking for you. Hands-off — we split each week&apos;s earnings 50/50.</p>
             <div className="price">
               <span className="now">₦150,000</span>
             </div>
+            <p className="save">+ 50/50 WEEKLY EARNINGS SPLIT · FREE ASSESSMENT</p>
             <ul className="feats">
               <li><CheckCircle2 size={15} /> Full account recovery</li>
-              <li><CheckCircle2 size={15} /> We manage and run it for you</li>
+              <li><CheckCircle2 size={15} /> We manage and handle all tasking</li>
+              <li><CheckCircle2 size={15} /> 50/50 split of each week&apos;s pay</li>
+              <li><CheckCircle2 size={15} /> Account assessment 100% free</li>
               <li><CheckCircle2 size={15} /> Projects guaranteed</li>
               <li><CheckCircle2 size={15} /> Ongoing support</li>
             </ul>
@@ -81,24 +84,6 @@ export default function OutlierRecoveryPage() {
               <li><CheckCircle2 size={15} /> You manage it going forward</li>
             </ul>
             <a className="cta ghost" href={waLink("Recovery Only")} target="_blank" rel="noreferrer">
-              <MessageCircle size={16} /> START ON WHATSAPP
-            </a>
-          </div>
-
-          <div className="card">
-            <h3>Tasking Option</h3>
-            <p className="cardsub">We handle the tasking on your account and split the earnings 50/50. Your account assessment is completely FREE.</p>
-            <div className="price">
-              <span className="now">50/50</span>
-            </div>
-            <p className="save">EARNINGS SPLIT · FREE ASSESSMENT</p>
-            <ul className="feats">
-              <li><CheckCircle2 size={15} /> We handle all tasking for you</li>
-              <li><CheckCircle2 size={15} /> 50/50 earnings split</li>
-              <li><CheckCircle2 size={15} /> Account assessment 100% free</li>
-              <li><CheckCircle2 size={15} /> Ongoing support</li>
-            </ul>
-            <a className="cta ghost" href={waLink("Tasking Option — 50/50 split")} target="_blank" rel="noreferrer">
               <MessageCircle size={16} /> START ON WHATSAPP
             </a>
           </div>
@@ -144,7 +129,7 @@ export default function OutlierRecoveryPage() {
         <div className="faq">
           <details><summary>What kind of accounts can you recover?</summary><p>Banned and suspended accounts, accounts locked after a failed assessment, accounts gone inactive with no tasks on Aether, and fully deactivated accounts.</p></details>
           <details><summary>Do I pay before or after?</summary><p>You pay once we confirm your account can be recovered. We check first, then you decide.</p></details>
-          <details><summary>What is the difference between the plans?</summary><p>Managed Recovery (₦150,000) means we recover it and keep running it for you, with projects coming in. Recovery Only (₦250,000) means we recover it and hand it fully back so you manage it yourself. The Tasking Option means we handle the tasking on your account on a 50/50 earnings split, with a completely free account assessment.</p></details>
+          <details><summary>What is the difference between the plans?</summary><p>Managed Recovery (₦150,000) means we recover the account, manage it and handle all the tasking for you, on a 50/50 split of each week&apos;s earnings — with a completely free account assessment. Recovery Only (₦250,000) means we recover it and hand it fully back so you manage it yourself and keep everything you earn.</p></details>
           <details><summary>What is your refund policy?</summary><p>We have a 98% success rate bringing accounts back. In the rare case recovery doesn&apos;t work, you get a refund of your payment minus a 30% service charge, which covers our time and attention on your case. Refunds are processed within two working days once we have confirmed the account is truly unrecoverable. To verify that, we may need temporary access to the email linked to your account, used only to check status and then returned.</p></details>
           <details><summary>How do I start?</summary><p>Tap any “Start on WhatsApp” button and tell us what happened to your account. We take it from there.</p></details>
         </div>
@@ -196,7 +181,7 @@ export default function OutlierRecoveryPage() {
         .orx .mini b { color: #fff; font-size: 14px; font-weight: 600; }
         .orx .mini span { color: #A1A1AA; font-size: 12.5px; line-height: 1.5; font-family: 'JetBrains Mono', ui-monospace, monospace; }
 
-        .orx .pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .orx .pricing { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
         .orx .card { position: relative; background: #18181B; border: 1px solid #27272A; border-radius: 20px; padding: 30px 26px; }
         .orx .card.featured { border-color: rgba(0,229,255,.45); box-shadow: 0 0 0 1px rgba(0,229,255,.12), 0 30px 70px -36px rgba(0,229,255,.35); }
         .orx .tag { position: absolute; top: -11px; left: 26px; background: linear-gradient(90deg,#00E5FF,#00CCE5); color: #050505; font-size: 10px; font-weight: 700; padding: 5px 12px; border-radius: 9999px; letter-spacing: .14em; }
